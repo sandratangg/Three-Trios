@@ -12,5 +12,13 @@ QUESTION:   when an attack value is 10 it prints out A so should the validCardAt
 
 Direction enum (NORTH, EAST, SOUTH, WEST) //Question: Will this direction be used anywhere else, or just in our card class
 
+
+
 How is a Grid represented?
-inner class called cell
+  Inner class called cell that can be either a hole or card cell
+
+Methods:
+  isEmpty() //validates if cell is available -- makes sure it is not a hole or already contains a card
+
+Other ideas: 
+Create a cell type enum: HOLE, CARDCELL
