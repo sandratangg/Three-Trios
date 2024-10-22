@@ -1,0 +1,16 @@
+How is a Card represented?
+Card class
+  Fields:
+    String name
+    int attackNorth, attackEast, attackSouth, attackWest
+        //accounts for attack values
+Methods:
+  validCardAttackValue() // called in constructor and validates if the attack value is between range 1-9 inclusive
+
+QUESTION:   when an attack value is 10 it prints out A so should the validCardAttackValue check for the range 1-10 inclusive
+            -> our plan for later is when we create a toString() we would have it print 'A' when the value is 10
+
+Direction enum (NORTH, EAST, SOUTH, WEST) //Question: Will this direction be used anywhere else, or just in our card class
+
+How is a Grid represented?
+inner class called cell
