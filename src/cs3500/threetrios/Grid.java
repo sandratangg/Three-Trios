@@ -1,3 +1,5 @@
+package cs3500.threetrios;
+
 public class Grid {
   private final int rows;
   private final int cols;
@@ -25,7 +27,7 @@ public class Grid {
   public Grid(int rows, int cols) {
 
     if (rows <= 0 || cols <= 0) {
-      throw new IllegalArgumentException("Grid dimensions must be positive.");
+      throw new IllegalArgumentException("cs3500.threetrios.Grid dimensions must be positive.");
     }
     this.rows = rows;
     this.cols = cols;

@@ -1,3 +1,5 @@
+package cs3500.threetrios;
+
 /**
  * Represents a card in the ThreeTrios game.
  */
@@ -32,16 +34,16 @@ public class Card {
 
   public int getAttackValue(Direction direction) {
     switch(direction) {
-      case NORTH:
+      case Direction.NORTH:
         //
         break;
-      case EAST:
+      case Direction.EAST:
         //
         break;
-      case WEST:
+      case Direction.WEST:
         //
         break;
-      case SOUTH:
+      case Direction.SOUTH:
         //
         break;
       default:
