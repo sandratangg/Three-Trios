@@ -28,29 +28,28 @@ public class Card {
 
   private static void validCardAttackValue(int attackValue) {
     if (attackValue < 1 || attackValue > 10) {
-      throw new IllegalArgumentException("value must be an > 1 and < 10");
+      throw new IllegalArgumentException("value must be between 1 and 10");
     }
   }
 
-  public int getAttackValue(Direction direction) {
-    switch(direction) {
-      case Direction.NORTH:
-        //
-        break;
-      case Direction.EAST:
-        //
-        break;
-      case Direction.WEST:
-        //
-        break;
-      case Direction.SOUTH:
-        //
-        break;
+  // Instead of getters, provide a more general method to return the attack value based on direction
+  public int attack(Direction direction) {
+    switch (direction) {
+      case NORTH:
+        return this.attackNorth;
+      case EAST:
+        return this.attackEast;
+      case WEST:
+        return this.attackWest;
+      case SOUTH:
+        return this.attackSouth;
       default:
         throw new IllegalArgumentException("Invalid direction");
     }
-    return 0;
   }
 
-
+  // No need to expose the card name directly, as it can be used within the game flow itself
+  public boolean matchesName(String name) {
+    return this.name.equals(name);
+  }
 }
