@@ -33,6 +33,10 @@ public class Card {
   }
 
   // Instead of getters, provide a more general method to return the attack value based on direction
+
+  //Instead of this attack getter, we can write a Compare attack value helper method that returns
+  // an int (1 for greater, 0 for equal, and -1 for less than)
+
   public int attack(Direction direction) {
     switch (direction) {
       case NORTH:
