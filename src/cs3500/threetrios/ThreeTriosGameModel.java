@@ -38,6 +38,12 @@ public class ThreeTriosGameModel {
   }
 
   private void switchTurn() {
-    currentPlayer = (currentPlayer == redPlayer) ? bluePlayer : redPlayer;
+    if (currentPlayer == redPlayer) {
+      // If the current player is red, switch to blue
+      currentPlayer = bluePlayer;
+    } else {
+      // If the current player is blue, switch to red
+      currentPlayer = redPlayer;
+    }
   }
 }
