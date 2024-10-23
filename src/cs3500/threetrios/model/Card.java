@@ -1,4 +1,4 @@
-package cs3500.threetrios;
+package cs3500.threetrios.model;
 
 /**
  * Represents a card in the ThreeTrios game.

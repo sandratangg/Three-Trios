@@ -1,4 +1,4 @@
-package cs3500.threetrios;
+package cs3500.threetrios.model;
 
 public class Grid {
   private final int rows;

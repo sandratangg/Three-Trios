@@ -1,5 +1,5 @@
-How is a cs3500.threetrios.Card represented?
-cs3500.threetrios.Card class
+How is a cs3500.threetrios.model.Card represented?
+cs3500.threetrios.model.Card class
   Fields:
     String name
     int attackNorth, attackEast, attackSouth, attackWest
@@ -10,11 +10,11 @@ Methods:
 QUESTION:   when an attack value is 10 it prints out A so should the validCardAttackValue check for the range 1-10 inclusive
             -> our plan for later is when we create a toString() we would have it print 'A' when the value is 10
 
-cs3500.threetrios.Direction enum (NORTH, EAST, SOUTH, WEST) //Question: Will this direction be used anywhere else, or just in our card class
+cs3500.threetrios.model.Direction enum (NORTH, EAST, SOUTH, WEST) //Question: Will this direction be used anywhere else, or just in our card class
 
 
 
-How is a cs3500.threetrios.Grid represented?
+How is a cs3500.threetrios.model.Grid represented?
   Inner class called cell that can be either a hole or card cell
 
 Methods:
