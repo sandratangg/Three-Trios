@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
-  private final String color;  // "Red" or "Blue"
+  private final PlayerColor color;  // "Red" or "Blue"
   private final List<Card> hand;
 
   public Player(String color, List<Card> initialHand) {

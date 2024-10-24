@@ -2,7 +2,7 @@ package cs3500.threetrios.model;
 
 import java.util.List;
 
-public class ThreeTriosGameModel {
+public class ThreeTriosGameModel implements ThreeTrios {
   private final Grid grid;
   private final Player redPlayer;
   private final Player bluePlayer;
