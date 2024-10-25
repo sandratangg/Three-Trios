@@ -90,13 +90,13 @@ public class ThreeTriosGrid {
   }
 
   public String toString(ThreeTriosPlayer red) {
-    String gridString = "";
+    StringBuilder gridString = new StringBuilder();
 
     for (int row = 0; row < rows; row++) {
-      gridString = gridString + rowToString(row, cols, red);
+      gridString.append(rowToString(row, cols, red));
     }
 
-    return gridString;
+    return gridString.toString();
   }
 
   private String rowToString(int row, int cols, ThreeTriosPlayer red) {
