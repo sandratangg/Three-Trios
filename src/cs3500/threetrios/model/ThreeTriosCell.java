@@ -5,12 +5,12 @@ package cs3500.threetrios.model;
  */
 public class ThreeTriosCell implements ICell {
   boolean isHole;
-  ThreeTriosCard card;
+  public ThreeTriosCard card;
 
   /**
    * Constructor for a Card Cell (A space that is empty or contains a card).
    */
-  ThreeTriosCell() {
+  public ThreeTriosCell() {
     this.isHole = false;
     this.card = null;
   }
@@ -19,7 +19,7 @@ public class ThreeTriosCell implements ICell {
    * Constructor for a Hole (A dark space where no card can be placed.).
    * @param isHole whether the cell is a hole or not
    */
-  ThreeTriosCell(boolean isHole) {
+  public ThreeTriosCell(boolean isHole) {
     this.isHole = isHole;
     this.card = null;
   }
@@ -31,4 +31,17 @@ public class ThreeTriosCell implements ICell {
     return !isHole && card == null;
   }
 
+  /**
+   * Method that gets the Card in the cell.
+   */
+  public ThreeTriosCard getCard() {
+    return this.card;
+  }
+
+  /**
+   * Method that sets the Card in the cell.
+   */
+  public void setCard(ThreeTriosCard card) {
+    this.card = card;
+  }
 }
