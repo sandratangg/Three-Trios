@@ -70,7 +70,11 @@ public class ThreeTriosCard implements ICard {
 
   // Helper : Converts attack values to string, handling 10 as 'A'
   private String convertAttackValue(int attackValue) {
-    return (attackValue == 10) ? "A" : Integer.toString(attackValue);
+    if (attackValue == 10) {
+      return "A";
+    } else {
+      return Integer.toString(attackValue);
+    }
   }
 
   // Helper : Constructs the string representation for the card
