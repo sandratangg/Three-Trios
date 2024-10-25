@@ -7,8 +7,9 @@ import cs3500.threetrios.model.ThreeTriosCard;
 import cs3500.threetrios.model.ThreeTriosCell;
 
 public class ThreeTriosCellTests {
-  private ThreeTriosCell defaultCell;
+  private ThreeTriosCell noCardCell;
   private ThreeTriosCell holeCell;
+  private ThreeTriosCell exampleCardCell1;
   private ThreeTriosCell cardCellWithCard;
   private ThreeTriosCard sampleCard;
 
@@ -18,13 +19,17 @@ public class ThreeTriosCellTests {
   @Before
   public void init() {
     // Default cell card with no card)
-    defaultCell = new ThreeTriosCell();
+    noCardCell = new ThreeTriosCell();
 
     // Hole cell with no card
     holeCell = new ThreeTriosCell(true);
 
     // Card cell with a card
-    
+    exampleCardCell1 = new ThreeTriosCell();
+    exampleCardCell1.setCard();
+    // In the ThreeTriosCell class, add a sameCard method that returns something like "this.card.equals(givenCard)"
+    exampleCardCell1.sameCard(givenCard);
+
   }
 
   //make a s card equals helper to return this.card == card
