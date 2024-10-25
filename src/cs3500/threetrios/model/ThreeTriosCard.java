@@ -37,7 +37,7 @@ public class ThreeTriosCard implements ICard {
   // Helper : Validates the attack value of the card
   private static void validCardAttackValue(int attackValue) {
     if (attackValue < 1 || attackValue > 10) {
-      throw new IllegalArgumentException("value must be between 1 and 10");
+      throw new IllegalArgumentException("Value must be between 1 and 10");
     }
   }
 
@@ -59,8 +59,6 @@ public class ThreeTriosCard implements ICard {
         throw new IllegalArgumentException("Invalid direction");
     }
   }
-
-
 
 
   /**
