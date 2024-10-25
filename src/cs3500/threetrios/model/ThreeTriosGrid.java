@@ -1,5 +1,9 @@
 package cs3500.threetrios.model;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 /**
  * Represents a grid in the game.
  */
@@ -172,5 +176,36 @@ public class ThreeTriosGrid {
       }
     }
     return true;
+  }
+
+  public static ThreeTriosGrid fromFile(String filename) throws FileNotFoundException {
+    Scanner scanner = new Scanner(new File(filename));
+    int rows = scanner.nextInt();
+    int cols = scanner.nextInt();
+    scanner.nextLine();  // Move to the next line after the dimensions
+
+    ThreeTriosGrid grid = new ThreeTriosGrid(rows, cols);
+
+    for (int row = 0; row < rows; row++) {
+      String line = scanner.nextLine();
+      for (int col = 0; col < cols; col++) {
+        char cellChar = line.charAt(col);
+        if (cellChar == 'C') {
+          grid.placeEmptyCardCell(row, col);  // Method to initialize an empty card cell
+        } else if (cellChar == 'X') {
+          grid.placeHole(row, col);  // Method to mark a hole
+        }
+      }
+    }
+
+    return grid;
+  }
+
+  private void placeEmptyCardCell(int row, int col) {
+    grid[row][col] = new ThreeTriosCell(false);  // 'false' means it’s not a hole
+  }
+
+  private void placeHole(int row, int col) {
+    grid[row][col] = new ThreeTriosCell(true);  // 'true' means it’s a hole
   }
 }
