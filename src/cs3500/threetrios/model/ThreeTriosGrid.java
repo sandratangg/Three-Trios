@@ -3,26 +3,8 @@ package cs3500.threetrios.model;
 public class ThreeTriosGrid {
   private final int rows;
   private final int cols;
-  private final Cell[][] grid;
+  private final ThreeTriosCell[][] grid;
 
-  private static class Cell {
-    boolean isHole;
-    ThreeTriosCard card;
-
-    Cell() {
-      this.isHole = false;
-      this.card = null;
-    }
-
-    Cell(boolean isHole) {
-      this.isHole = isHole;
-      this.card = null;
-    }
-
-    boolean isEmpty() {
-      return !isHole && card == null;
-    }
-  }
 
   public ThreeTriosGrid(int rows, int cols) {
     if (rows <= 0 || cols <= 0) {
@@ -30,14 +12,14 @@ public class ThreeTriosGrid {
     }
     this.rows = rows;
     this.cols = cols;
-    this.grid = new Cell[this.rows][this.cols];
+    this.grid = new ThreeTriosCell[this.rows][this.cols];
     initializeGrid();
   }
 
   private void initializeGrid() {
     for (int row = 0; row < rows; row++) {
       for (int col = 0; col < cols; col++) {
-        grid[row][col] = new Cell();
+        grid[row][col] = new ThreeTriosCell();
       }
     }
   }
@@ -105,5 +87,36 @@ public class ThreeTriosGrid {
       default:
         return col;
     }
+  }
+
+  public String toString(ThreeTriosPlayer red) {
+    String gridString = "";
+
+    for (int row = 0; row < rows; row++) {
+      gridString = gridString + rowToString(row, cols, red);
+    }
+
+    return gridString;
+  }
+
+  private String rowToString(int row, int cols, ThreeTriosPlayer red) {
+    StringBuilder rowString = new StringBuilder();
+
+    for (int col = 0; col < cols; col++) {
+      ThreeTriosCell currentCell = grid[row][col];
+      if (currentCell.isHole) {
+        rowString.append(" ");
+      } else if (currentCell.isEmpty()) {
+        rowString.append("_");
+      } else {
+        if (red.owns(currentCell.card)) {
+          rowString.append("R");
+        } else {
+          rowString.append("B");
+        }
+      }
+    }
+
+    return rowString.toString();
   }
 }

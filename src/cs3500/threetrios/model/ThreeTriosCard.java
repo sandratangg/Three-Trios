@@ -3,7 +3,7 @@ package cs3500.threetrios.model;
 /**
  * Represents a card in the ThreeTrios game.
  */
-public class ThreeTriosCard {
+public class ThreeTriosCard implements ICard {
 
   private final String name;
 

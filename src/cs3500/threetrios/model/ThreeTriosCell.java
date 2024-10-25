@@ -1,6 +1,6 @@
 package cs3500.threetrios.model;
 
-public class ThreeTriosCell {
+public class ThreeTriosCell implements ICell {
   boolean isHole;
   ThreeTriosCard card;
 
@@ -14,9 +14,8 @@ public class ThreeTriosCell {
     this.card = null;
   }
 
-  boolean isEmpty() {
+  public boolean isEmpty() {
     return !isHole && card == null;
   }
-
 
 }

@@ -36,4 +36,9 @@ public class ThreeTriosPlayer {
   public boolean isBlue() {
     return PlayerColor.BLUE.equals(this.color);
   }
+
+  public String toString() {
+    return "Player: " + this.color.toString();
+  }
+
 }
