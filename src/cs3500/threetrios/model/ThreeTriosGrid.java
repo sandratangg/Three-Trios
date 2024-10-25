@@ -1,11 +1,19 @@
 package cs3500.threetrios.model;
 
+/**
+ * Represents a grid in the game.
+ */
 public class ThreeTriosGrid {
   private final int rows;
   private final int cols;
   private final ThreeTriosCell[][] grid;
 
 
+  /**
+   * Constructs a ThreeTriosGrid with the given dimensions.
+   * @param rows
+   * @param cols
+   */
   public ThreeTriosGrid(int rows, int cols) {
     if (rows <= 0 || cols <= 0) {
       throw new IllegalArgumentException("Grid dimensions must be positive.");
@@ -16,6 +24,9 @@ public class ThreeTriosGrid {
     initializeGrid();
   }
 
+  /**
+   * Helper: Initializes the grid with empty cells.
+   */
   private void initializeGrid() {
     for (int row = 0; row < rows; row++) {
       for (int col = 0; col < cols; col++) {
@@ -24,7 +35,9 @@ public class ThreeTriosGrid {
     }
   }
 
-  // Place card only if valid; no need for external checking logic
+  /**
+   * Helper: Places card only if valid; no need for external checking logic
+   */
   public boolean placeCard(int row, int col, ThreeTriosCard card) {
     if (isValidPosition(row, col) && grid[row][col].isEmpty()) {
       grid[row][col].card = card;
@@ -33,7 +46,9 @@ public class ThreeTriosGrid {
     return false;
   }
 
-  // Battle logic now encapsulated in the grid class itself
+  /**
+   * Helper: Battle logic now encapsulated in the grid class itself
+   */
   public void battlePhase(int row, int col, ThreeTriosCard placedCard, Direction direction) {
     int adjacentRow = getAdjacentRow(row, direction);
     int adjacentCol = getAdjacentCol(col, direction);
@@ -89,6 +104,11 @@ public class ThreeTriosGrid {
     }
   }
 
+  /**
+   * Returns a string representation of the grid.
+   * @param red the red player
+   * @return the string representation of the grid
+   */
   public String toString(ThreeTriosPlayer red) {
     String gridString = "";
 
@@ -99,6 +119,9 @@ public class ThreeTriosGrid {
     return gridString;
   }
 
+  /**
+   * Helper: Converts a row to a string.
+   */
   private String rowToString(int row, int cols, ThreeTriosPlayer red) {
     StringBuilder rowString = new StringBuilder();
 

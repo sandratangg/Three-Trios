@@ -12,6 +12,14 @@ public class ThreeTriosCard implements ICard {
   private final int attackWest;
   private final int attackSouth;
 
+  /**
+   * Constructor for the ThreeTriosCard.
+   * @param name the name of the card
+   * @param attackNorth the attack value for the north direction
+   * @param attackEast the attack value for the east direction
+   * @param attackWest the attack value for the west direction
+   * @param attackSouth the attack value for the south direction
+   */
   public ThreeTriosCard(String name, int attackNorth, int attackEast, int attackWest, int attackSouth) {
 
     validCardAttackValue(attackNorth);
@@ -26,6 +34,7 @@ public class ThreeTriosCard implements ICard {
     this.attackSouth = attackSouth;
   }
 
+  // Helper : Validates the attack value of the card
   private static void validCardAttackValue(int attackValue) {
     if (attackValue < 1 || attackValue > 10) {
       throw new IllegalArgumentException("value must be between 1 and 10");
@@ -33,8 +42,7 @@ public class ThreeTriosCard implements ICard {
   }
 
   // Instead of getters, provide a more general method to return the attack value based on direction
-
-  //Instead of this attack getter, we can write a Compare attack value helper method that returns
+  // Instead of this attack getter, we can write a Compare attack value helper method that returns
   // an int (1 for greater, 0 for equal, and -1 for less than)
 
   public int attack(Direction direction) {
@@ -52,7 +60,15 @@ public class ThreeTriosCard implements ICard {
     }
   }
 
-  // No need to expose the card name directly, as it can be used within the game flow itself
+
+
+
+  /**
+   * Method to check if the card name matches a given name.
+   * @param name the name to check
+   * @return true if the name matches, false otherwise
+   * No need to expose the card name directly, as it can be used within the game flow itself
+   */
   public boolean matchesName(String name) {
     return this.name.equals(name);
   }
