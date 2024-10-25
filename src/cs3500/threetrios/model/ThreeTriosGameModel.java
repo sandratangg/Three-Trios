@@ -46,4 +46,22 @@ public class ThreeTriosGameModel implements ThreeTrios {
       currentPlayer = redPlayer;
     }
   }
+
+  public String toString() {
+    StringBuilder gameModelString = new StringBuilder();
+
+    gameModelString.append(currentPlayer.toString());
+    gameModelString = newLine(gameModelString);
+
+    gameModelString.append(grid.toString(redPlayer));
+    gameModelString = newLine(gameModelString);
+
+    gameModelString.append(currentPlayer.handToString());
+
+    return gameModelString.toString();
+  }
+
+  public StringBuilder newLine(StringBuilder string) {
+    return string.append("\n");
+  }
 }

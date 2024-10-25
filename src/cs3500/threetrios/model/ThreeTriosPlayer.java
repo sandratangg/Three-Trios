@@ -41,4 +41,13 @@ public class ThreeTriosPlayer {
     return "Player: " + this.color.toString();
   }
 
+  public String handToString() {
+    StringBuilder handString = new StringBuilder();
+
+    for (ThreeTriosCard card : hand) {
+      handString.append(card.toString()).append("\n");
+    }
+
+    return  handString.toString().trim();
+  }
 }
