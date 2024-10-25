@@ -1,15 +1,15 @@
 package cs3500.threetrios.model;
 
-public class Cell {
+public class ThreeTriosCell {
   boolean isHole;
-  Card card;
+  ThreeTriosCard card;
 
-  Cell() {
+  ThreeTriosCell() {
     this.isHole = false;
     this.card = null;
   }
 
-  Cell(boolean isHole) {
+  ThreeTriosCell(boolean isHole) {
     this.isHole = isHole;
     this.card = null;
   }

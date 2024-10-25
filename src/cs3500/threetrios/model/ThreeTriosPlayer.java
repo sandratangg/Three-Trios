@@ -3,16 +3,16 @@ package cs3500.threetrios.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Player {
+public class ThreeTriosPlayer {
   private final PlayerColor color;  // "Red" or "Blue"
-  private final List<Card> hand;
+  private final List<ThreeTriosCard> hand;
 
-  public Player(String color, List<Card> initialHand) {
+  public ThreeTriosPlayer(PlayerColor color, List<ThreeTriosCard> initialHand) {
     this.color = color;
     this.hand = new ArrayList<>(initialHand);
   }
 
-  public boolean playCard(Card card) {
+  public boolean playCard(ThreeTriosCard card) {
     if (this.hand.contains(card)) {
       this.hand.remove(card);
       return true;
@@ -20,20 +20,20 @@ public class Player {
     return false;
   }
 
-  public void addCard(Card card) {
+  public void addCard(ThreeTriosCard card) {
     this.hand.add(card);  // Add card after a flip
   }
 
-  public boolean owns(Card card) {
+  public boolean owns(ThreeTriosCard card) {
     return this.hand.contains(card);
   }
 
   // Check player color
   public boolean isRed() {
-    return "Red".equalsIgnoreCase(this.color);
+    return PlayerColor.RED.equals(this.color);
   }
 
   public boolean isBlue() {
-    return "Blue".equalsIgnoreCase(this.color);
+    return PlayerColor.BLUE.equals(this.color);
   }
 }

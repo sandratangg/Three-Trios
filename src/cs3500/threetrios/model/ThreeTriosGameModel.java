@@ -3,21 +3,21 @@ package cs3500.threetrios.model;
 import java.util.List;
 
 public class ThreeTriosGameModel implements ThreeTrios {
-  private final Grid grid;
-  private final Player redPlayer;
-  private final Player bluePlayer;
-  private Player currentPlayer;
+  private final ThreeTriosGrid grid;
+  private final ThreeTriosPlayer redPlayer;
+  private final ThreeTriosPlayer bluePlayer;
+  private ThreeTriosPlayer currentPlayer;
 
-  public ThreeTriosGameModel(int rows, int cols, List<Card> deck) {
-    this.grid = new Grid(rows, cols);
+  public ThreeTriosGameModel(int rows, int cols, List<ThreeTriosCard> deck) {
+    this.grid = new ThreeTriosGrid(rows, cols);
     int cardsPerPlayer = deck.size() / 2;
 
-    this.redPlayer = new Player("Red", deck.subList(0, cardsPerPlayer));
-    this.bluePlayer = new Player("Blue", deck.subList(cardsPerPlayer, deck.size()));
+    this.redPlayer = new ThreeTriosPlayer(PlayerColor.RED, deck.subList(0, cardsPerPlayer));
+    this.bluePlayer = new ThreeTriosPlayer(PlayerColor.BLUE, deck.subList(cardsPerPlayer, deck.size()));
     this.currentPlayer = redPlayer;  // Red player starts
   }
 
-  public boolean placeCard(int row, int col, Card card) {
+  public boolean placeCard(int row, int col, ThreeTriosCard card) {
     if (!currentPlayer.playCard(card)) {
       throw new IllegalArgumentException("Player does not have this card.");
     }
@@ -31,7 +31,7 @@ public class ThreeTriosGameModel implements ThreeTrios {
     return true;
   }
 
-  private void performBattlePhase(int row, int col, Card placedCard) {
+  private void performBattlePhase(int row, int col, ThreeTriosCard placedCard) {
     for (Direction direction : Direction.values()) {
       grid.battlePhase(row, col, placedCard, direction);
     }

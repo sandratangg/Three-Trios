@@ -1,13 +1,13 @@
 package cs3500.threetrios.model;
 
-public class Grid {
+public class ThreeTriosGrid {
   private final int rows;
   private final int cols;
   private final Cell[][] grid;
 
   private static class Cell {
     boolean isHole;
-    Card card;
+    ThreeTriosCard card;
 
     Cell() {
       this.isHole = false;
@@ -24,7 +24,7 @@ public class Grid {
     }
   }
 
-  public Grid(int rows, int cols) {
+  public ThreeTriosGrid(int rows, int cols) {
     if (rows <= 0 || cols <= 0) {
       throw new IllegalArgumentException("Grid dimensions must be positive.");
     }
@@ -43,7 +43,7 @@ public class Grid {
   }
 
   // Place card only if valid; no need for external checking logic
-  public boolean placeCard(int row, int col, Card card) {
+  public boolean placeCard(int row, int col, ThreeTriosCard card) {
     if (isValidPosition(row, col) && grid[row][col].isEmpty()) {
       grid[row][col].card = card;
       return true;
@@ -52,12 +52,12 @@ public class Grid {
   }
 
   // Battle logic now encapsulated in the grid class itself
-  public void battlePhase(int row, int col, Card placedCard, Direction direction) {
+  public void battlePhase(int row, int col, ThreeTriosCard placedCard, Direction direction) {
     int adjacentRow = getAdjacentRow(row, direction);
     int adjacentCol = getAdjacentCol(col, direction);
 
     if (isValidPosition(adjacentRow, adjacentCol)) {
-      Card adjacentCard = grid[adjacentRow][adjacentCol].card;
+      ThreeTriosCard adjacentCard = grid[adjacentRow][adjacentCol].card;
       if (adjacentCard != null) {
         if (placedCard.attack(direction) > adjacentCard.attack(getOppositeDirection(direction))) {
           // Flip the card - Ownership change logic can be handled at a higher level (Player/Model)

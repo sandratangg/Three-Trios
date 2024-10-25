@@ -1,5 +1,5 @@
-How is a cs3500.threetrios.model.Card represented?
-cs3500.threetrios.model.Card class
+How is a cs3500.threetrios.model.ThreeTriosCard represented?
+cs3500.threetrios.model.ThreeTriosCard class
   Fields:
     String name
     int attackNorth, attackEast, attackSouth, attackWest
@@ -14,7 +14,7 @@ cs3500.threetrios.model.Direction enum (NORTH, EAST, SOUTH, WEST) //Question: Wi
 
 
 
-How is a cs3500.threetrios.model.Grid represented?
+How is a cs3500.threetrios.model.ThreeTriosGrid represented?
   Inner class called cell that can be either a hole or card cell
 
 Methods:

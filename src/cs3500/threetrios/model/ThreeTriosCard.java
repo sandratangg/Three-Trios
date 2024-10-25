@@ -3,7 +3,7 @@ package cs3500.threetrios.model;
 /**
  * Represents a card in the ThreeTrios game.
  */
-public class Card {
+public class ThreeTriosCard {
 
   private final String name;
 
@@ -12,7 +12,7 @@ public class Card {
   private final int attackWest;
   private final int attackSouth;
 
-  public Card(String name, int attackNorth, int attackEast, int attackWest, int attackSouth) {
+  public ThreeTriosCard(String name, int attackNorth, int attackEast, int attackWest, int attackSouth) {
 
     validCardAttackValue(attackNorth);
     validCardAttackValue(attackEast);
