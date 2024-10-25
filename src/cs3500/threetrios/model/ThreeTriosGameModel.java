@@ -1,6 +1,10 @@
 package cs3500.threetrios.model;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * Represents a ThreeTrios game model.
@@ -107,4 +111,31 @@ public class ThreeTriosGameModel implements ThreeTrios {
     return player.getOwnedCardsSize();  // Include cards in hand
   }
 
+  public static List<ThreeTriosCard> readCardsFromFile(String filename) throws FileNotFoundException {
+    Scanner scanner = new Scanner(new File(filename));
+    List<ThreeTriosCard> deck = new ArrayList<>();
+
+    while (scanner.hasNextLine()) {
+      String line = scanner.nextLine();
+      String[] cardData = line.split(" ");
+      String cardName = cardData[0];
+      int attackNorth = parseCardValue(cardData[1]);
+      int attackSouth = parseCardValue(cardData[2]);
+      int attackEast = parseCardValue(cardData[3]);
+      int attackWest = parseCardValue(cardData[4]);
+
+      deck.add(new ThreeTriosCard(cardName, attackNorth, attackSouth, attackEast, attackWest));
+    }
+
+    return deck;
+  }
+
+  // Helper method to parse attack values, accounting for 'A' (10 in hexadecimal)
+  private static int parseCardValue(String value) {
+    if (value.equals("A")) {
+      return 10;  // A stands for 10 in hexadecimal
+    } else {
+      return Integer.parseInt(value);
+    }
+  }
 }
