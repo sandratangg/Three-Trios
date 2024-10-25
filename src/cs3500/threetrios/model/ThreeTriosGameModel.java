@@ -61,14 +61,16 @@ public class ThreeTriosGameModel implements ThreeTrios {
 
   // Helper method to switch the turn
   private void switchTurn() {
-    if (currentPlayer == redPlayer) {
-      // If the current player is red, switch to blue
-      currentPlayer = bluePlayer;
-      oppositePlayer = redPlayer;
+    if (isGameOver()) {
+      System.out.println(determineWinner());
     } else {
-      // If the current player is blue, switch to red
-      currentPlayer = redPlayer;
-      oppositePlayer = bluePlayer;
+      if (currentPlayer == redPlayer) {
+        currentPlayer = bluePlayer;
+        oppositePlayer = redPlayer;
+      } else {
+        currentPlayer = redPlayer;
+        oppositePlayer = bluePlayer;
+      }
     }
   }
 
