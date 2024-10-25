@@ -18,5 +18,4 @@ public class ThreeTriosCell implements ICell {
     return !isHole && card == null;
   }
 
-
 }

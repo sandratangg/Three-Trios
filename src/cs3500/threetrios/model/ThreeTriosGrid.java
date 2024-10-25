@@ -88,4 +88,35 @@ public class ThreeTriosGrid {
         return col;
     }
   }
+
+  public String toString(ThreeTriosPlayer red) {
+    String gridString = "";
+
+    for (int row = 0; row < rows; row++) {
+      gridString = gridString + rowToString(row, cols, red);
+    }
+
+    return gridString;
+  }
+
+  private String rowToString(int row, int cols, ThreeTriosPlayer red) {
+    StringBuilder rowString = new StringBuilder();
+
+    for (int col = 0; col < cols; col++) {
+      ThreeTriosCell currentCell = grid[row][col];
+      if (currentCell.isHole) {
+        rowString.append(" ");
+      } else if (currentCell.isEmpty()) {
+        rowString.append("_");
+      } else {
+        if (red.owns(currentCell.card)) {
+          rowString.append("R");
+        } else {
+          rowString.append("B");
+        }
+      }
+    }
+
+    return rowString.toString();
+  }
 }
