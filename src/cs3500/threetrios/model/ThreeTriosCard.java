@@ -56,4 +56,29 @@ public class ThreeTriosCard {
   public boolean matchesName(String name) {
     return this.name.equals(name);
   }
+
+
+  /**
+   * Returns a string representation of the card.
+   * Example: "CardName 1 2 3 4"
+   * Note: If the attack value is 10, it is represented as 'A'.
+   */
+  @Override
+  public String toString() {
+    return this.name + " " + buildAttackString();
+  }
+
+  // Helper : Converts attack values to string, handling 10 as 'A'
+  private String convertAttackValue(int attackValue) {
+    return (attackValue == 10) ? "A" : Integer.toString(attackValue);
+  }
+
+  // Helper : Constructs the string representation for the card
+  private String buildAttackString() {
+    return convertAttackValue(attackNorth) + " " +
+            convertAttackValue(attackEast) + " " +
+            convertAttackValue(attackWest) + " " +
+            convertAttackValue(attackSouth);
+  }
+
 }
