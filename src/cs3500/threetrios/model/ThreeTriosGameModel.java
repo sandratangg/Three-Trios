@@ -10,6 +10,7 @@ public class ThreeTriosGameModel implements ThreeTrios {
   private final ThreeTriosPlayer redPlayer;
   private final ThreeTriosPlayer bluePlayer;
   private ThreeTriosPlayer currentPlayer;
+  private ThreeTriosPlayer oppositePlayer;
 
   /**
    * Constructor for a ThreeTrios game model.
@@ -23,7 +24,8 @@ public class ThreeTriosGameModel implements ThreeTrios {
 
     this.redPlayer = new ThreeTriosPlayer(PlayerColor.RED, deck.subList(0, cardsPerPlayer));
     this.bluePlayer = new ThreeTriosPlayer(PlayerColor.BLUE, deck.subList(cardsPerPlayer, deck.size()));
-    this.currentPlayer = redPlayer;  // Red player starts
+    this.currentPlayer = redPlayer;
+    this.oppositePlayer = bluePlayer; // Red player starts
   }
 
   /**
@@ -41,15 +43,15 @@ public class ThreeTriosGameModel implements ThreeTrios {
       return false;  // Invalid move
     }
 
-    performBattlePhase(row, col, card);
+    performBattlePhase(row, col, card, currentPlayer, oppositePlayer);
     switchTurn();
     return true;
   }
 
   // Helper method to perform the battle phase
-  private void performBattlePhase(int row, int col, ThreeTriosCard placedCard) {
+  private void performBattlePhase(int row, int col, ThreeTriosCard placedCard, ThreeTriosPlayer currentPlayer, ThreeTriosPlayer oppositePlayer) {
     for (Direction direction : Direction.values()) {
-      grid.battlePhase(row, col, placedCard, direction);
+      grid.battlePhase(row, col, placedCard, direction, currentPlayer, oppositePlayer);
     }
   }
 
@@ -58,9 +60,11 @@ public class ThreeTriosGameModel implements ThreeTrios {
     if (currentPlayer == redPlayer) {
       // If the current player is red, switch to blue
       currentPlayer = bluePlayer;
+      oppositePlayer = redPlayer;
     } else {
       // If the current player is blue, switch to red
       currentPlayer = redPlayer;
+      oppositePlayer = bluePlayer;
     }
   }
 

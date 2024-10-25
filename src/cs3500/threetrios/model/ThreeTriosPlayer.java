@@ -82,4 +82,18 @@ public class ThreeTriosPlayer {
 
     return  handString.toString().trim();
   }
+
+  public void removeFromHand(ThreeTriosCard cardToRemove) {
+    if (!this.owns(cardToRemove)) {
+      throw new IllegalStateException("Cannot remove card since this hand does not own it!");
+    }
+    this.hand.remove(cardToRemove);
+  }
+
+  public void addToHand(ThreeTriosCard cardToAdd) {
+    if (!this.owns(cardToAdd)) {
+      throw new IllegalStateException("Cannot add card since this hand already owns it!");
+    }
+    this.hand.add(cardToAdd);
+  }
 }

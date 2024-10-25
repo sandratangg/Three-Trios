@@ -49,19 +49,39 @@ public class ThreeTriosGrid {
   /**
    * Helper: Battle logic now encapsulated in the grid class itself
    */
-  public void battlePhase(int row, int col, ThreeTriosCard placedCard, Direction direction) {
+  public void battlePhase(int row, int col, ThreeTriosCard placedCard, Direction direction,
+                          ThreeTriosPlayer currentPlayer, ThreeTriosPlayer oppositePlayer) {
     int adjacentRow = getAdjacentRow(row, direction);
     int adjacentCol = getAdjacentCol(col, direction);
 
     if (isValidPosition(adjacentRow, adjacentCol)) {
-      ThreeTriosCard adjacentCard = grid[adjacentRow][adjacentCol].card;
-      if (adjacentCard != null) {
-        if (placedCard.attack(direction) > adjacentCard.attack(getOppositeDirection(direction))) {
-          // Flip the card - Ownership change logic can be handled at a higher level (Player/Model)
+      ThreeTriosCell adjacentCell = grid[adjacentRow][adjacentCol];
+
+      if (!adjacentCell.isEmpty()) {  // Check if the cell has a card
+        ThreeTriosCard adjacentCard = adjacentCell.card;
+
+        // Only battle if the adjacent card belongs to the opponent
+        if (!currentPlayer.owns(adjacentCard)) {
+          // Compare attack values in the direction
+          if (placedCard.attack(direction) > adjacentCard.attack(getOppositeDirection(direction))) {
+            // Flip the card: opponent loses ownership, current player gains it
+            currentPlayer.addToHand(adjacentCard);  // Update grid ownership
+            oppositePlayer.removeFromHand(adjacentCard);  // Reflect the card change in the grid
+
+            // Combo step: the flipped card now does battle with its adjacent cards
+            for (Direction adjDirection : Direction.values()) {
+              battlePhase(adjacentRow, adjacentCol, adjacentCard, adjDirection,
+                      currentPlayer, oppositePlayer);
+            }
+          }
         }
       }
     }
   }
+
+
+
+
 
   private Direction getOppositeDirection(Direction direction) {
     switch (direction) {
