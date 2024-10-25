@@ -1,0 +1,7 @@
+Dragon 9 8 7 6
+Phoenix 6 5 4 3
+Lion 3 4 5 6
+Tiger 7 8 9 5
+Bear 5 6 7 8
+Wolf 8 9 7 6
+Fox 9 7 5 8
