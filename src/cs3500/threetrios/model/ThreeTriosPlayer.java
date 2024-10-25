@@ -8,7 +8,8 @@ import java.util.List;
  */
 public class ThreeTriosPlayer {
   private final PlayerColor color;  // "Red" or "Blue"
-  private final List<ThreeTriosCard> hand;
+  private List<ThreeTriosCard> hand;
+  private List<ThreeTriosCard> ownedCards;
 
   /**
    * Constructor for a player.
@@ -18,6 +19,7 @@ public class ThreeTriosPlayer {
   public ThreeTriosPlayer(PlayerColor color, List<ThreeTriosCard> initialHand) {
     this.color = color;
     this.hand = new ArrayList<>(initialHand);
+    this.ownedCards = new ArrayList<>();
   }
 
   /**
@@ -47,7 +49,7 @@ public class ThreeTriosPlayer {
    * @return true or false whether the player owns the card
    */
   public boolean owns(ThreeTriosCard card) {
-    return this.hand.contains(card);
+    return this.ownedCards.contains(card);
   }
 
   /**
@@ -84,16 +86,35 @@ public class ThreeTriosPlayer {
   }
 
   public void removeFromHand(ThreeTriosCard cardToRemove) {
-    if (!this.owns(cardToRemove)) {
-      throw new IllegalStateException("Cannot remove card since this hand does not own it!");
+    if (!this.hand.contains(cardToRemove)) {
+      throw new IllegalStateException("Cannot remove card since this hand does not contain it!");
     }
     this.hand.remove(cardToRemove);
   }
 
   public void addToHand(ThreeTriosCard cardToAdd) {
-    if (!this.owns(cardToAdd)) {
-      throw new IllegalStateException("Cannot add card since this hand already owns it!");
+    if (!this.hand.contains(cardToAdd)) {
+      throw new IllegalStateException("Cannot add card since this hand already contains it!");
     }
     this.hand.add(cardToAdd);
   }
+
+  public void addToOwned(ThreeTriosCard cardToAdd) {
+    if (!this.owns(cardToAdd)) {
+      throw new IllegalStateException("Cannot add card since this player already owns it!");
+    }
+    this.ownedCards.add(cardToAdd);
+  }
+
+  public void removeFromOwned(ThreeTriosCard cardToRemove) {
+    if (!this.owns(cardToRemove)) {
+      throw new IllegalStateException("Cannot remove card since this player does not own it!");
+    }
+    this.ownedCards.remove(cardToRemove);
+  }
+
+  public int getOwnedCardsSize() {
+    return this.ownedCards.size();
+  }
+
 }

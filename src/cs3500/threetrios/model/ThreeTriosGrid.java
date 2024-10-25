@@ -65,8 +65,8 @@ public class ThreeTriosGrid {
           // Compare attack values in the direction
           if (placedCard.attack(direction) > adjacentCard.attack(getOppositeDirection(direction))) {
             // Flip the card: opponent loses ownership, current player gains it
-            currentPlayer.addToHand(adjacentCard);  // Update grid ownership
-            oppositePlayer.removeFromHand(adjacentCard);  // Reflect the card change in the grid
+            currentPlayer.addToOwned(adjacentCard);  // Update grid ownership
+            oppositePlayer.removeFromOwned(adjacentCard);  // Reflect the card change in the grid
 
             // Combo step: the flipped card now does battle with its adjacent cards
             for (Direction adjDirection : Direction.values()) {
@@ -161,5 +161,16 @@ public class ThreeTriosGrid {
     }
 
     return rowString.toString();
+  }
+
+  public boolean isGridFull() {
+    for (int row = 0; row < rows; row++) {
+      for (int col = 0; col < cols; col++) {
+        if (grid[row][col].isEmpty()) {
+          return false;
+        }
+      }
+    }
+    return true;
   }
 }

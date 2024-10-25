@@ -85,4 +85,26 @@ public class ThreeTriosGameModel implements ThreeTrios {
   public StringBuilder newLine(StringBuilder string) {
     return string.append("\n");
   }
+
+  public boolean isGameOver() {
+    return grid.isGridFull();
+  }
+
+  public String determineWinner() {
+    int redPlayerCards = countOwnedCards(redPlayer);
+    int bluePlayerCards = countOwnedCards(bluePlayer);
+
+    if (redPlayerCards > bluePlayerCards) {
+      return "Red player wins with " + redPlayerCards + " cards!";
+    } else if (bluePlayerCards > redPlayerCards) {
+      return "Blue player wins with " + bluePlayerCards + " cards!";
+    } else {
+      return "It's a tie!";
+    }
+  }
+
+  private int countOwnedCards(ThreeTriosPlayer player) {
+    return player.getOwnedCardsSize();  // Include cards in hand
+  }
+
 }
