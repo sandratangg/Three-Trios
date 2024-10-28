@@ -6,10 +6,10 @@ import java.util.List;
 /**
  * Represents a player in the game.
  */
-public class ThreeTriosPlayer {
+public class ThreeTriosPlayer implements IPlayer {
   private final PlayerColor color;  // "Red" or "Blue"
-  private List<ThreeTriosCard> hand;
-  private List<ThreeTriosCard> ownedCards;
+  private List<ICard> hand;
+  private List<ICard> ownedCards;
 
   /**
    * Constructor for a player.
@@ -27,7 +27,7 @@ public class ThreeTriosPlayer {
    * @param card the card to play
    * @return true or false whether the card was played
    */
-  public boolean playCard(ThreeTriosCard card) {
+  public boolean playCard(ICard card) {
     if (this.hand.contains(card)) {
       this.hand.remove(card);
       return true;
@@ -39,7 +39,7 @@ public class ThreeTriosPlayer {
    * Method to add a card to the player's hand.
    * @param card the card to add
    */
-  public void addCard(ThreeTriosCard card) {
+  public void addCard(ICard card) {
     this.hand.add(card);  // Add card after a flip
   }
 
@@ -48,7 +48,7 @@ public class ThreeTriosPlayer {
    * @param card the card to check
    * @return true or false whether the player owns the card
    */
-  public boolean owns(ThreeTriosCard card) {
+  public boolean owns(ICard card) {
     return this.ownedCards.contains(card);
   }
 
@@ -78,11 +78,11 @@ public class ThreeTriosPlayer {
   public String handToString() {
     StringBuilder handString = new StringBuilder();
 
-    for (ThreeTriosCard card : hand) {
+    for (ICard card : hand) {
       handString.append(card.toString()).append("\n");
     }
 
-    return  handString.toString().trim();
+    return handString.toString().trim();
   }
 
   public void removeFromHand(ThreeTriosCard cardToRemove) {
@@ -99,14 +99,14 @@ public class ThreeTriosPlayer {
     this.hand.add(cardToAdd);
   }
 
-  public void addToOwned(ThreeTriosCard cardToAdd) {
+  public void addToOwned(ICard cardToAdd) {
     if (!this.owns(cardToAdd)) {
       throw new IllegalStateException("Cannot add card since this player already owns it!");
     }
     this.ownedCards.add(cardToAdd);
   }
 
-  public void removeFromOwned(ThreeTriosCard cardToRemove) {
+  public void removeFromOwned(ICard cardToRemove) {
     if (!this.owns(cardToRemove)) {
       throw new IllegalStateException("Cannot remove card since this player does not own it!");
     }

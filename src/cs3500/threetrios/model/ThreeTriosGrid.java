@@ -7,7 +7,7 @@ import java.util.Scanner;
 /**
  * Represents a grid in the game.
  */
-public class ThreeTriosGrid {
+public class ThreeTriosGrid implements IGrid {
   private final int rows;
   private final int cols;
   private final ThreeTriosCell[][] grid;
@@ -42,7 +42,7 @@ public class ThreeTriosGrid {
   /**
    * Helper: Places card only if valid; no need for external checking logic
    */
-  public boolean placeCard(int row, int col, ThreeTriosCard card) {
+  public boolean placeCard(int row, int col, ICard card) {
     if (isValidPosition(row, col) && grid[row][col].isEmpty()) {
       grid[row][col].card = card;
       return true;
@@ -53,7 +53,7 @@ public class ThreeTriosGrid {
   /**
    * Helper: Battle logic now encapsulated in the grid class itself
    */
-  public void battlePhase(int row, int col, ThreeTriosCard placedCard, Direction direction,
+  public void battlePhase(int row, int col, ICard placedCard, Direction direction,
                           ThreeTriosPlayer currentPlayer, ThreeTriosPlayer oppositePlayer) {
     int adjacentRow = getAdjacentRow(row, direction);
     int adjacentCol = getAdjacentCol(col, direction);
@@ -62,7 +62,7 @@ public class ThreeTriosGrid {
       ThreeTriosCell adjacentCell = grid[adjacentRow][adjacentCol];
 
       if (!adjacentCell.isEmpty()) {  // Check if the cell has a card
-        ThreeTriosCard adjacentCard = adjacentCell.card;
+        ICard adjacentCard = adjacentCell.card;
 
         // Only battle if the adjacent card belongs to the opponent
         if (!currentPlayer.owns(adjacentCard)) {
