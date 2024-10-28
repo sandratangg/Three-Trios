@@ -4,17 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Represents a player in the game.
+ * Represents a player in the Three Trios game. A player has a specific color
+ * (red or blue), a hand of cards, and a list of cards they own on the grid.
+ * This class manages player actions, such as playing cards, adding or removing
+ * cards from the hand, and tracking owned cards.
  */
 public class ThreeTriosPlayer implements IPlayer {
+
   private final PlayerColor color;  // "Red" or "Blue"
   private List<ICard> hand;
   private List<ICard> ownedCards;
 
   /**
-   * Constructor for a player.
-   * @param color the color of the player
-   * @param initialHand the initial hand of the player
+   * Constructs a player with a specified color and an initial hand of cards.
+   * Each player starts with an empty list of owned cards on the grid.
+   *
+   * @param color the color of the player, either red or blue.
+   * @param initialHand the initial hand of cards for the player.
    */
   public ThreeTriosPlayer(PlayerColor color, List<ThreeTriosCard> initialHand) {
     this.color = color;
@@ -22,11 +28,6 @@ public class ThreeTriosPlayer implements IPlayer {
     this.ownedCards = new ArrayList<>();
   }
 
-  /**
-   * Method to play a card.
-   * @param card the card to play
-   * @return true or false whether the card was played
-   */
   public boolean playCard(ICard card) {
     if (this.hand.contains(card)) {
       this.hand.remove(card);
@@ -35,46 +36,48 @@ public class ThreeTriosPlayer implements IPlayer {
     return false;
   }
 
-  /**
-   * Method to add a card to the player's hand.
-   * @param card the card to add
-   */
   public void addCard(ICard card) {
     this.hand.add(card);  // Add card after a flip
   }
 
-  /**
-   * Method to check if the player owns a card.
-   * @param card the card to check
-   * @return true or false whether the player owns the card
-   */
   public boolean owns(ICard card) {
     return this.ownedCards.contains(card);
   }
 
   /**
-   * Method to check if the player is red.
+   * Checks if the player is red.
+   *
+   * @return true if the player is red; false otherwise.
    */
   public boolean isRed() {
     return PlayerColor.RED.equals(this.color);
   }
 
   /**
-   * Method to check if the player is blue.
+   * Checks if the player is blue.
+   *
+   * @return true if the player is blue; false otherwise.
    */
   public boolean isBlue() {
     return PlayerColor.BLUE.equals(this.color);
   }
 
   /**
-   * Method to print the player.
-   * @return the player color as a string
+   * Returns a string representation of the player.
+   *
+   * @return the player color as a string.
    */
   @Override
   public String toString() {
     return "Player: " + this.color.toString();
   }
 
+  /**
+   * Provides a string representation of the player's hand, listing each card
+   * on a new line.
+   *
+   * @return a string displaying the player's hand of cards.
+   */
   public String handToString() {
     StringBuilder handString = new StringBuilder();
 
@@ -85,6 +88,12 @@ public class ThreeTriosPlayer implements IPlayer {
     return handString.toString().trim();
   }
 
+  /**
+   * Removes a specified card from the player's hand.
+   *
+   * @param cardToRemove the card to remove from the hand.
+   * @throws IllegalStateException if the card is not in the player's hand.
+   */
   public void removeFromHand(ThreeTriosCard cardToRemove) {
     if (!this.hand.contains(cardToRemove)) {
       throw new IllegalStateException("Cannot remove card since this hand does not contain it!");
@@ -92,20 +101,40 @@ public class ThreeTriosPlayer implements IPlayer {
     this.hand.remove(cardToRemove);
   }
 
+  /**
+   * Adds a specified card to the player's hand.
+   *
+   * @param cardToAdd the card to add to the hand.
+   * @throws IllegalStateException if the card is already in the player's hand.
+   */
   public void addToHand(ThreeTriosCard cardToAdd) {
-    if (!this.hand.contains(cardToAdd)) {
+    if (this.hand.contains(cardToAdd)) {
       throw new IllegalStateException("Cannot add card since this hand already contains it!");
     }
     this.hand.add(cardToAdd);
   }
 
+  /**
+   * Adds a card to the player's owned cards list. Ownership is transferred
+   * when a card is captured during a battle phase.
+   *
+   * @param cardToAdd the card to add to the player's ownership.
+   * @throws IllegalStateException if the player already owns the card.
+   */
   public void addToOwned(ICard cardToAdd) {
-    if (!this.owns(cardToAdd)) {
+    if (this.owns(cardToAdd)) {
       throw new IllegalStateException("Cannot add card since this player already owns it!");
     }
     this.ownedCards.add(cardToAdd);
   }
 
+  /**
+   * Removes a card from the player's owned cards list, used when ownership
+   * is transferred to the opponent.
+   *
+   * @param cardToRemove the card to remove from the player's ownership.
+   * @throws IllegalStateException if the player does not own the card.
+   */
   public void removeFromOwned(ICard cardToRemove) {
     if (!this.owns(cardToRemove)) {
       throw new IllegalStateException("Cannot remove card since this player does not own it!");
@@ -113,8 +142,12 @@ public class ThreeTriosPlayer implements IPlayer {
     this.ownedCards.remove(cardToRemove);
   }
 
+  /**
+   * Retrieves the number of cards owned by the player.
+   *
+   * @return the count of cards in the player's owned cards list.
+   */
   public int getOwnedCardsSize() {
     return this.ownedCards.size();
   }
-
 }

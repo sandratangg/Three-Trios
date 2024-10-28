@@ -7,9 +7,13 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * Represents a ThreeTrios game model.
+ * Represents the Three Trios game model, containing the game grid, players,
+ * and core game logic. This class handles actions such as card placement,
+ * turn-switching, battle phases, and determining the game's outcome.
+ * The model maintains the current and opposite player to manage game turns.
  */
 public class ThreeTriosGameModel implements ThreeTrios {
+
   private final ThreeTriosGrid grid;
   private final ThreeTriosPlayer redPlayer;
   private final ThreeTriosPlayer bluePlayer;
@@ -17,10 +21,13 @@ public class ThreeTriosGameModel implements ThreeTrios {
   private ThreeTriosPlayer oppositePlayer;
 
   /**
-   * Constructor for a ThreeTrios game model.
-   * @param rows the number of rows in the grid
-   * @param cols the number of columns in the grid
-   * @param deck lists of cards that represents the deck
+   * Constructs a ThreeTrios game model with specified grid dimensions
+   * and an initial deck of cards. The deck is divided between two players,
+   * who take turns placing cards on the grid. The red player starts first.
+   *
+   * @param rows the number of rows in the game grid.
+   * @param cols the number of columns in the game grid.
+   * @param deck the list of cards representing the deck, split between players.
    */
   public ThreeTriosGameModel(int rows, int cols, List<ThreeTriosCard> deck) {
     this.grid = new ThreeTriosGrid(rows, cols);
@@ -32,12 +39,6 @@ public class ThreeTriosGameModel implements ThreeTrios {
     this.oppositePlayer = bluePlayer; // Red player starts
   }
 
-  /**
-   * Method to place a card on the grid.
-   * @param row the row to place the card
-   * @param col the column to place the card
-   * @return true or false whether the card was placed
-   */
   public boolean placeCard(int row, int col, ICard card) {
     if (!currentPlayer.playCard(card)) {
       throw new IllegalArgumentException("Player does not have this card.");
@@ -52,14 +53,14 @@ public class ThreeTriosGameModel implements ThreeTrios {
     return true;
   }
 
-  // Helper method to perform the battle phase
+  // Helper method to perform the battle phase.
   private void performBattlePhase(int row, int col, ICard placedCard, ThreeTriosPlayer currentPlayer, ThreeTriosPlayer oppositePlayer) {
     for (Direction direction : Direction.values()) {
       grid.battlePhase(row, col, placedCard, direction, currentPlayer, oppositePlayer);
     }
   }
 
-  // Helper method to switch the turn
+  // Helper method to switch the turn.
   private void switchTurn() {
     if (isGameOver()) {
       System.out.println(determineWinner());
@@ -74,6 +75,13 @@ public class ThreeTriosGameModel implements ThreeTrios {
     }
   }
 
+  /**
+   * Provides a string representation of the game model's current state,
+   * including the active player's information, the grid, and the current
+   * player's hand. This representation supports debugging and tracking game progress.
+   *
+   * @return a string summarizing the game's current state.
+   */
   public String toString() {
     StringBuilder gameModelString = new StringBuilder();
 
@@ -88,14 +96,33 @@ public class ThreeTriosGameModel implements ThreeTrios {
     return gameModelString.toString();
   }
 
+  /**
+   * Adds a newline to a provided StringBuilder, primarily used to format
+   * the string representation of the game model.
+   *
+   * @param string the StringBuilder to append a newline to.
+   * @return the updated StringBuilder with an appended newline.
+   */
   public StringBuilder newLine(StringBuilder string) {
     return string.append("\n");
   }
 
+  /**
+   * Checks if the game is over by determining if the grid is full.
+   *
+   * @return true if the grid is fully occupied; false otherwise.
+   */
   public boolean isGameOver() {
     return grid.isGridFull();
   }
 
+  /**
+   * Determines the winner of the game based on the number of cards owned
+   * by each player. In the event of a tie, a message indicating the tie
+   * is returned.
+   *
+   * @return a string announcing the winner or indicating a tie.
+   */
   public String determineWinner() {
     int redPlayerCards = countOwnedCards(redPlayer);
     int bluePlayerCards = countOwnedCards(bluePlayer);
@@ -109,10 +136,27 @@ public class ThreeTriosGameModel implements ThreeTrios {
     }
   }
 
+  /**
+   * Counts the total number of cards owned by a player, including
+   * both the cards on the grid and those in the player's hand.
+   *
+   * @param player the player for whom to count the owned cards.
+   * @return the number of cards owned by the player.
+   */
   private int countOwnedCards(ThreeTriosPlayer player) {
-    return player.getOwnedCardsSize();  // Include cards in hand
+    return player.getOwnedCardsSize();  // Includes cards in hand
   }
 
+  /**
+   * Reads a list of cards from a file and creates a deck. The file should
+   * contain card information in lines, each specifying a card's name and
+   * attack values for the north, south, east, and west directions. Attack
+   * values should range from 1 to 10, with 'A' representing 10.
+   *
+   * @param filename the path to the file containing card data.
+   * @return a list of {@link ThreeTriosCard} objects representing the deck.
+   * @throws FileNotFoundException if the specified file cannot be found.
+   */
   public static List<ThreeTriosCard> readCardsFromFile(String filename) throws FileNotFoundException {
     Scanner scanner = new Scanner(new File(filename));
     List<ThreeTriosCard> deck = new ArrayList<>();
@@ -132,10 +176,10 @@ public class ThreeTriosGameModel implements ThreeTrios {
     return deck;
   }
 
-  // Helper method to parse attack values, accounting for 'A' (10 in hexadecimal)
+  // Helper method to parse attack values, accounting for 'A' (10 in hexadecimal).
   private static int parseCardValue(String value) {
     if (value.equals("A")) {
-      return 10;  // A stands for 10 in hexadecimal
+      return 10;  // 'A' represents 10 in hexadecimal format.
     } else {
       return Integer.parseInt(value);
     }

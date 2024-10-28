@@ -1,11 +1,14 @@
 package cs3500.threetrios.model;
 
 /**
- * Represents a card in the ThreeTrios game. This class encapsulates the properties
- * and behaviors associated with a game card, including its color, value, and owner.
+ * Represents a card in the Three Trios game. This class encapsulates the
+ * properties and behaviors associated with a game card, including its name
+ * and attack values in four cardinal directions. Each card can perform
+ * directional attacks, and its strength is determined by these values.
  *
- * <p>The ThreeTriosCard class is central to game mechanics, determining card interactions
- * and effects based on the card's attributes.
+ * <p>The ThreeTriosCard class is central to game mechanics, as it defines
+ * how cards interact based on their attributes, affecting gameplay outcomes
+ * through strategic placement and attack.
  */
 public class ThreeTriosCard implements ICard {
 
@@ -17,12 +20,16 @@ public class ThreeTriosCard implements ICard {
   private final int attackSouth;
 
   /**
-   * Constructor for the ThreeTriosCard.
-   * @param name the name of the card
-   * @param attackNorth the attack value for the north direction
-   * @param attackEast the attack value for the east direction
-   * @param attackWest the attack value for the west direction
-   * @param attackSouth the attack value for the south direction
+   * Constructs a ThreeTriosCard with specified directional attack values
+   * and a name. Each attack value represents the card's strength in a given
+   * direction, used in battle comparisons.
+   *
+   * @param name the name of the card, used for identification and gameplay interactions.
+   * @param attackNorth the attack value for the north direction; must be between 1 and 10.
+   * @param attackEast the attack value for the east direction; must be between 1 and 10.
+   * @param attackWest the attack value for the west direction; must be between 1 and 10.
+   * @param attackSouth the attack value for the south direction; must be between 1 and 10.
+   * @throws IllegalArgumentException if any attack value is outside the range 1 to 10.
    */
   public ThreeTriosCard(String name, int attackNorth, int attackEast, int attackWest, int attackSouth) {
 
@@ -38,16 +45,12 @@ public class ThreeTriosCard implements ICard {
     this.attackSouth = attackSouth;
   }
 
-  // Helper : Validates the attack value of the card
+  // Helper : Validates the attack value of the card.
   private static void validCardAttackValue(int attackValue) {
     if (attackValue < 1 || attackValue > 10) {
-      throw new IllegalArgumentException("Value must be between 1 and 10");
+      throw new IllegalArgumentException("Value must be between 1 and 10.");
     }
   }
-
-  // Instead of getters, provide a more general method to return the attack value based on direction
-  // Instead of this attack getter, we can write a Compare attack value helper method that returns
-  // an int (1 for greater, 0 for equal, and -1 for less than)
 
   public int attack(Direction direction) {
     switch (direction) {
@@ -60,33 +63,35 @@ public class ThreeTriosCard implements ICard {
       case SOUTH:
         return this.attackSouth;
       default:
-        throw new IllegalArgumentException("Invalid direction");
+        throw new IllegalArgumentException("Invalid direction.");
     }
   }
 
-
   /**
-   * Method to check if the card name matches a given name.
-   * @param name the name to check
-   * @return true if the name matches, false otherwise
-   * No need to expose the card name directly, as it can be used within the game flow itself
+   * Checks if the card's name matches a given name. This method allows for
+   * indirect card identification without exposing the name directly.
+   *
+   * @param name the name to check against the card's name.
+   * @return true if the given name matches the card's name; false otherwise.
    */
   public boolean matchesName(String name) {
     return this.name.equals(name);
   }
 
-
   /**
-   * Returns a string representation of the card.
-   * Example: "CardName 1 2 3 4"
-   * Note: If the attack value is 10, it is represented as 'A'.
+   * Provides a string representation of the card, formatted as
+   * "CardName X Y Z W" where each letter represents an attack value
+   * (with 10 represented as 'A'). This method offers a human-readable
+   * display of the card's properties, aiding in debugging and gameplay.
+   *
+   * @return a string showing the card's name and attack values in order.
    */
   @Override
   public String toString() {
     return this.name + " " + buildAttackString();
   }
 
-  // Helper : Converts attack values to string, handling 10 as 'A'
+  // Helper : Converts attack values to string, handling 10 as 'A'.
   private String convertAttackValue(int attackValue) {
     if (attackValue == 10) {
       return "A";
@@ -95,7 +100,7 @@ public class ThreeTriosCard implements ICard {
     }
   }
 
-  // Helper : Constructs the string representation for the card
+  // Helper : Constructs the string representation of attack values for the card.
   private String buildAttackString() {
     return convertAttackValue(attackNorth) + " " +
             convertAttackValue(attackEast) + " " +
