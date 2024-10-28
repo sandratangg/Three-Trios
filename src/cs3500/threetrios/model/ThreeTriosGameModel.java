@@ -38,7 +38,7 @@ public class ThreeTriosGameModel implements ThreeTrios {
    * @param col the column to place the card
    * @return true or false whether the card was placed
    */
-  public boolean placeCard(int row, int col, ThreeTriosCard card) {
+  public boolean placeCard(int row, int col, ICard card) {
     if (!currentPlayer.playCard(card)) {
       throw new IllegalArgumentException("Player does not have this card.");
     }
@@ -53,7 +53,7 @@ public class ThreeTriosGameModel implements ThreeTrios {
   }
 
   // Helper method to perform the battle phase
-  private void performBattlePhase(int row, int col, ThreeTriosCard placedCard, ThreeTriosPlayer currentPlayer, ThreeTriosPlayer oppositePlayer) {
+  private void performBattlePhase(int row, int col, ICard placedCard, ThreeTriosPlayer currentPlayer, ThreeTriosPlayer oppositePlayer) {
     for (Direction direction : Direction.values()) {
       grid.battlePhase(row, col, placedCard, direction, currentPlayer, oppositePlayer);
     }

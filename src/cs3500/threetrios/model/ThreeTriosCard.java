@@ -1,7 +1,11 @@
 package cs3500.threetrios.model;
 
 /**
- * Represents a card in the ThreeTrios game.
+ * Represents a card in the ThreeTrios game. This class encapsulates the properties
+ * and behaviors associated with a game card, including its color, value, and owner.
+ *
+ * <p>The ThreeTriosCard class is central to game mechanics, determining card interactions
+ * and effects based on the card's attributes.
  */
 public class ThreeTriosCard implements ICard {
 
