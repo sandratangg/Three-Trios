@@ -50,7 +50,10 @@ public class ThreeTriosCell implements ICell {
   /**
    * Method that sets the Card in the cell.
    */
-  public void setCard(ThreeTriosCard card) {
+  public void setCard(ICard card) {
+    if (this.isHole){
+      throw new IllegalStateException("Cannot place card in a hole.");
+    }
     this.card = card;
   }
 

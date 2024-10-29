@@ -166,20 +166,20 @@ public void testPlaceCardOccupiedCell() {
 }
 
 // Test placeCard in a hole cell (invalid placement): Ensure placeCard returns false, as a card cannot be placed in a hole.
-//@Test
-//  public void testPlaceCardHoleCell() {
-//    // Place sampleCard in the top-left corner of the small grid
-//    smallGrid.placeCard(0, 0, sampleCardDragon);
-//    assertTrue(!smallGrid.placeCard(0, 1, sampleCardDragon));
-//
-//    // Place sampleCard in the center of the medium grid
-//    mediumGrid.placeCard(2, 2, sampleCardDragon);
-//    assertTrue(!mediumGrid.placeCard(2, 3, sampleCardDragon));
-//
-//    // Place sampleCard in the bottom-right corner of the large grid
-//    largeGrid.placeCard(9, 9, sampleCardDragon);
-//    assertTrue(!largeGrid.placeCard(9, 8, sampleCardDragon));
-//  }
+@Test
+  public void testPlaceCardHoleCell() {
+    // Place sampleCard in the top-left corner of the small grid
+    smallGrid.placeCard(0, 0, sampleCardDragon);
+    try
+
+    // Place sampleCard in the center of the medium grid
+    mediumGrid.placeCard(2, 2, sampleCardDragon);
+    assertTrue(!mediumGrid.placeCard(2, 3, sampleCardDragon));
+
+    // Place sampleCard in the bottom-right corner of the large grid
+    largeGrid.placeCard(9, 9, sampleCardDragon);
+    assertTrue(!largeGrid.placeCard(9, 8, sampleCardDragon));
+  }
 
 // Test placeCard with out-of-bounds indices: Ensure placeCard returns false without any exception.
 
