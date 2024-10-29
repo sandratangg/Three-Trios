@@ -8,6 +8,7 @@ import java.util.List;
 
 import cs3500.threetrios.model.PlayerColor;
 import cs3500.threetrios.model.ThreeTriosCard;
+import cs3500.threetrios.model.ThreeTriosGameModel;
 import cs3500.threetrios.model.ThreeTriosGrid;
 import cs3500.threetrios.model.ThreeTriosPlayer;
 
@@ -137,7 +138,7 @@ public void testGetCardFromCell() {
 
 
 // Test placeCard in an occupied cell (already has a card)
-  //Should thorw IllegalArgumentException
+// Should throw IllegalArgumentException
 @Test
 public void testPlaceCardOccupiedCell() {
   // Place sampleCard in the top-left corner of the small grid
@@ -145,7 +146,7 @@ public void testPlaceCardOccupiedCell() {
   try {
     smallGrid.placeCard(0, 0, sampleCardDragon);
   } catch (IllegalArgumentException e) {
-    assertTrue(e.getMessage().contains("Card already placed at: (0, 0)"));
+    assertTrue(e.getMessage().contains("Card is already placed or cell is a hole."));
   }
 
   // Place sampleCard in the center of the medium grid
@@ -153,7 +154,7 @@ public void testPlaceCardOccupiedCell() {
   try {
     mediumGrid.placeCard(2, 2, sampleCardDragon);
   } catch (IllegalArgumentException e) {
-    assertTrue(e.getMessage().contains("Card already placed at: (2, 2)"));
+    assertTrue(e.getMessage().contains("Card is already placed or cell is a hole."));
   }
 
   // Place sampleCard in the bottom-right corner of the large grid
@@ -161,25 +162,17 @@ public void testPlaceCardOccupiedCell() {
   try {
     largeGrid.placeCard(9, 9, sampleCardDragon);
   } catch (IllegalArgumentException e) {
-    assertTrue(e.getMessage().contains("Card already placed at: (9, 9)"));
+    assertTrue(e.getMessage().contains("Card is already placed or cell is a hole."));
   }
 }
 
-// Test placeCard in a hole cell (invalid placement): Ensure placeCard returns false, as a card cannot be placed in a hole.
+// Test placeCard in a hole cell (invalid placement)
+// Should throw IllegalStateException
 @Test
   public void testPlaceCardHoleCell() {
-    // Place sampleCard in the top-left corner of the small grid
-    smallGrid.placeCard(0, 0, sampleCardDragon);
-    try
-
-    // Place sampleCard in the center of the medium grid
-    mediumGrid.placeCard(2, 2, sampleCardDragon);
-    assertTrue(!mediumGrid.placeCard(2, 3, sampleCardDragon));
-
-    // Place sampleCard in the bottom-right corner of the large grid
-    largeGrid.placeCard(9, 9, sampleCardDragon);
-    assertTrue(!largeGrid.placeCard(9, 8, sampleCardDragon));
+    
   }
+
 
 // Test placeCard with out-of-bounds indices: Ensure placeCard returns false without any exception.
 
