@@ -44,14 +44,19 @@ public class ThreeTriosGameModel implements ThreeTrios {
       throw new IllegalArgumentException("Player does not have this card.");
     }
 
-    if (!grid.placeCard(row, col, card)) {
-      return false;  // Invalid move
+    try {
+      grid.placeCard(row, col, card);
+    }
+    catch (IllegalArgumentException e) {
+      throw new IllegalArgumentException("Invalid position: (" + row + ", " + col + ")");
     }
 
     performBattlePhase(row, col, card, currentPlayer, oppositePlayer);
     switchTurn();
     return true;
   }
+
+
 
   // Helper method to perform the battle phase.
   private void performBattlePhase(int row, int col, ICard placedCard, ThreeTriosPlayer currentPlayer, ThreeTriosPlayer oppositePlayer) {

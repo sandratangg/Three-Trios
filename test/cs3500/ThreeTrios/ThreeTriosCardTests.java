@@ -109,12 +109,9 @@ public class ThreeTriosCardTests {
 
 
   // Test attack method with invalid direction (default case): Expect IllegalArgumentException.
-  @Test(expected = IllegalArgumentException.class)
-  public void testAttackDirectionDefaultCase() {
-    // TODO: Implement this test
-    // card1.attack(Direction.NORTHWEST);
-    // expected: "Invalid direction"
-  }
+  // NOTE: THIS CANNOT BE TESTED AS THE DEFAULT CASE IN THE SWITCH STATEMENT IS NOT REACHABLE
+  // UNLESS THE ENUM IS EDITED.
+
 
   // Test matchesName with valid matching name: Ensure true is returned for a matching name.
   @Test

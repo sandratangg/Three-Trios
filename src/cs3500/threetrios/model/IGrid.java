@@ -21,7 +21,7 @@ public interface IGrid {
    * @return true if the card was successfully placed; false if the cell is occupied
    *         or if the coordinates are invalid.
    */
-  boolean placeCard(int row, int col, ICard card);
+  void placeCard(int row, int col, ICard card);
 
   /**
    * Checks if the grid is fully occupied with no empty cells remaining.

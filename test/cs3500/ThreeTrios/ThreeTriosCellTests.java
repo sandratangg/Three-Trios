@@ -6,10 +6,14 @@ import org.junit.Test;
 import cs3500.threetrios.model.ThreeTriosCard;
 import cs3500.threetrios.model.ThreeTriosCell;
 
+import static org.junit.Assert.assertTrue;
+
+/**
+ * Tests for the ThreeTriosCell class.
+ */
 public class ThreeTriosCellTests {
   private ThreeTriosCell noCardCell;
   private ThreeTriosCell holeCell;
-  private ThreeTriosCell exampleCardCell1;
   private ThreeTriosCell cardCellWithCard;
   private ThreeTriosCard sampleCard;
 
@@ -25,29 +29,55 @@ public class ThreeTriosCellTests {
     holeCell = new ThreeTriosCell(true);
 
     // Card cell with a card
-    exampleCardCell1 = new ThreeTriosCell();
-    exampleCardCell1.setCard();
-    // In the ThreeTriosCell class, add a sameCard method that returns something like "this.card.equals(givenCard)"
-    exampleCardCell1.sameCard(givenCard);
+    cardCellWithCard = new ThreeTriosCell();
+    sampleCard = new ThreeTriosCard("Dragon", 5, 7, 6, 3);
 
   }
 
-  //make a s card equals helper to return this.card == card
-  // Test default constructor: Ensure the cell is created as a non-hole and without a card (isHole = false, card = null).
+  // Test default constructor: Makes sure the cell is created as a Card Cell and without a card
+  // It checks if the cell card is null and if the cell is empty
+  // Test isEmpty method on a default cell (non-hole and no card)
+  @Test
+  public void testDefaultConstructorNoCard() {
+    assertTrue(noCardCell.card == null);
+    assertTrue(noCardCell.isEmpty());
+  }
 
+  // Test hole constructor with isHole is true
+  // Makes sure the cell is created as a hole and does not contain a card.
+  @Test
+  public void testHoleConstructorNoCard() {
+    //holeCell is a card cell with no card
+    assertTrue(holeCell.card == null);
+    assertTrue(!holeCell.isEmpty()); //Returns true when the cell is not empty
+  }
 
-// Test hole constructor with isHole set to true: Ensure the cell is created as a hole and does not contain a card.
+  // Test hole constructor with isHole set to false
+  // Makes sure the cell is made as a non-hole and does not contain a card.
+  @Test
+  public void testNonHoleConstructorNoCard() {
+    ThreeTriosCell cell = new ThreeTriosCell(false);
+    assertTrue(cell.card == null);
+    assertTrue(cell.isEmpty());
+  }
 
+  // Test constructor with a card cell containing a card
+  // Make cell is created as a Card Cell and contains the given card in the cell
+  @Test
+  public void testConstructorWithCard() {
+    //Places sample card into card call
+    cardCellWithCard.setCard(sampleCard);
 
-// Test hole constructor with isHole set to false: Ensure the cell is created as a non-hole and does not contain a card.
+    //Checks if sampleCard is the same as the card in the cell
+    assertTrue(cardCellWithCard.sameCard(sampleCard));
+  }
 
-
-// Test isEmpty method on a default cell (non-hole and no card): Ensure it returns true, indicating the cell is empty.
-
-
-// Test isEmpty method on a hole cell: Ensure it returns false, as holes cannot be considered "empty" even without a card.
-
-
-// Test isEmpty method on a non-hole cell with a card assigned: Ensure it returns false, as the cell contains a card.
+  // Test isEmpty method on a non-hole cell with a card assigned
+  // Makes it returns false, as the cell contains a card.
+  @Test
+  public void testNonHoleCellWithCard() {
+    cardCellWithCard.setCard(sampleCard);
+    assertTrue(!cardCellWithCard.isEmpty());
+  }
 
 }
