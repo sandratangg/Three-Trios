@@ -217,4 +217,10 @@ public class ThreeTriosGrid implements IGrid {
   public ICard getCardFromCell(int i, int j) {
     return grid[i][j].card;
   }
+
+
+  public ICell getCell(int row, int col) {
+    return new ThreeTriosCell(this.grid[row][col].isHole,
+            this.grid[row][col].getCard());
+  }
 }

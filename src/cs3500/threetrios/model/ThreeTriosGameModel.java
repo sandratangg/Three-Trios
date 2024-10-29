@@ -23,7 +23,10 @@ public class ThreeTriosGameModel implements ThreeTrios {
   /**
    * Constructs a ThreeTrios game model with specified grid dimensions
    * and an initial deck of cards. The deck is divided between two players,
-   * who take turns placing cards on the grid. The red player starts first.
+   * who take turns placing cards on the grid.
+   * <p>
+   * Invariant: The `currentPlayer` starts as `redPlayer` and alternates
+   * with `bluePlayer` on each turn, ensuring consistent turn order.
    *
    * @param rows the number of rows in the game grid.
    * @param cols the number of columns in the game grid.
@@ -65,7 +68,14 @@ public class ThreeTriosGameModel implements ThreeTrios {
     }
   }
 
-  // Helper method to switch the turn.
+  /**
+   * Helper method to switch the turn between players.
+   * <p>
+   * Invariant: The `currentPlayer` must always alternate between `redPlayer`
+   * and `bluePlayer` after each valid move. This method ensures that
+   * each player takes turns in sequence and that the game ends only when
+   * the grid is full.
+   */
   private void switchTurn() {
     if (isGameOver()) {
       System.out.println(determineWinner());
@@ -175,7 +185,7 @@ public class ThreeTriosGameModel implements ThreeTrios {
       int attackEast = parseCardValue(cardData[3]);
       int attackWest = parseCardValue(cardData[4]);
 
-      deck.add(new ThreeTriosCard(cardName, attackNorth, attackSouth, attackEast, attackWest));
+      deck.add(new ThreeTriosCard(cardName, attackNorth, attackEast, attackWest, attackSouth));
     }
 
     return deck;

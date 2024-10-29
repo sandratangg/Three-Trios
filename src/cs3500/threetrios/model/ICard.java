@@ -32,5 +32,5 @@ public interface ICard {
    */
   boolean matchesName(String name);
 
-
+  String getName();
 }

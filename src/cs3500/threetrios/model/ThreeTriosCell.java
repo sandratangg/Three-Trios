@@ -24,6 +24,11 @@ public class ThreeTriosCell implements ICell {
     this.card = null;
   }
 
+  public ThreeTriosCell(boolean isHole, ICard card) {
+    this.isHole = isHole;
+    this.card = card;
+  }
+
   /**
    * Method that checks if it is a Card Cell and if it is empty.
    */
@@ -35,7 +40,11 @@ public class ThreeTriosCell implements ICell {
    * Method that gets the Card in the cell.
    */
   public ICard getCard() {
-    return this.card;
+    return new ThreeTriosCard(card.getName(),
+            card.attack(Direction.NORTH),
+            card.attack(Direction.EAST),
+            card.attack(Direction.WEST),
+            card.attack(Direction.SOUTH));
   }
 
   /**
