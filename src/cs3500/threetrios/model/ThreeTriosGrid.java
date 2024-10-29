@@ -241,4 +241,11 @@ public class ThreeTriosGrid implements IGrid {
   private void placeHole(int row, int col) {
     grid[row][col] = new ThreeTriosCell(true);  // 'true' means it’s a hole
   }
+
+  //boolean isHole;
+  //public ICard card;
+  public ICell getCell(int row, int col) {
+    return new ThreeTriosCell(this.grid[row][col].isHole,
+            this.grid[row][col].getCard());
+  }
 }

@@ -31,4 +31,6 @@ public interface ICard {
    * @return true if the card's name matches the provided name; false otherwise.
    */
   boolean matchesName(String name);
+
+  String getName();
 }

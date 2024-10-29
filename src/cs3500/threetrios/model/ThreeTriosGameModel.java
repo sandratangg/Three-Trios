@@ -180,7 +180,7 @@ public class ThreeTriosGameModel implements ThreeTrios {
       int attackEast = parseCardValue(cardData[3]);
       int attackWest = parseCardValue(cardData[4]);
 
-      deck.add(new ThreeTriosCard(cardName, attackNorth, attackSouth, attackEast, attackWest));
+      deck.add(new ThreeTriosCard(cardName, attackNorth, attackEast, attackWest, attackSouth));
     }
 
     return deck;

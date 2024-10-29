@@ -12,7 +12,7 @@ package cs3500.threetrios.model;
  */
 public class ThreeTriosCard implements ICard {
 
-  private final String name;
+  private final String cardName;
 
   private final int attackNorth;
   private final int attackEast;
@@ -38,7 +38,7 @@ public class ThreeTriosCard implements ICard {
     validCardAttackValue(attackWest);
     validCardAttackValue(attackSouth);
 
-    this.name = name;
+    this.cardName = name;
     this.attackNorth = attackNorth;
     this.attackEast = attackEast;
     this.attackWest = attackWest;
@@ -50,6 +50,10 @@ public class ThreeTriosCard implements ICard {
     if (attackValue < 1 || attackValue > 10) {
       throw new IllegalArgumentException("Value must be between 1 and 10.");
     }
+  }
+
+  public String getName() {
+    return this.cardName;
   }
 
   public int attack(Direction direction) {
@@ -75,7 +79,7 @@ public class ThreeTriosCard implements ICard {
    * @return true if the given name matches the card's name; false otherwise.
    */
   public boolean matchesName(String name) {
-    return this.name.equals(name);
+    return this.cardName.equals(name);
   }
 
   /**
@@ -88,7 +92,7 @@ public class ThreeTriosCard implements ICard {
    */
   @Override
   public String toString() {
-    return this.name + " " + buildAttackString();
+    return this.cardName + " " + buildAttackString();
   }
 
   // Helper : Converts attack values to string, handling 10 as 'A'.
