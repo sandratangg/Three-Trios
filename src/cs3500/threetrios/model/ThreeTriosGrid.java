@@ -150,6 +150,9 @@ public class ThreeTriosGrid implements IGrid {
 
     for (int row = 0; row < rows; row++) {
       gridString.append(rowToString(row, cols, red));
+      if (row < rows - 1) {  // Add newline between rows, but not after the last row
+        gridString.append("\n");
+      }
     }
 
     return gridString.toString();
@@ -236,6 +239,12 @@ public class ThreeTriosGrid implements IGrid {
   }
 
 
+  /**
+   * Returns the cell at the given row and column.
+   * @param row the row of the cell
+   * @param col the column of cell
+   * @return the cell at the given row and column
+   */
   public ICell getCell(int row, int col) {
     return new ThreeTriosCell(this.grid[row][col].isHole,
             this.grid[row][col].getCard());
