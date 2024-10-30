@@ -24,6 +24,11 @@ public class ThreeTriosCell implements ICell {
     this.card = null;
   }
 
+  /**
+   * Constructor for a Card Cell with a given card
+   * @param isHole whether the cell is a hole or not
+   * @param card The card to place in the cell
+   */
   public ThreeTriosCell(boolean isHole, ICard card) {
     this.isHole = isHole;
     this.card = card;
