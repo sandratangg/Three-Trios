@@ -26,7 +26,7 @@ public class ThreeTriosGridTests {
   private ThreeTriosGrid mediumGrid;
   private ThreeTriosGrid largeGrid;
   private ThreeTriosCard sampleCardDragon;
-  private ThreeTriosCard sampleCard;
+  private ThreeTriosCard sampleCardPhoenix;
   private ThreeTriosPlayer playerRed;
   private ThreeTriosPlayer playerBlue;
   private ThreeTriosCard highAttackCard;
@@ -46,12 +46,13 @@ public class ThreeTriosGridTests {
     // Sample card for placement and battle testing
     sampleCardDragon = new ThreeTriosCard("Dragon",
             5, 7, 6, 3);
+    sampleCardPhoenix = new ThreeTriosCard("Phoenix",
+            3, 8, 5, 7);
 
     // Sample initial hands for players
     List<ThreeTriosCard> redInitialHand = new ArrayList<>();
     redInitialHand.add(sampleCardDragon); // Adding sampleCard to Red's hand
-    redInitialHand.add(new ThreeTriosCard("Phoenix",
-            3, 8, 5, 7));
+    redInitialHand.add(sampleCardPhoenix);
 
     List<ThreeTriosCard> blueInitialHand = new ArrayList<>();
     blueInitialHand.add(new ThreeTriosCard("Tiger",
@@ -195,11 +196,11 @@ public class ThreeTriosGridTests {
   public void testPlaceCardHoleCell() throws FileNotFoundException {
     ThreeTriosGrid gridFile = ThreeTriosGrid.fromFile(
             "test/cs3500/ThreeTrios/ExampleBoards/board2.txt");
-    sampleCard = new ThreeTriosCard("Dragon", 5,
+    sampleCardPhoenix = new ThreeTriosCard("Dragon", 5,
             7, 6, 3);
 
     try {
-      gridFile.placeCard(0, 2, sampleCard);
+      gridFile.placeCard(0, 2, sampleCardPhoenix);
       fail("Expected IllegalStateException to be thrown for placing card in a hole cell");
     } catch (IllegalStateException e) {
       // Test passes if IllegalStateException is thrown
@@ -328,6 +329,58 @@ public void testBattlePhaseOutOfBoundsNoChange() {
   assertTrue(playerRed.owns(highAttackCard));
   assertFalse(playerBlue.owns(highAttackCard));
 }
+
+  // Test toString for an empty grids
+  @Test
+  public void testToStringEmptyGrid() {
+    //Small empty grid
+    String expectedOutput = "__\n__";
+    assertEquals(expectedOutput, smallGrid.toString(playerRed));
+
+    //Medium empty grid
+    String expectedEmptyOutput = "_____\n_____\n_____\n_____\n_____";
+    assertEquals(expectedEmptyOutput, mediumGrid.toString(playerRed));
+
+    //Large empty grid
+    StringBuilder expectedEmptyOutputLarge = new StringBuilder();
+    for (int i = 0; i < 10; i++) {
+      expectedEmptyOutputLarge.append("__________\n");
+    }
+    assertEquals(expectedEmptyOutputLarge.toString().trim(), largeGrid.toString(playerRed));
+  }
+
+  // Test toString for a grid with red-owned card or blue-owned card
+  @Test
+  public void testToStringColorPlayerOwned() {
+    //Small grid with a red-owned card
+    smallGrid.placeCard(0, 0, sampleCardDragon);
+    playerRed.addToOwned(sampleCardDragon);
+    String expectedRedOwnedOutput = "R_\n__";
+    assertEquals(expectedRedOwnedOutput, smallGrid.toString(playerRed));
+
+    //Medium grid with a blue-owned card
+    mediumGrid.placeCard(1, 1, sampleCardPhoenix);
+    playerBlue.addToOwned(sampleCardPhoenix);
+    String expectedBlueOwnedOutput = "_____\n_B___\n_____\n_____\n_____";
+    assertEquals(expectedBlueOwnedOutput, mediumGrid.toString(playerRed));
+
+    // Medium grid with red and blue cards
+    mediumGrid.placeCard(2, 2, sampleCardDragon);
+    mediumGrid.placeCard(0, 4, sampleCardPhoenix);
+    String expectedMixedOutput = "____B\n_____\n__R__\n_____\n_____";
+
+    //Large grid with a red-owned card
+    largeGrid.placeCard(5, 5, sampleCardDragon);
+    StringBuilder expectedCenterRedOutput = new StringBuilder();
+    for (int i = 0; i < 10; i++) {
+      if (i == 5) {
+        expectedCenterRedOutput.append("_____R____\n");
+      } else {
+        expectedCenterRedOutput.append("__________\n");
+      }
+    }
+    assertEquals(expectedCenterRedOutput.toString().trim(), largeGrid.toString(playerRed));
+  }
 
 
 }

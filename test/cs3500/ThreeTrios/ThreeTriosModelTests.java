@@ -12,7 +12,6 @@
 //import cs3500.threetrios.model.ThreeTriosPlayer;
 //import cs3500.threetrios.model.ThreeTriosGameModel;
 //
-///**
 // * Tests for the ThreeTriosModel class.
 // */
 //public class ThreeTriosModelTests {
