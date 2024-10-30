@@ -44,6 +44,13 @@ public class ThreeTriosGameModel implements ThreeTrios {
    */
   public ThreeTriosGameModel(ThreeTriosGrid grid, List<ThreeTriosCard> deck) {
     this.grid = grid;
+    int cellsInGrid = grid.getNumCardCells();
+
+    if (deck.size() <= cellsInGrid) {
+      throw new IllegalStateException("If there are n card cells in the grid,"
+              + "there must be at least n + 1 cards available to split.");
+    }
+
     int cardsPerPlayer = deck.size() / 2;
 
     this.redPlayer = new ThreeTriosPlayer(PlayerColor.RED, deck.subList(0, cardsPerPlayer));

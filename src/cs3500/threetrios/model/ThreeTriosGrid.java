@@ -250,5 +250,9 @@ public class ThreeTriosGrid implements IGrid {
             this.grid[row][col].getCard());
   }
 
+  public int getNumCardCells() {
+    return rows * cols;
+  }
+
 
 }
