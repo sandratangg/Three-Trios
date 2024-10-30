@@ -65,3 +65,11 @@ interfaces. The purpose of each file is as follows:
    gameplay.
 - `ThreeTriosCell.java`: Represents grid cells, distinguishing playable cells and holes for
    accurate grid representation.
+
+
+Configuration Files
+
+The game setup includes grid and card configuration files:
+
+board1.txt, board2.txt, board3.txt: Define various grid setups, specifying cell types and spaces.
+card_file1.txt, card_file2.txt: List available cards and their directional attack values.
