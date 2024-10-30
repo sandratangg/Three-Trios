@@ -12,6 +12,9 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
+/**
+ * Tests for the ThreeTriosPlayer class.
+ */
 public class ThreeTriosPlayerTests {
 
   private ThreeTriosPlayer playerRed;
@@ -19,6 +22,9 @@ public class ThreeTriosPlayerTests {
   private ThreeTriosCard sampleCardDragon;
   private ThreeTriosCard sampleCardPhoenix;
 
+  /**
+   * Initializes common objects before each test.
+   */
   @Before
   public void init() {
     // Initialize sample cards for testing

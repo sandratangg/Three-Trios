@@ -125,7 +125,7 @@ public class ThreeTriosGridTests {
     }
   }
 
-  // Test getCardFromCell
+  // Test getCardFromCell()
   @Test
   public void testGetCardFromCell() {
     // Place sampleCard in the top-left corner of the small grid
@@ -141,8 +141,8 @@ public class ThreeTriosGridTests {
     assertTrue(largeGrid.getCardFromCell(9, 9).equals(sampleCardDragon));
   }
 
-  // Test placeCard in a valid position on an empty cell: Ensure the card is successfully placed
-  // placeCard returns true.
+  // Test placeCard in a valid position on an empty cell
+  // Makes sure the card is placed correctly and placeCard returns true.
   @Test
   public void testPlaceCardValidPos() {
     // Place sampleCard in the top-left corner of the small grid
@@ -160,7 +160,7 @@ public class ThreeTriosGridTests {
 
 
   // Test placeCard in an occupied cell (already has a card)
-// Should throw IllegalArgumentException
+  // Should throw IllegalArgumentException
   @Test
   public void testPlaceCardOccupiedCell() {
     // Place sampleCard in the top-left corner of the small grid
@@ -208,10 +208,7 @@ public class ThreeTriosGridTests {
   }
 
 
-  /**
-   * Tests that placeCard throws an IllegalArgumentException for out-of-bounds indices
-   * on all grid sizes (small, medium, large).
-   */
+  //Tests that placeCard throws an IllegalArgumentException for out-of-bounds indices on all grids
   @Test
   public void testPlaceCardOutOfBoundsAllGrids() {
     // Testing out-of-bounds indices on smallGrid (2x2)
