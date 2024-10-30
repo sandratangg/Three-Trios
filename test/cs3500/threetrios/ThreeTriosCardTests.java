@@ -67,7 +67,7 @@ public class ThreeTriosCardTests {
   }
 
   // Test constructor with boundary values (1 and 10).
-// Makes sure the card is successfully created and not null.
+  // Makes sure the card is successfully created and not null.
   @Test
   public void testConstructorBoundaryValues() {
     ThreeTriosCard card1 = new ThreeTriosCard("Dragon", 1, 1, 1, 1);

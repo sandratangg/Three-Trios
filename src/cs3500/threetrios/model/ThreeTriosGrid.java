@@ -41,7 +41,7 @@ public class ThreeTriosGrid implements IGrid {
   }
 
   /**
-   * Helper: Places card only if valid
+   * Helper: Places card only if valid.
    *
    * @param row  the row to place the card
    * @param col  the column to place the card
@@ -65,7 +65,7 @@ public class ThreeTriosGrid implements IGrid {
   }
 
   /**
-   * Helper: Battle logic now encapsulated in the grid class itself
+   * Helper: Battle logic now encapsulated in the grid class itself.
    */
   public void battlePhase(int row, int col, ICard placedCard, Direction direction,
                           ThreeTriosPlayer currentPlayer, ThreeTriosPlayer oppositePlayer) {
@@ -201,6 +201,13 @@ public class ThreeTriosGrid implements IGrid {
     return true;
   }
 
+  /**
+   * Creates a {@code ThreeTriosGrid} instance by reading grid configuration from a specified file.
+   *
+   * @param filename the path to the configuration file
+   * @return a {@code ThreeTriosGrid} initialized according to the specified file configuration
+   * @throws FileNotFoundException if the file cannot be found
+   */
   public static ThreeTriosGrid fromFile(String filename) throws FileNotFoundException {
     Scanner scanner = new Scanner(new File(filename));
     int rows = scanner.nextInt();
@@ -250,6 +257,12 @@ public class ThreeTriosGrid implements IGrid {
             this.grid[row][col].getCard());
   }
 
+  /**
+   * Counts the total number of card cells in the grid.
+   * Card cells are defined as playable cells that are not marked as holes.
+   *
+   * @return the number of card cells in the grid
+   */
   public int getNumCardCells() {
     int numCardCells = 0;
 
@@ -264,6 +277,12 @@ public class ThreeTriosGrid implements IGrid {
     return numCardCells;
   }
 
+  /**
+   * Counts the total number of hole cells in the grid.
+   * Hole cells are defined as non-playable cells.
+   *
+   * @return the number of hole cells in the grid
+   */
   public int getNumHoleCells() {
     int numHoleCells = 0;
 
@@ -278,11 +297,21 @@ public class ThreeTriosGrid implements IGrid {
     return numHoleCells;
   }
 
+  /**
+   * Gets the total number of rows in the grid.
+   *
+   * @return the row count of the grid
+   */
   public int getRowCount() {
     return this.rows;
   }
 
 
+  /**
+   * Gets the total number of columns in the grid.
+   *
+   * @return the column count of the grid
+   */
   public int getColCount() {
     return this.cols;
   }

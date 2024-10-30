@@ -1,6 +1,5 @@
 package cs3500.threetrios;
 
-import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import java.io.FileNotFoundException;
@@ -11,6 +10,10 @@ import cs3500.threetrios.model.PlayerColor;
 import cs3500.threetrios.model.ThreeTriosCard;
 import cs3500.threetrios.model.ThreeTriosGameModel;
 import cs3500.threetrios.model.ThreeTriosGrid;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Test suite for the ThreeTriosGameModel class, ensuring that the model
