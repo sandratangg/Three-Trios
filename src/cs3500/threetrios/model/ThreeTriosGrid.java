@@ -242,7 +242,40 @@ public class ThreeTriosGrid implements IGrid {
   }
 
   public int getNumCardCells() {
-    return rows * cols;
+    int numCardCells = 0;
+
+    for (int row = 0; row < rows; row++) {
+      for (int col = 0; col < cols; col++) {
+        if (!grid[row][col].isHole) {
+          numCardCells++;
+        }
+      }
+    }
+
+    return numCardCells;
+  }
+
+  public int getNumHoleCells() {
+    int numHoleCells = 0;
+
+    for (int row = 0; row < rows; row++) {
+      for (int col = 0; col < cols; col++) {
+        if (grid[row][col].isHole) {
+          numHoleCells++;
+        }
+      }
+    }
+
+    return numHoleCells;
+  }
+
+  public int getRowCount() {
+    return this.rows;
+  }
+
+
+  public int getColCount() {
+    return this.cols;
   }
 
 

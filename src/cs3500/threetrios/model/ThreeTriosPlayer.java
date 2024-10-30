@@ -166,4 +166,12 @@ public class ThreeTriosPlayer implements IPlayer {
   public int getOwnedCardsSize() {
     return this.ownedCards.size();
   }
+
+  public List<ICard> getOwnedCards() {
+    return new ArrayList<ICard>(ownedCards);
+  }
+
+  public boolean sameColor(PlayerColor color) {
+    return this.color.equals(color);
+  }
 }

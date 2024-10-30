@@ -232,4 +232,20 @@ public class ThreeTriosGameModel implements ThreeTrios {
       return Integer.parseInt(value);
     }
   }
+
+  public PlayerColor currentPlayerColor() {
+    if (this.currentPlayer.isRed()) {
+      return PlayerColor.RED;
+    } else {
+      return PlayerColor.BLUE;
+    }
+  }
+
+  public boolean redPlayerOwnsCard(ICard card) {
+    return this.redPlayer.getOwnedCards().contains(card);
+  }
+
+  public boolean bluePlayerOwnsCard(ICard card) {
+    return this.bluePlayer.getOwnedCards().contains(card);
+  }
 }
