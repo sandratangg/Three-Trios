@@ -47,11 +47,19 @@ public class ThreeTriosGrid implements IGrid {
    * @throws IllegalArgumentException if the position is invalid
    */
   public void placeCard(int row, int col, ICard card) {
+
+    if (card == null) {
+      throw new IllegalArgumentException("Need a card value!");
+    }
+
     try {
       grid[row][col].setCard(card);
     }
+    catch (NullPointerException e) {
+      throw new IllegalArgumentException("Invalid grid index");
+    }
     catch (Exception e) {
-      throw new IllegalArgumentException("Card is already placed or cell is a hole.");
+      throw new IllegalStateException("Card is already placed or cell is a hole.");
     }
 
   }
