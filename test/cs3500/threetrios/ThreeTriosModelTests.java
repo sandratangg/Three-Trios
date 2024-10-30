@@ -1,4 +1,4 @@
-package cs3500.ThreeTrios;
+package cs3500.threetrios;
 
 import static org.junit.Assert.*;
 import org.junit.Before;
