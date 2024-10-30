@@ -27,7 +27,7 @@ public class ThreeTriosGameModel implements ThreeTrios {
    * <p>
    * Invariant: The `currentPlayer` starts as `redPlayer` and alternates
    * with `bluePlayer` on each turn, ensuring consistent turn order.
-   *
+   * </p>
    * @param rows the number of rows in the game grid.
    * @param cols the number of columns in the game grid.
    * @param deck the list of cards representing the deck, split between players.
@@ -36,17 +36,36 @@ public class ThreeTriosGameModel implements ThreeTrios {
     new ThreeTriosGameModel(new ThreeTriosGrid(rows, cols), deck);
   }
 
+
+  /**
+   * Constructs a ThreeTrios game model with a specified grid and deck of cards.
+   * @param grid the game grid to use for the model.
+   * @param deck the deck of cards to use for the model.
+   */
   public ThreeTriosGameModel(ThreeTriosGrid grid, List<ThreeTriosCard> deck) {
     this.grid = grid;
     int cardsPerPlayer = deck.size() / 2;
 
     this.redPlayer = new ThreeTriosPlayer(PlayerColor.RED, deck.subList(0, cardsPerPlayer));
-    this.bluePlayer = new ThreeTriosPlayer(PlayerColor.BLUE, deck.subList(cardsPerPlayer, deck.size()));
+    this.bluePlayer = new ThreeTriosPlayer(PlayerColor.BLUE,
+            deck.subList(cardsPerPlayer, deck.size()));
     this.currentPlayer = redPlayer;
     this.oppositePlayer = bluePlayer; // Red player starts
   }
 
 
+  /**
+   * Attempts to place a card at a specified location on the game grid.
+   * @param row the row index at which to place the card.
+   * @param col the column index at which to place the card.
+   * @param card the ThreeTriosCard to be placed on the grid.
+   *
+   * @return true if the card was successfully placed at the specified location;
+   *
+   * @throws IllegalArgumentException if the card cannot be placed at the specified location.
+   * @throws IllegalArgumentException if the player does not have the card.
+   * @throws IllegalArgumentException if the position is invalid.
+   */
   public boolean placeCard(int row, int col, ICard card) {
     if (!currentPlayer.playCard(card)) {
       throw new IllegalArgumentException("Player does not have this card.");
@@ -54,8 +73,7 @@ public class ThreeTriosGameModel implements ThreeTrios {
 
     try {
       grid.placeCard(row, col, card);
-    }
-    catch (IllegalArgumentException e) {
+    } catch (IllegalArgumentException e) {
       throw new IllegalArgumentException("Invalid position: (" + row + ", " + col + ")");
     }
 
@@ -67,7 +85,8 @@ public class ThreeTriosGameModel implements ThreeTrios {
 
 
   // Helper method to perform the battle phase.
-  private void performBattlePhase(int row, int col, ICard placedCard, ThreeTriosPlayer currentPlayer, ThreeTriosPlayer oppositePlayer) {
+  private void performBattlePhase(int row, int col, ICard placedCard,
+                                  ThreeTriosPlayer currentPlayer, ThreeTriosPlayer oppositePlayer) {
     for (Direction direction : Direction.values()) {
       grid.battlePhase(row, col, placedCard, direction, currentPlayer, oppositePlayer);
     }
@@ -80,6 +99,7 @@ public class ThreeTriosGameModel implements ThreeTrios {
    * and `bluePlayer` after each valid move. This method ensures that
    * each player takes turns in sequence and that the game ends only when
    * the grid is full.
+   * </p>
    */
   private void switchTurn() {
     if (isGameOver()) {
@@ -177,7 +197,8 @@ public class ThreeTriosGameModel implements ThreeTrios {
    * @return a list of {@link ThreeTriosCard} objects representing the deck.
    * @throws FileNotFoundException if the specified file cannot be found.
    */
-  public static List<ThreeTriosCard> readCardsFromFile(String filename) throws FileNotFoundException {
+  public static List<ThreeTriosCard> readCardsFromFile(String filename)
+          throws FileNotFoundException {
     Scanner scanner = new Scanner(new File(filename));
     List<ThreeTriosCard> deck = new ArrayList<>();
 

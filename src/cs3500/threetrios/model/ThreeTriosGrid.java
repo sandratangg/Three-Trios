@@ -179,6 +179,14 @@ public class ThreeTriosGrid implements IGrid {
     return rowString.toString();
   }
 
+  /**
+   * Checks if the grid is fully occupied with no empty cells remaining.
+   * A full grid signifies that no further moves can be made, potentially
+   * indicating an end state for the game. This method allows for efficient
+   * assessment of grid capacity, impacting gameplay decisions and flow.
+   *
+   * @return true if the grid has no empty cells; false if at least one cell is empty.
+   */
   public boolean isGridFull() {
     for (int row = 0; row < rows; row++) {
       for (int col = 0; col < cols; col++) {

@@ -32,5 +32,9 @@ public interface ICard {
    */
   boolean matchesName(String name);
 
+  /**
+   * Gets the name of the card as a string.
+   * @return the name of the card as a string
+   */
   String getName();
 }

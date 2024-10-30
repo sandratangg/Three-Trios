@@ -28,6 +28,13 @@ public class ThreeTriosPlayer implements IPlayer {
     this.ownedCards = new ArrayList<>();
   }
 
+
+  /**
+   * Retrieves the color of the player.
+   * @param card the ICard to be played by the player
+   * @return true if the card was successfully played
+   *         or false if the card is not in the player's hand.
+   */
   public boolean playCard(ICard card) {
     if (this.hand.contains(card)) {
       this.hand.remove(card);
@@ -36,10 +43,19 @@ public class ThreeTriosPlayer implements IPlayer {
     return false;
   }
 
+  /**
+   * Adds a card to the player's hand.
+   * @param card the ICard to be added to the player's hand
+   */
   public void addCard(ICard card) {
     this.hand.add(card);  // Add card after a flip
   }
 
+  /**
+   * Checks if the player owns the specified card.
+   * @param card the ICard to check for ownership
+   * @return true if the player owns the card or false if otherwise.
+   */
   public boolean owns(ICard card) {
     return this.ownedCards.contains(card);
   }

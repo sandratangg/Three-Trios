@@ -31,7 +31,8 @@ public class ThreeTriosCard implements ICard {
    * @param attackSouth the attack value for the south direction; must be between 1 and 10.
    * @throws IllegalArgumentException if any attack value is outside the range 1 to 10.
    */
-  public ThreeTriosCard(String name, int attackNorth, int attackEast, int attackWest, int attackSouth) {
+  public ThreeTriosCard(String name, int attackNorth, int attackEast,
+                        int attackWest, int attackSouth) {
 
     validCardAttackValue(attackNorth);
     validCardAttackValue(attackEast);
@@ -56,6 +57,11 @@ public class ThreeTriosCard implements ICard {
     return this.cardName;
   }
 
+  /**
+   * Gets the attack value of the card for a specified direction.
+   * @param direction uses the Direction enum to get the card's attack value
+   * @return the attack value for the specified direction as an integer.
+   */
   public int attack(Direction direction) {
     switch (direction) {
       case NORTH:
@@ -108,10 +114,13 @@ public class ThreeTriosCard implements ICard {
 
   // Helper : Constructs the string representation of attack values for the card.
   private String buildAttackString() {
-    return convertAttackValue(attackNorth) + " " +
-            convertAttackValue(attackEast) + " " +
-            convertAttackValue(attackWest) + " " +
-            convertAttackValue(attackSouth);
+    return convertAttackValue(attackNorth)
+            + " "
+            + convertAttackValue(attackEast)
+            + " "
+            + convertAttackValue(attackWest)
+            + " "
+            + convertAttackValue(attackSouth);
   }
 
 }
