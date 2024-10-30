@@ -20,6 +20,9 @@ import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+/**
+ * Test for the ThreeTriosGrid class
+ */
 public class ThreeTriosGridTests {
 
   private ThreeTriosGrid smallGrid;
@@ -208,37 +211,44 @@ public class ThreeTriosGridTests {
   }
 
 
-  //Tests that placeCard throws an IllegalArgumentException for out-of-bounds indices on all grids
+  // Tests that placeCard throws an IllegalArgumentException for out-of-bounds indices on all grids
   @Test
   public void testPlaceCardOutOfBoundsAllGrids() {
-    // Testing out-of-bounds indices on smallGrid (2x2)
-    testOutOfBoundsPlaceCard(smallGrid, -1, 0);  // Negative row
-    testOutOfBoundsPlaceCard(smallGrid, 2, 2);   // Out of bounds for grid size
-    testOutOfBoundsPlaceCard(smallGrid, 0, 3);   // Out of bounds column
-    testOutOfBoundsPlaceCard(smallGrid, 3, 3);   // Both row and column out of bounds
+    // Testing out-of-bounds on smallGrid 2x2
+    assertThrows(IllegalArgumentException.class,
+            () -> testOutOfBoundsPlaceCard(smallGrid, -1, 0));  // Negative row
+    assertThrows(IllegalArgumentException.class,
+            () -> testOutOfBoundsPlaceCard(smallGrid, 2, 2));   // Out of bounds for grid size
+    assertThrows(IllegalArgumentException.class,
+            () -> testOutOfBoundsPlaceCard(smallGrid, 0, 3));   // Out of bounds column
+    assertThrows(IllegalArgumentException.class,
+            () -> testOutOfBoundsPlaceCard(smallGrid, 3, 3));   // Both row and column out of bounds
 
-    // Testing out-of-bounds indices on mediumGrid (5x5)
-    testOutOfBoundsPlaceCard(mediumGrid, -1, 0);  // Negative row
-    testOutOfBoundsPlaceCard(mediumGrid, 5, 5);   // Out of bounds for grid size
-    testOutOfBoundsPlaceCard(mediumGrid, 0, 6);   // Out of bounds column
-    testOutOfBoundsPlaceCard(mediumGrid, 6, 4);   // Out of bounds row
+    // Testing out-of-bounds on mediumGrid 5x5
+    assertThrows(IllegalArgumentException.class,
+            () -> testOutOfBoundsPlaceCard(mediumGrid, -1, 0));  // Negative row
+    assertThrows(IllegalArgumentException.class,
+            () -> testOutOfBoundsPlaceCard(mediumGrid, 5, 5));   // Out of bounds for grid size
+    assertThrows(IllegalArgumentException.class,
+            () -> testOutOfBoundsPlaceCard(mediumGrid, 0, 6));   // Out of bounds column
+    assertThrows(IllegalArgumentException.class,
+            () -> testOutOfBoundsPlaceCard(mediumGrid, 6, 4));   // Out of bounds row
 
-    // Testing out-of-bounds indices on largeGrid (10x10)
-    testOutOfBoundsPlaceCard(largeGrid, -1, 0);   // Negative row
-    testOutOfBoundsPlaceCard(largeGrid, 10, 10);  // Out of bounds for grid size
-    testOutOfBoundsPlaceCard(largeGrid, 0, 11);   // Out of bounds column
-    testOutOfBoundsPlaceCard(largeGrid, 11, 9);   // Out of bounds row
+    // Testing out-of-bounds on largeGrid 10x10
+    assertThrows(IllegalArgumentException.class,
+            () -> testOutOfBoundsPlaceCard(largeGrid, -1, 0));   // Negative row
+    assertThrows(IllegalArgumentException.class,
+            () -> testOutOfBoundsPlaceCard(largeGrid, 10, 10));  // Out of bounds for grid size
+    assertThrows(IllegalArgumentException.class,
+            () -> testOutOfBoundsPlaceCard(largeGrid, 0, 11));   // Out of bounds column
+    assertThrows(IllegalArgumentException.class,
+            () -> testOutOfBoundsPlaceCard(largeGrid, 11, 9));   // Out of bounds row
   }
 
-  // Helper method to test placeCard with out-of-bounds indices
-  // Expects an IllegalArgumentException to be thrown.
+  // Helper method to perform the placeCard operation
+  // This method now does not handle exceptions as they are expected in the main test.
   private void testOutOfBoundsPlaceCard(ThreeTriosGrid grid, int row, int col) {
-    try {
-      grid.placeCard(row, col, sampleCardDragon);
-    } catch (IllegalArgumentException e) {
-      // Expected exception, test passes for this index
-      assertTrue(e.getMessage().contains("Invalid grid index"));
-    }
+    grid.placeCard(row, col, sampleCardDragon);
   }
 
 
@@ -269,63 +279,64 @@ public class ThreeTriosGridTests {
   }
 
 
-// Test battlePhase with valid params where the placed card has a higher attack
+  // Test battlePhase with valid params where the placed card has a higher attack
 // Makes sure the opponent’s card is flipped and ownership changes accordingly.
-@Test
-public void testBattlePhaseHigherAttackFlipsOwnership() {
-  // Place the high attack card for playerRed and low attack card for playerBlue
-  mediumGrid.placeCard(2, 2, highAttackCard);  // Center position in 5x5 grid
-  playerRed.addToOwned(highAttackCard);
+  @Test
+  public void testBattlePhaseHigherAttackFlipsOwnership() {
+    // Place the high attack card for playerRed and low attack card for playerBlue
+    mediumGrid.placeCard(2, 2, highAttackCard);  // Center position in 5x5 grid
+    playerRed.addToOwned(highAttackCard);
 
-  mediumGrid.placeCard(2, 3, lowAttackCard);   // Adjacent on the East
-  playerBlue.addToOwned(lowAttackCard);
+    mediumGrid.placeCard(2, 3, lowAttackCard);   // Adjacent on the East
+    playerBlue.addToOwned(lowAttackCard);
 
-  // Invoke battlePhase, expecting highAttackCard to flip ownership of lowAttackCard
-  mediumGrid.battlePhase(2, 2, highAttackCard, Direction.EAST, playerRed, playerBlue);
+    // Invoke battlePhase, expecting highAttackCard to flip ownership of lowAttackCard
+    mediumGrid.battlePhase(2, 2, highAttackCard, Direction.EAST, playerRed, playerBlue);
 
-  // Assert that lowAttackCard now belongs to playerRed
-  assertTrue(playerRed.owns(lowAttackCard));
-  assertFalse(playerBlue.owns(lowAttackCard));
-}
-
-// Test battlePhase with valid parameters where the opponent’s card has a higher attack/
-// Make's sure the opponent’s card ownership doesn't change.
-@Test
-public void testBattlePhaseLowerAttackNoFlip() {
-  // Place low attack card for playerRed and high attack card for playerBlue
-  mediumGrid.placeCard(2, 2, lowAttackCard);
-  playerRed.addToOwned(lowAttackCard);
-
-  mediumGrid.placeCard(2, 3, highAttackCard);
-  playerBlue.addToOwned(highAttackCard);
-
-  // Use battlePhase, expecting no change in ownership since opponent's attack is higher
-  mediumGrid.battlePhase(2, 2, lowAttackCard, Direction.EAST, playerRed, playerBlue);
-
-  // Assert that ownership of highAttackCard has not changed
-  assertFalse(playerRed.owns(highAttackCard));
-  assertTrue(playerBlue.owns(highAttackCard));
-}
-
-// Test battlePhase with out-of-bounds indices: Ensure no changes occur, and no exceptions thrown.
-@Test
-public void testBattlePhaseOutOfBoundsNoChange() {
-  // Place a card in the grid for playerRed
-  mediumGrid.placeCard(2, 2, highAttackCard);
-  playerRed.addToOwned(highAttackCard);
-
-  // Attempt to initiate battlePhase on an out-of-bounds cell (e.g., (5, 5))
-  try {
-    mediumGrid.battlePhase(5, 5, highAttackCard, Direction.EAST, playerRed, playerBlue);
-  } catch (Exception e) {
-    fail("Expected no exception thrown " +
-            "for out-of-bounds battlePhase, instead it got: " + e.getMessage());
+    // Assert that lowAttackCard now belongs to playerRed
+    assertTrue(playerRed.owns(lowAttackCard));
+    assertFalse(playerBlue.owns(lowAttackCard));
   }
 
-  // Assert that no changes occurred, confirming ownership remains the same
-  assertTrue(playerRed.owns(highAttackCard));
-  assertFalse(playerBlue.owns(highAttackCard));
-}
+  // Test battlePhase with valid parameters where the opponent’s card has a higher attack/
+// Make's sure the opponent’s card ownership doesn't change.
+  @Test
+  public void testBattlePhaseLowerAttackNoFlip() {
+    // Place low attack card for playerRed and high attack card for playerBlue
+    mediumGrid.placeCard(2, 2, lowAttackCard);
+    playerRed.addToOwned(lowAttackCard);
+
+    mediumGrid.placeCard(2, 3, highAttackCard);
+    playerBlue.addToOwned(highAttackCard);
+
+    // Use battlePhase, expecting no change in ownership since opponent's attack is higher
+    mediumGrid.battlePhase(2, 2, lowAttackCard, Direction.EAST, playerRed, playerBlue);
+
+    // Assert that ownership of highAttackCard has not changed
+    assertFalse(playerRed.owns(highAttackCard));
+    assertTrue(playerBlue.owns(highAttackCard));
+  }
+
+  // Test battlePhase with out-of-bounds indices: Ensure no changes occur, and no exceptions thrown.
+  @Test
+  public void testBattlePhaseOutOfBoundsNoChange() {
+    // Place a card in the grid for playerRed
+    mediumGrid.placeCard(2, 2, highAttackCard);
+    playerRed.addToOwned(highAttackCard);
+
+    // Attempt to initiate battlePhase on an out-of-bounds cell (e.g., (5, 5))
+    try {
+      mediumGrid.battlePhase(5, 5, highAttackCard, Direction.EAST, playerRed, playerBlue);
+    } catch (Exception e) {
+      fail("Expected no exception thrown "
+              + "for out-of-bounds battlePhase, instead it got: "
+              + e.getMessage());
+    }
+
+    // Assert that no changes occurred, confirming ownership remains the same
+    assertTrue(playerRed.owns(highAttackCard));
+    assertFalse(playerBlue.owns(highAttackCard));
+  }
 
   // Test toString for an empty grids
   @Test
