@@ -6,6 +6,8 @@ import org.junit.Test;
 import cs3500.threetrios.model.ThreeTriosCard;
 import cs3500.threetrios.model.ThreeTriosCell;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -39,7 +41,7 @@ public class ThreeTriosCellTests {
   // Test isEmpty method on a default cell (non-hole and no card)
   @Test
   public void testDefaultConstructorNoCard() {
-    assertTrue(noCardCell.card == null);
+    assertNull(noCardCell.card);
     assertTrue(noCardCell.isEmpty());
   }
 
@@ -48,8 +50,8 @@ public class ThreeTriosCellTests {
   @Test
   public void testHoleConstructorNoCard() {
     //holeCell is a card cell with no card
-    assertTrue(holeCell.card == null);
-    assertTrue(!holeCell.isEmpty()); //Returns true when the cell is not empty
+    assertNull(holeCell.card);
+    assertFalse(holeCell.isEmpty()); //Returns true when the cell is not empty
   }
 
   // Test hole constructor with isHole set to false
@@ -57,7 +59,7 @@ public class ThreeTriosCellTests {
   @Test
   public void testNonHoleConstructorNoCard() {
     ThreeTriosCell cell = new ThreeTriosCell(false);
-    assertTrue(cell.card == null);
+    assertNull(cell.card);
     assertTrue(cell.isEmpty());
   }
 
@@ -77,7 +79,7 @@ public class ThreeTriosCellTests {
   @Test
   public void testNonHoleCellWithCard() {
     cardCellWithCard.setCard(sampleCard);
-    assertTrue(!cardCellWithCard.isEmpty());
+    assertFalse(cardCellWithCard.isEmpty());
   }
 
 }

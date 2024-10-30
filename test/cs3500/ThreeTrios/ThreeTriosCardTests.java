@@ -6,6 +6,7 @@ import org.junit.Test;
 import cs3500.threetrios.model.Direction;
 import cs3500.threetrios.model.ThreeTriosCard;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -81,24 +82,24 @@ public class ThreeTriosCardTests {
   @Test
   public void testAttackValidDirections() {
     //Checks with NORTH direction
-    assertTrue(card1.attack(Direction.NORTH) == 5);
-    assertTrue(card2.attack(Direction.NORTH) == 1);
-    assertTrue(cardWith10.attack(Direction.NORTH) == 10);
+    assertEquals(5, card1.attack(Direction.NORTH));
+    assertEquals(1, card2.attack(Direction.NORTH));
+    assertEquals(10, cardWith10.attack(Direction.NORTH));
 
     //Checks with EAST direction
-    assertTrue(card1.attack(Direction.EAST) == 7);
-    assertTrue(card2.attack(Direction.EAST) == 10);
-    assertTrue(cardWith10.attack(Direction.EAST) == 10);
+    assertEquals(7, card1.attack(Direction.EAST));
+    assertEquals(10, card2.attack(Direction.EAST));
+    assertEquals(10, cardWith10.attack(Direction.EAST));
 
     //Checks with WEST direction
-    assertTrue(card1.attack(Direction.WEST) == 6);
-    assertTrue(card2.attack(Direction.WEST) == 9);
-    assertTrue(cardWith10.attack(Direction.WEST) == 10);
+    assertEquals(6, card1.attack(Direction.WEST));
+    assertEquals(9, card2.attack(Direction.WEST));
+    assertEquals(10, cardWith10.attack(Direction.WEST));
 
     //Checks with SOUTH direction
-    assertTrue(card1.attack(Direction.SOUTH) == 3);
-    assertTrue(card2.attack(Direction.SOUTH) == 8);
-    assertTrue(cardWith10.attack(Direction.SOUTH) == 10);
+    assertEquals(3, card1.attack(Direction.SOUTH));
+    assertEquals(8, card2.attack(Direction.SOUTH));
+    assertEquals(10, cardWith10.attack(Direction.SOUTH));
   }
 
   // Test attack method with invalid direction (null): Expect NullPointerException.
@@ -113,7 +114,8 @@ public class ThreeTriosCardTests {
   // UNLESS THE ENUM IS EDITED.
 
 
-  // Test matchesName with valid matching name: Ensure true is returned for a matching name.
+  // Test matchesName with valid matching name
+  // Makes sure true is returned for a matching name.
   @Test
   public void testMatchesNameValidMatchingName() {
     assertTrue(card1.matchesName("Dragon"));
@@ -121,7 +123,8 @@ public class ThreeTriosCardTests {
     assertTrue(cardWith10.matchesName("Lion"));
   }
 
-  // Test matchesName with a non-matching name: Ensure false is returned for a non-matching name.
+  // Test matchesName with a non-matching name
+  // Makes sure false is returned for a non-matching name.
   @Test
   public void testMatchesNameNonMatchingName() {
     assertFalse(card1.matchesName("Phoenix"));
@@ -129,7 +132,8 @@ public class ThreeTriosCardTests {
     assertFalse(cardWith10.matchesName("Dragon"));
   }
 
-  // Test matchesName with null: Ensure false is returned when null is passed.
+  // Test matchesName with null
+  // Makes sure false is returned when null is passed.
   @Test
   public void testMatchesNameNull() {
     assertFalse(card1.matchesName(null));
@@ -137,7 +141,8 @@ public class ThreeTriosCardTests {
     assertFalse(cardWith10.matchesName(null));
   }
 
-  // Test matchesName with an empty string: Ensure false is returned for an empty string.
+  // Test matchesName with an empty string
+  // Makes sure false is returned for an empty string.
   @Test
   public void testMatchesNameEmptyString() {
     assertFalse(card1.matchesName(""));
@@ -145,21 +150,23 @@ public class ThreeTriosCardTests {
     assertFalse(cardWith10.matchesName(""));
   }
 
-  // Test toString with valid attack values: Ensure correct string representation of the card is returned.
+  // Test toString with valid attack values
+  // Makes sure correct string representation of the card is returned.
   @Test
   public void testToStringValidAttackValues() {
     //Checks with valid attack values
-    assertTrue(card1.toString().equals("Dragon 5 7 6 3"));
-    assertTrue(card2.toString().equals("Phoenix 1 A 9 8"));
-    assertTrue(cardWith10.toString().equals("Lion A A A A"));
+    assertEquals("Dragon 5 7 6 3", card1.toString());
+    assertEquals("Phoenix 1 A 9 8", card2.toString());
+    assertEquals("Lion A A A A", cardWith10.toString());
   }
 
-  // Test toString when attack value is 10: Ensure 'A' is used to represent the attack value of 10.
+  // Test toString when attack value is 10
+  // Makes sure 'A' is used to represent the attack value of 10.
   @Test
   public void testToStringAttackValue10() {
     //Checks with attack value 10
-    assertTrue(card2.toString().equals("Phoenix 1 A 9 8"));
-    assertTrue(cardWith10.toString().equals("Lion A A A A"));
+    assertEquals("Phoenix 1 A 9 8", card2.toString());
+    assertEquals("Lion A A A A", cardWith10.toString());
   }
 
 }

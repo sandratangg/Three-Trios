@@ -15,6 +15,7 @@ public class ThreeTriosGrid implements IGrid {
 
   /**
    * Constructs a ThreeTriosGrid with the given dimensions.
+   *
    * @param rows the number of rows
    * @param cols the number of columns
    */
@@ -41,27 +42,26 @@ public class ThreeTriosGrid implements IGrid {
 
   /**
    * Helper: Places card only if valid
-   * @param row the row to place the card
-   * @param col the column to place the card
+   *
+   * @param row  the row to place the card
+   * @param col  the column to place the card
    * @param card the card to place
    * @throws IllegalArgumentException if the position is invalid
    */
   public void placeCard(int row, int col, ICard card) {
-
     if (card == null) {
       throw new IllegalArgumentException("Need a card value!");
     }
 
-    try {
-      grid[row][col].setCard(card);
-    }
-    catch (NullPointerException e) {
+    if (row < 0 || row >= rows || col < 0 || col >= cols) {
       throw new IllegalArgumentException("Invalid grid index");
     }
-    catch (Exception e) {
+
+    try {
+      grid[row][col].setCard(card);
+    } catch (Exception e) {
       throw new IllegalStateException("Card is already placed or cell is a hole.");
     }
-
   }
 
   /**
@@ -96,9 +96,6 @@ public class ThreeTriosGrid implements IGrid {
       }
     }
   }
-
-
-
 
 
   private Direction getOppositeDirection(Direction direction) {
@@ -144,6 +141,7 @@ public class ThreeTriosGrid implements IGrid {
 
   /**
    * Returns a string representation of the grid.
+   *
    * @param red the red player
    * @return the string representation of the grid
    */
@@ -234,4 +232,6 @@ public class ThreeTriosGrid implements IGrid {
     return new ThreeTriosCell(this.grid[row][col].isHole,
             this.grid[row][col].getCard());
   }
+
+
 }
