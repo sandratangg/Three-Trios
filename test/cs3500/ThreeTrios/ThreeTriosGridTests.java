@@ -3,16 +3,17 @@ package cs3500.ThreeTrios;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
 import cs3500.threetrios.model.PlayerColor;
 import cs3500.threetrios.model.ThreeTriosCard;
-import cs3500.threetrios.model.ThreeTriosGameModel;
 import cs3500.threetrios.model.ThreeTriosGrid;
 import cs3500.threetrios.model.ThreeTriosPlayer;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
 public class ThreeTriosGridTests {
@@ -54,73 +55,73 @@ public class ThreeTriosGridTests {
 
 
   // Test constructor with valid dimensions (positive rows and columns): Ensure the grid is created with empty cells.
-@Test
-public void testConstructorValidDimensions() {
-  // Small grid
-  for (int row = 0; row < 2; row++) {
-    for (int col = 0; col < 2; col++) {
-      //check if every cell in small grid isEmpty()
-      assertTrue(!smallGrid.isGridFull());
+  @Test
+  public void testConstructorValidDimensions() {
+    // Small grid
+    for (int row = 0; row < 2; row++) {
+      for (int col = 0; col < 2; col++) {
+        //check if every cell in small grid isEmpty()
+        assertTrue(!smallGrid.isGridFull());
 
+      }
+    }
+
+    // Medium grid
+    for (int row = 0; row < 5; row++) {
+      for (int col = 0; col < 5; col++) {
+        //check if every cell in medium grid isEmpty()
+        assertTrue(!mediumGrid.isGridFull());
+      }
+    }
+
+    // Large grid
+    for (int row = 0; row < 10; row++) {
+      for (int col = 0; col < 10; col++) {
+        //check if every cell in large grid isEmpty()
+        assertTrue(!largeGrid.isGridFull());
+      }
     }
   }
 
-  // Medium grid
-  for (int row = 0; row < 5; row++) {
-    for (int col = 0; col < 5; col++) {
-      //check if every cell in medium grid isEmpty()
-      assertTrue(!mediumGrid.isGridFull());
+  // Test constructor with invalid dimensions (rows or columns <= 0): Expect IllegalArgumentException.
+  @Test
+  public void testConstructorInvalidDimensions() {
+    try {
+      ThreeTriosGrid invalidGrid = new ThreeTriosGrid(0, 5);
+    } catch (IllegalArgumentException e) {
+      assertTrue(e.getMessage().contains("Grid dimensions must be positive."));
+    }
+
+    try {
+      ThreeTriosGrid invalidGrid = new ThreeTriosGrid(5, 0);
+    } catch (IllegalArgumentException e) {
+      assertTrue(e.getMessage().contains("Grid dimensions must be positive."));
+    }
+
+    try {
+      ThreeTriosGrid invalidGrid = new ThreeTriosGrid(0, 0);
+    } catch (IllegalArgumentException e) {
+      assertTrue(e.getMessage().contains("Grid dimensions must be positive."));
     }
   }
 
-  // Large grid
-  for (int row = 0; row < 10; row++) {
-    for (int col = 0; col < 10; col++) {
-      //check if every cell in large grid isEmpty()
-      assertTrue(!largeGrid.isGridFull());
-    }
-  }
-}
+  // Test getCardFromCell
+  @Test
+  public void testGetCardFromCell() {
+    // Place sampleCard in the top-left corner of the small grid
+    smallGrid.placeCard(0, 0, sampleCardDragon);
+    assertTrue(smallGrid.getCardFromCell(0, 0).equals(sampleCardDragon));
 
-// Test constructor with invalid dimensions (rows or columns <= 0): Expect IllegalArgumentException.
-@Test
-public void testConstructorInvalidDimensions() {
-  try {
-    ThreeTriosGrid invalidGrid = new ThreeTriosGrid(0, 5);
-  } catch (IllegalArgumentException e) {
-    assertTrue(e.getMessage().contains("Grid dimensions must be positive."));
+    // Place sampleCard in the center of the medium grid
+    mediumGrid.placeCard(2, 2, sampleCardDragon);
+    assertTrue(mediumGrid.getCardFromCell(2, 2).equals(sampleCardDragon));
+
+    // Place sampleCard in the bottom-right corner of the large grid
+    largeGrid.placeCard(9, 9, sampleCardDragon);
+    assertTrue(largeGrid.getCardFromCell(9, 9).equals(sampleCardDragon));
   }
 
-  try {
-    ThreeTriosGrid invalidGrid = new ThreeTriosGrid(5, 0);
-  } catch (IllegalArgumentException e) {
-    assertTrue(e.getMessage().contains("Grid dimensions must be positive."));
-  }
-
-  try {
-    ThreeTriosGrid invalidGrid = new ThreeTriosGrid(0, 0);
-  } catch (IllegalArgumentException e) {
-    assertTrue(e.getMessage().contains("Grid dimensions must be positive."));
-  }
-}
-
-// Test getCardFromCell
-@Test
-public void testGetCardFromCell() {
-  // Place sampleCard in the top-left corner of the small grid
-  smallGrid.placeCard(0, 0, sampleCardDragon);
-  assertTrue(smallGrid.getCardFromCell(0, 0).equals(sampleCardDragon));
-
-  // Place sampleCard in the center of the medium grid
-  mediumGrid.placeCard(2, 2, sampleCardDragon);
-  assertTrue(mediumGrid.getCardFromCell(2, 2).equals(sampleCardDragon));
-
-  // Place sampleCard in the bottom-right corner of the large grid
-  largeGrid.placeCard(9, 9, sampleCardDragon);
-  assertTrue(largeGrid.getCardFromCell(9, 9).equals(sampleCardDragon));
-}
-
-// Test placeCard in a valid position on an empty cell: Ensure the card is successfully placed, and placeCard returns true.
+  // Test placeCard in a valid position on an empty cell: Ensure the card is successfully placed, and placeCard returns true.
   @Test
   public void testPlaceCardValidPos() {
     // Place sampleCard in the top-left corner of the small grid
@@ -137,45 +138,58 @@ public void testGetCardFromCell() {
   }
 
 
-// Test placeCard in an occupied cell (already has a card)
+  // Test placeCard in an occupied cell (already has a card)
 // Should throw IllegalArgumentException
-@Test
-public void testPlaceCardOccupiedCell() {
-  // Place sampleCard in the top-left corner of the small grid
-  smallGrid.placeCard(0, 0, sampleCardDragon);
-  try {
+  @Test
+  public void testPlaceCardOccupiedCell() {
+    // Place sampleCard in the top-left corner of the small grid
     smallGrid.placeCard(0, 0, sampleCardDragon);
-  } catch (IllegalArgumentException e) {
-    assertTrue(e.getMessage().contains("Card is already placed or cell is a hole."));
-  }
+    try {
+      smallGrid.placeCard(0, 0, sampleCardDragon);
+    } catch (IllegalArgumentException e) {
+      assertTrue(e.getMessage().contains("Card is already placed or cell is a hole."));
+    }
 
-  // Place sampleCard in the center of the medium grid
-  mediumGrid.placeCard(2, 2, sampleCardDragon);
-  try {
+    // Place sampleCard in the center of the medium grid
     mediumGrid.placeCard(2, 2, sampleCardDragon);
-  } catch (IllegalArgumentException e) {
-    assertTrue(e.getMessage().contains("Card is already placed or cell is a hole."));
-  }
+    try {
+      mediumGrid.placeCard(2, 2, sampleCardDragon);
+    } catch (IllegalArgumentException e) {
+      assertTrue(e.getMessage().contains("Card is already placed or cell is a hole."));
+    }
 
-  // Place sampleCard in the bottom-right corner of the large grid
-  largeGrid.placeCard(9, 9, sampleCardDragon);
-  try {
+    // Place sampleCard in the bottom-right corner of the large grid
     largeGrid.placeCard(9, 9, sampleCardDragon);
-  } catch (IllegalArgumentException e) {
-    assertTrue(e.getMessage().contains("Card is already placed or cell is a hole."));
+    try {
+      largeGrid.placeCard(9, 9, sampleCardDragon);
+    } catch (IllegalArgumentException e) {
+      assertTrue(e.getMessage().contains("Card is already placed or cell is a hole."));
+    }
   }
-}
 
-// Test placeCard in a hole cell (invalid placement)
-// Should throw IllegalStateException
-@Test
-  public void testPlaceCardHoleCell() {
-    
+  // Test placeCard in a hole cell (invalid placement)
+  // Should throw IllegalStateException
+  // Uses the fromFile() method to create a grid from a file.
+  // Uses board2.txt as the file (config file that contains a hole cell).
+  @Test
+  public void testPlaceCardHoleCell() throws FileNotFoundException {
+
+    ThreeTriosGrid gridFile = ThreeTriosGrid.fromFile("test/cs3500/ThreeTrios/ExampleBoards/board2.txt");
+    sampleCard = new ThreeTriosCard("Dragon", 5, 7, 6, 3);
+    assertThrows(IllegalArgumentException.class, () -> {
+      gridFile.placeCard(0, 2, sampleCard);
+    });
   }
 
 
 // Test placeCard with out-of-bounds indices: Ensure placeCard returns false without any exception.
-
+@Test
+public void testPlaceCardOutOfBounds() {
+    //Try to place card that is out of bounds
+    assertThrows(IllegalArgumentException.class, () -> {
+      smallGrid.placeCard(3, 3, sampleCardDragon);
+    });
+}
 
 // Test battlePhase with valid parameters where the placed card has a higher attack: Ensure the opponent’s card is flipped and ownership changes accordingly.
 
@@ -184,6 +198,5 @@ public void testPlaceCardOccupiedCell() {
 
 
 // Test battlePhase with out-of-bounds indices: Ensure no changes occur, and no
-
   //Test getCardFromCell
 }
