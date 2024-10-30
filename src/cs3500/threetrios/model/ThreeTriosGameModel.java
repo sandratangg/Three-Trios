@@ -33,7 +33,11 @@ public class ThreeTriosGameModel implements ThreeTrios {
    * @param deck the list of cards representing the deck, split between players.
    */
   public ThreeTriosGameModel(int rows, int cols, List<ThreeTriosCard> deck) {
-    this.grid = new ThreeTriosGrid(rows, cols);
+    new ThreeTriosGameModel(new ThreeTriosGrid(rows, cols), deck);
+  }
+
+  public ThreeTriosGameModel(ThreeTriosGrid grid, List<ThreeTriosCard> deck) {
+    this.grid = grid;
     int cardsPerPlayer = deck.size() / 2;
 
     this.redPlayer = new ThreeTriosPlayer(PlayerColor.RED, deck.subList(0, cardsPerPlayer));
@@ -41,6 +45,7 @@ public class ThreeTriosGameModel implements ThreeTrios {
     this.currentPlayer = redPlayer;
     this.oppositePlayer = bluePlayer; // Red player starts
   }
+
 
   public boolean placeCard(int row, int col, ICard card) {
     if (!currentPlayer.playCard(card)) {
