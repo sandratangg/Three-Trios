@@ -1,4 +1,4 @@
-package cs3500.ThreeTrios;
+package cs3500.threetrios;
 
 import cs3500.threetrios.model.ThreeTriosCard;
 import cs3500.threetrios.model.ThreeTriosPlayer;

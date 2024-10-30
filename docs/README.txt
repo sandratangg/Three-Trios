@@ -73,3 +73,10 @@ The game setup includes grid and card configuration files:
 
 board1.txt, board2.txt, board3.txt: Define various grid setups, specifying cell types and spaces.
 card_file1.txt, card_file2.txt: List available cards and their directional attack values.
+
+
+Textual Rendering of the Model
+
+To facilitate visualization, we implemented a textual rendering feature (toString() method) within
+the ThreeTriosGameModel class, allowing players and developers to view a simplified text-based
+representation of the game board.
