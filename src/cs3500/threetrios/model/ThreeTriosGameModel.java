@@ -233,6 +233,12 @@ public class ThreeTriosGameModel implements ThreeTrios {
     }
   }
 
+  /**
+   * Returns the color of the current player.
+   * Determines if the current player is red or blue based on their attributes.
+   *
+   * @return the {@code PlayerColor} of the current player, either {@code RED} or {@code BLUE}
+   */
   public PlayerColor currentPlayerColor() {
     if (this.currentPlayer.isRed()) {
       return PlayerColor.RED;
@@ -241,11 +247,4 @@ public class ThreeTriosGameModel implements ThreeTrios {
     }
   }
 
-  public boolean redPlayerOwnsCard(ICard card) {
-    return this.redPlayer.getOwnedCards().contains(card);
-  }
-
-  public boolean bluePlayerOwnsCard(ICard card) {
-    return this.bluePlayer.getOwnedCards().contains(card);
-  }
 }

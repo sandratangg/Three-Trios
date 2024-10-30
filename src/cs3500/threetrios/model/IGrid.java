@@ -18,8 +18,6 @@ public interface IGrid {
    * @param row the row index at which to place the card.
    * @param col the column index at which to place the card.
    * @param card the {@link ICard} to be placed at the specified cell.
-   * @return true if the card was successfully placed; false if the cell is occupied
-   *         or if the coordinates are invalid.
    */
   void placeCard(int row, int col, ICard card);
 

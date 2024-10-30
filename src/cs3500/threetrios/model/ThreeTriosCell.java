@@ -25,7 +25,8 @@ public class ThreeTriosCell implements ICell {
   }
 
   /**
-   * Constructor for a Card Cell with a given card
+   * Constructor for a Card Cell with a given card.
+   *
    * @param isHole whether the cell is a hole or not
    * @param card The card to place in the cell
    */
