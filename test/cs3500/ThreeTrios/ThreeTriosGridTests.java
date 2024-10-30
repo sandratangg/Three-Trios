@@ -200,7 +200,7 @@ public class ThreeTriosGridTests {
             7, 6, 3);
 
     try {
-      gridFile.placeCard(0, 2, sampleCardPhoenix);
+      gridFile.placeCard(1, 2, sampleCardPhoenix);
       fail("Expected IllegalStateException to be thrown for placing card in a hole cell");
     } catch (IllegalStateException e) {
       // Test passes if IllegalStateException is thrown
@@ -335,6 +335,7 @@ public void testBattlePhaseOutOfBoundsNoChange() {
   public void testToStringEmptyGrid() {
     //Small empty grid
     String expectedOutput = "__\n__";
+    System.out.println(smallGrid.toString(playerRed));
     assertEquals(expectedOutput, smallGrid.toString(playerRed));
 
     //Medium empty grid
