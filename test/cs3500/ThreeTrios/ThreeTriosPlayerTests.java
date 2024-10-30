@@ -113,7 +113,7 @@ public class ThreeTriosPlayerTests {
 
   // Test toString method
   @Test
-  public void testToString() {
+  public void testToStringPlayerColor() {
     assertEquals("Player: RED", playerRed.toString());
     assertEquals("Player: BLUE", playerBlue.toString());
   }
@@ -131,5 +131,40 @@ public class ThreeTriosPlayerTests {
     assertEquals(0, playerRed.getOwnedCardsSize()); // Initial size should be 0
     playerRed.addToOwned(sampleCardDragon);
     assertEquals(1, playerRed.getOwnedCardsSize());
+  }
+
+  // Test handToString with cards in the hand
+  @Test
+  public void testHandToStringWithCards() {
+    // Check the handToString when "Dragon" card is in hard
+    assertEquals("Dragon 5 7 6 3", playerRed.handToString());
+
+    // Check the handToString for playerBlue when "Phoenix" card is in hand
+    assertEquals("Phoenix 3 8 5 7", playerBlue.handToString());
+  }
+
+  // Test handToString with an empty hand
+  @Test
+  public void testHandToStringEmptyHand() {
+    // Create a player with an empty hand
+    ThreeTriosPlayer playerRedEmpty = new ThreeTriosPlayer(PlayerColor.RED, new ArrayList<>());
+    assertTrue(playerRedEmpty.handToString().isEmpty());
+
+    // Create another player with an empty hand
+    ThreeTriosPlayer playerBlueEmpty = new ThreeTriosPlayer(PlayerColor.BLUE, new ArrayList<>());
+    assertTrue(playerBlueEmpty.handToString().isEmpty());
+
+  }
+
+  // Test handToString with multiple cards in hand
+  @Test
+  public void testHandToStringMultipleCards() {
+    // Add another card to playerRed's hand
+    ThreeTriosCard newCard = new ThreeTriosCard("Tiger", 6, 4, 9, 2);
+    playerRed.addToHand(newCard);
+
+    // Expected hand string output with both "Dragon" and "Tiger" in hand
+    String expectedHand = "Dragon 5 7 6 3\nTiger 6 4 9 2";
+    assertEquals(expectedHand, playerRed.handToString());
   }
 }
