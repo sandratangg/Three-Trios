@@ -14,9 +14,9 @@ import java.util.Scanner;
  */
 public class ThreeTriosGameModel implements ThreeTrios {
 
-  private final ThreeTriosGrid grid;
-  private final ThreeTriosPlayer redPlayer;
-  private final ThreeTriosPlayer bluePlayer;
+  private ThreeTriosGrid grid;
+  private ThreeTriosPlayer redPlayer;
+  private ThreeTriosPlayer bluePlayer;
   private ThreeTriosPlayer currentPlayer;
   private ThreeTriosPlayer oppositePlayer;
 
