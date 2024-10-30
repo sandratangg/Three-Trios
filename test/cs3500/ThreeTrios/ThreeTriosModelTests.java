@@ -26,8 +26,8 @@ public class ThreeTriosModelTests {
   @Before
   public void setUp() throws FileNotFoundException {
     // Load the basic grid and deck configuration for initialization
-    grid = ThreeTriosGrid.fromFile("test/cs3500/ThreeTrios/ExampleBoards/board1.txt");
-    deck = ThreeTriosGameModel.readCardsFromFile("test/cs3500/ThreeTrios/ExampleCards/"
+    grid = ThreeTriosGrid.fromFile("docs/ExampleBoards/board1.txt");
+    deck = ThreeTriosGameModel.readCardsFromFile("docs/ExampleCards/"
             + "card_file1.txt");
     gameModel = new ThreeTriosGameModel(grid, deck);
   }
@@ -77,8 +77,7 @@ public class ThreeTriosModelTests {
   // Test grid configuration parsing, ensuring correct grid structure and cell types.
   @Test
   public void testGridConfigParsingBoard1() throws FileNotFoundException {
-    grid = ThreeTriosGrid.fromFile("test/cs3500/ThreeTrios"
-            + "/ExampleBoards/board1.txt");
+    grid = ThreeTriosGrid.fromFile("docs/ExampleBoards/board1.txt");
     assertNotNull("Grid should be initialized", grid);
     assertEquals("Grid should have 2 rows", 2, grid.getRowCount());
     assertEquals("Grid should have 2 columns", 2, grid.getColCount());
@@ -88,8 +87,7 @@ public class ThreeTriosModelTests {
 
   @Test
   public void testGridConfigParsingBoard2() throws FileNotFoundException {
-    grid = ThreeTriosGrid.fromFile("test/cs3500/ThreeTrios"
-            + "/ExampleBoards/board2.txt");
+    grid = ThreeTriosGrid.fromFile("docs/ExampleBoards/board2.txt");
     assertNotNull("Grid should be initialized", grid);
     assertEquals("Grid should have 5 rows", 5, grid.getRowCount());
     assertEquals("Grid should have 5 columns", 5, grid.getColCount());
@@ -99,8 +97,7 @@ public class ThreeTriosModelTests {
 
   @Test
   public void testGridConfigParsingBoard3() throws FileNotFoundException {
-    grid = ThreeTriosGrid.fromFile("test/cs3500/ThreeTrios"
-            + "/ExampleBoards/board3.txt");
+    grid = ThreeTriosGrid.fromFile("docs/ExampleBoards/board3.txt");
     assertNotNull("Grid should be initialized", grid);
     assertEquals("Grid should have 5 rows", 5, grid.getRowCount());
     assertEquals("Grid should have 5 columns", 5, grid.getColCount());
@@ -112,8 +109,7 @@ public class ThreeTriosModelTests {
   @Test
   public void testCardFile1Parsing() throws FileNotFoundException {
     List<ThreeTriosCard> deck =
-            ThreeTriosGameModel.readCardsFromFile("test/cs3500/ThreeTrios"
-                    + "/ExampleCards/card_file1.txt");
+            ThreeTriosGameModel.readCardsFromFile("docs/ExampleCards/card_file1.txt");
     assertNotNull("Deck should not be null", deck);
     assertEquals("Deck should contain 7 cards", 7, deck.size());
 
@@ -128,8 +124,7 @@ public class ThreeTriosModelTests {
   @Test
   public void testCardFile2Parsing() throws FileNotFoundException {
     List<ThreeTriosCard> deck =
-            ThreeTriosGameModel.readCardsFromFile("test/cs3500/ThreeTrios"
-                    + "/ExampleCards/card_file2.txt");
+            ThreeTriosGameModel.readCardsFromFile("docs/ExampleCards/card_file2.txt");
     assertNotNull("Deck should not be null", deck);
     assertEquals("Deck should contain 26 cards", 26, deck.size());
 

@@ -195,7 +195,7 @@ public class ThreeTriosGridTests {
   @Test
   public void testPlaceCardHoleCell() throws FileNotFoundException {
     ThreeTriosGrid gridFile = ThreeTriosGrid.fromFile(
-            "test/cs3500/ThreeTrios/ExampleBoards/board2.txt");
+            "docs/ExampleBoards/board2.txt");
     sampleCardPhoenix = new ThreeTriosCard("Dragon", 5,
             7, 6, 3);
 

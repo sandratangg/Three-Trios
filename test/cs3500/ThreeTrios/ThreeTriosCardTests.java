@@ -78,7 +78,7 @@ public class ThreeTriosCardTests {
 
 
   // Test attack method with valid directions.
-// Makes sure correct attack values are returned for each direction (NORTH, EAST, WEST, SOUTH).
+  // Makes sure correct attack values are returned for each direction (NORTH, EAST, WEST, SOUTH).
   @Test
   public void testAttackValidDirections() {
     //Checks with NORTH direction
