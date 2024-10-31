@@ -216,33 +216,33 @@ public class ThreeTriosGridTests {
   public void testPlaceCardOutOfBoundsAllGrids() {
     // Testing out-of-bounds on smallGrid 2x2
     assertThrows(IllegalArgumentException.class,
-      () -> testOutOfBoundsPlaceCard(smallGrid, -1, 0));  // Negative row
+        () -> testOutOfBoundsPlaceCard(smallGrid, -1, 0));  // Negative row
     assertThrows(IllegalArgumentException.class,
-      () -> testOutOfBoundsPlaceCard(smallGrid, 2, 2));   // Out of bounds for grid size
+        () -> testOutOfBoundsPlaceCard(smallGrid, 2, 2));   // Out of bounds for grid size
     assertThrows(IllegalArgumentException.class,
-      () -> testOutOfBoundsPlaceCard(smallGrid, 0, 3));   // Out of bounds column
+        () -> testOutOfBoundsPlaceCard(smallGrid, 0, 3));   // Out of bounds column
     assertThrows(IllegalArgumentException.class,
-      () -> testOutOfBoundsPlaceCard(smallGrid, 3, 3));   // Both row and column out of bounds
+        () -> testOutOfBoundsPlaceCard(smallGrid, 3, 3));   // Both row and column out of bounds
 
     // Testing out-of-bounds on mediumGrid 5x5
     assertThrows(IllegalArgumentException.class,
-      () -> testOutOfBoundsPlaceCard(mediumGrid, -1, 0));  // Negative row
+        () -> testOutOfBoundsPlaceCard(mediumGrid, -1, 0));  // Negative row
     assertThrows(IllegalArgumentException.class,
-      () -> testOutOfBoundsPlaceCard(mediumGrid, 5, 5));   // Out of bounds for grid size
+        () -> testOutOfBoundsPlaceCard(mediumGrid, 5, 5));   // Out of bounds for grid size
     assertThrows(IllegalArgumentException.class,
-      () -> testOutOfBoundsPlaceCard(mediumGrid, 0, 6));   // Out of bounds column
+        () -> testOutOfBoundsPlaceCard(mediumGrid, 0, 6));   // Out of bounds column
     assertThrows(IllegalArgumentException.class,
-      () -> testOutOfBoundsPlaceCard(mediumGrid, 6, 4));   // Out of bounds row
+        () -> testOutOfBoundsPlaceCard(mediumGrid, 6, 4));   // Out of bounds row
 
     // Testing out-of-bounds on largeGrid 10x10
     assertThrows(IllegalArgumentException.class,
-      () -> testOutOfBoundsPlaceCard(largeGrid, -1, 0));   // Negative row
+        () -> testOutOfBoundsPlaceCard(largeGrid, -1, 0));   // Negative row
     assertThrows(IllegalArgumentException.class,
-      () -> testOutOfBoundsPlaceCard(largeGrid, 10, 10));  // Out of bounds for grid size
+        () -> testOutOfBoundsPlaceCard(largeGrid, 10, 10));  // Out of bounds for grid size
     assertThrows(IllegalArgumentException.class,
-      () -> testOutOfBoundsPlaceCard(largeGrid, 0, 11));   // Out of bounds column
+        () -> testOutOfBoundsPlaceCard(largeGrid, 0, 11));   // Out of bounds column
     assertThrows(IllegalArgumentException.class,
-      () -> testOutOfBoundsPlaceCard(largeGrid, 11, 9));   // Out of bounds row
+        () -> testOutOfBoundsPlaceCard(largeGrid, 11, 9));   // Out of bounds row
   }
 
   // Helper method to perform the placeCard operation
