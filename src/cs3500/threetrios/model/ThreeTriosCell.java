@@ -51,6 +51,10 @@ public class ThreeTriosCell implements ICell {
    * Method that gets the Card in the cell.
    */
   public ICard getCard() {
+    if (this.card == null) {
+      return null;
+    }
+
     return new ThreeTriosCard(card.getName(),
             card.attack(Direction.NORTH),
             card.attack(Direction.EAST),
