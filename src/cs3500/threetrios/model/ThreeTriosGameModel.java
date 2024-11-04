@@ -33,7 +33,7 @@ public class ThreeTriosGameModel extends ReadOnlyThreeTriosModel implements Thre
    * @param deck the list of cards representing the deck, split between players.
    */
   public ThreeTriosGameModel(int rows, int cols, List<ThreeTriosCard> deck) {
-    new ThreeTriosGameModel(new ThreeTriosGrid(rows, cols), deck);
+    this(new ThreeTriosGrid(rows, cols), deck);
   }
 
 
@@ -61,7 +61,7 @@ public class ThreeTriosGameModel extends ReadOnlyThreeTriosModel implements Thre
   }
 
   public ThreeTriosGameModel(String gridConfigPath, String cardConfigPath) throws FileNotFoundException {
-    new ThreeTriosGameModel(ThreeTriosGrid.fromFile(gridConfigPath), readCardsFromFile(cardConfigPath));
+    this(ThreeTriosGrid.fromFile(gridConfigPath), readCardsFromFile(cardConfigPath));
   }
 
 

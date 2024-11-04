@@ -10,9 +10,7 @@ public final class ThreeTrios {
     ThreeTriosGameModel model = new ThreeTriosGameModel(2, 2, ThreeTriosGameModel.readCardsFromFile("docs/ExampleCards/card_file2.txt"));
 
     // Test
-    System.out.println("Current player color " + model.getCurrentPlayerColor().toString());
-
-
+    System.out.println("Current grid height: " + model.getGridHeight());
 
     ThreeTriosView view = new ThreeTriosView(model);
     view.setVisible(true);
