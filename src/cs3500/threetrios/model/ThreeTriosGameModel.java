@@ -60,20 +60,22 @@ public class ThreeTriosGameModel implements ThreeTrios {
     this.oppositePlayer = bluePlayer; // Red player starts
   }
 
+  public ThreeTriosGameModel(String gridConfigPath, String cardConfigPath) throws FileNotFoundException {
+    new ThreeTriosGameModel(ThreeTriosGrid.fromFile(gridConfigPath), readCardsFromFile(cardConfigPath));
+  }
+
 
   /**
    * Attempts to place a card at a specified location on the game grid.
-   * @param row the row index at which to place the card.
-   * @param col the column index at which to place the card.
+   *
+   * @param row  the row index at which to place the card.
+   * @param col  the column index at which to place the card.
    * @param card the ThreeTriosCard to be placed on the grid.
-   *
-   * @return true if the card was successfully placed at the specified location;
-   *
    * @throws IllegalArgumentException if the card cannot be placed at the specified location.
    * @throws IllegalArgumentException if the player does not have the card.
    * @throws IllegalArgumentException if the position is invalid.
    */
-  public boolean placeCard(int row, int col, ICard card) {
+  public void placeCard(int row, int col, ICard card) {
     if (!currentPlayer.playCard(card)) {
       throw new IllegalArgumentException("Player does not have this card.");
     }
@@ -86,7 +88,6 @@ public class ThreeTriosGameModel implements ThreeTrios {
 
     performBattlePhase(row, col, card, currentPlayer, oppositePlayer);
     switchTurn();
-    return true;
   }
 
 
@@ -152,6 +153,48 @@ public class ThreeTriosGameModel implements ThreeTrios {
    */
   public StringBuilder newLine(StringBuilder string) {
     return string.append("\n");
+  }
+
+  public IGrid copyGrid() {
+    return grid.copy();
+  }
+
+  public int getGridWidth() {
+    return grid.getColCount();
+  }
+
+  public int getGridHeight() {
+    return grid.getRowCount();
+  }
+
+  public ICell getCellContents(int x, int y) {
+    return grid.getCell(x, y);
+  }
+
+  public List<ThreeTriosCard> getPlayerHand(ThreeTriosPlayer player) {
+    return player.getHandCards();
+  }
+
+  public IPlayer getCardOwner(int x, int y) {
+    if (currentPlayer.owns(grid.getCardFromCell(x, y))) {
+      return new ThreeTriosPlayer(currentPlayerColor(), currentPlayer.getHandCards());
+    } else if (oppositePlayer.owns(grid.getCardFromCell(x, y))) {
+      return new ThreeTriosPlayer(oppositePlayerColor(), oppositePlayer.getHandCards());
+    } else {
+      throw new IllegalStateException("No player owns a card at this spot!");
+    }
+  }
+
+  public boolean isLegalMove(int x, int y, ICard card, IPlayer player) {
+    return grid.isLegalMove(x, y, card);
+  }
+
+  public int calculateFlippableCards(int x, int y, ICard card, IPlayer player) {
+    return grid.calculateFlippableCards(x, y, card, player);
+  }
+
+  public int getPlayerScore(ThreeTriosPlayer player) {
+    return countOwnedCards(player);
   }
 
   /**
@@ -244,6 +287,14 @@ public class ThreeTriosGameModel implements ThreeTrios {
       return PlayerColor.RED;
     } else {
       return PlayerColor.BLUE;
+    }
+  }
+
+  public PlayerColor oppositePlayerColor() {
+    if (this.currentPlayer.isRed()) {
+      return PlayerColor.BLUE;
+    } else {
+      return PlayerColor.RED;
     }
   }
 

@@ -40,6 +40,22 @@ public class ThreeTriosGrid implements IGrid {
     }
   }
 
+  public ThreeTriosGrid copy() {
+    ThreeTriosGrid newGrid = new ThreeTriosGrid(this.rows, this.cols);
+
+    for (int row = 0; row < this.rows; row++) {
+      for (int col = 0; col < this.cols; col++) {
+        ThreeTriosCell originalCell = this.grid[row][col];
+        ICard cardCopy = originalCell.getCard() != null ? originalCell.getCard() : null;
+
+        // Create a new cell with the hole status and the copied card (or null if no card)
+        newGrid.grid[row][col] = new ThreeTriosCell(originalCell.isHole, cardCopy);
+      }
+    }
+
+    return newGrid;
+  }
+
   /**
    * Helper: Places card only if valid.
    *
@@ -49,19 +65,18 @@ public class ThreeTriosGrid implements IGrid {
    * @throws IllegalArgumentException if the position is invalid
    */
   public void placeCard(int row, int col, ICard card) {
-    if (card == null) {
-      throw new IllegalArgumentException("Need a card value!");
-    }
-
-    if (row < 0 || row >= rows || col < 0 || col >= cols) {
-      throw new IllegalArgumentException("Invalid grid index");
-    }
-
-    try {
+    if (isLegalMove(row, col, card)) {
       grid[row][col].setCard(card);
-    } catch (Exception e) {
-      throw new IllegalStateException("Card is already placed or cell is a hole.");
+    } else {
+      throw new IllegalStateException("Illegal card placement");
     }
+  }
+
+  public boolean isLegalMove(int row, int col, ICard card) {
+    if (row < 0 || row >= rows || col < 0 || col >= cols) {
+      return false;
+    } else return !grid[row][col].isEmpty();
+
   }
 
   /**
@@ -111,6 +126,42 @@ public class ThreeTriosGrid implements IGrid {
       default:
         throw new IllegalArgumentException("Invalid direction");
     }
+  }
+
+  public int calculateFlippableCards(int x, int y, ICard card, IPlayer player) {
+    boolean[][] visited = new boolean[this.rows][this.cols];
+    return calculateFlipsFromPosition(x, y, card, player, visited);
+  }
+
+  // Recursive helper method to calculate flips with chain reactions
+  private int calculateFlipsFromPosition(int x, int y, ICard card, IPlayer player, boolean[][] visited) {
+    int chainFlips = 0;
+
+    for (Direction direction : Direction.values()) {
+      int adjacentRow = getAdjacentRow(x, direction);
+      int adjacentCol = getAdjacentCol(y, direction);
+
+      if (isValidPosition(adjacentRow, adjacentCol) && !visited[adjacentRow][adjacentCol]) {
+        ThreeTriosCell adjacentCell = (ThreeTriosCell) getCell(adjacentRow, adjacentCol);
+
+        // Check if there's an opponent card in the adjacent cell
+        if (!adjacentCell.isEmpty() && !player.owns(adjacentCell.card)) {
+          // Flip condition: check attack values
+          if (card.attack(direction) > adjacentCell.card.attack(getOppositeDirection(direction))) {
+            // Mark this cell as visited to prevent re-processing
+            visited[adjacentRow][adjacentCol] = true;
+
+            // Increment flip count for this card
+            chainFlips++;
+
+            // Recursively calculate further flips from this new position
+            chainFlips += calculateFlipsFromPosition(adjacentRow, adjacentCol, adjacentCell.card, player, visited);
+          }
+        }
+      }
+    }
+
+    return chainFlips;
   }
 
   private boolean isValidPosition(int row, int col) {

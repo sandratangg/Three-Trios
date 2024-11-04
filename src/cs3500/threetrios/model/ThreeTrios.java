@@ -14,11 +14,9 @@ public interface ThreeTrios {
    * Placement may be subject to grid availability and game rules,
    * such as preventing placement in occupied cells or out-of-bounds locations.
    *
-   * @param row the row index at which to place the card.
-   * @param col the column index at which to place the card.
+   * @param row  the row index at which to place the card.
+   * @param col  the column index at which to place the card.
    * @param card the {@link ThreeTriosCard} to be placed on the grid.
-   * @return true if the card was successfully placed at the specified location;
-   *         false if the placement failed due to game rules or invalid coordinates.
    */
-  boolean placeCard(int row, int col, ICard card);
+  void placeCard(int row, int col, ICard card);
 }
