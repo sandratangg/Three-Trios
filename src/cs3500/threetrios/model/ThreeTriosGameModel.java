@@ -167,7 +167,7 @@ public class ThreeTriosGameModel extends ReadOnlyThreeTriosModel implements Thre
     return grid.getRowCount();
   }
 
-  public ICell getCellContents(int x, int y) {
+  public ThreeTriosCell getCellContents(int x, int y) {
     return grid.getCell(x, y);
   }
 

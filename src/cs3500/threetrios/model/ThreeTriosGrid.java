@@ -303,7 +303,7 @@ public class ThreeTriosGrid implements IGrid {
    * @param col the column of cell
    * @return the cell at the given row and column
    */
-  public ICell getCell(int row, int col) {
+  public ThreeTriosCell getCell(int row, int col) {
     return new ThreeTriosCell(this.grid[row][col].isHole,
             this.grid[row][col].getCard());
   }

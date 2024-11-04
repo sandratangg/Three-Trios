@@ -20,7 +20,7 @@ public abstract class ReadOnlyThreeTriosModel {
   }
 
   // Returns the contents of a specific cell in the grid
-  public ICell getCellContents(int row, int col) {
+  public ThreeTriosCell getCellContents(int row, int col) {
     return grid.getCell(row, col);
   }
 
