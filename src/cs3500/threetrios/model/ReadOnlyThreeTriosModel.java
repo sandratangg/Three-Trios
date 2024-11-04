@@ -7,7 +7,6 @@ public abstract class ReadOnlyThreeTriosModel {
   protected ThreeTriosPlayer redPlayer;
   protected ThreeTriosPlayer bluePlayer;
   protected ThreeTriosPlayer currentPlayer;
-  protected ThreeTriosPlayer oppositePlayer;
 
   // Returns the grid's width (number of columns)
   public int getGridWidth() {
@@ -26,7 +25,11 @@ public abstract class ReadOnlyThreeTriosModel {
 
   // Returns the contents of a player's hand based on the player's color
   public List<ThreeTriosCard> getPlayerHand(PlayerColor playerColor) {
-    return playerColor == PlayerColor.RED ? redPlayer.getHandCards() : bluePlayer.getHandCards();
+    if (playerColor.equals(PlayerColor.RED)) {
+      return redPlayer.getHandCards();
+    } else {
+      return bluePlayer.getHandCards();
+    }
   }
 
   // Determines the owner of the card in a cell at the given coordinate

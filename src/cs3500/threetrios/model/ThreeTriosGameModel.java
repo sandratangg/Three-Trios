@@ -171,8 +171,12 @@ public class ThreeTriosGameModel extends ReadOnlyThreeTriosModel implements Thre
     return grid.getCell(x, y);
   }
 
-  public List<ThreeTriosCard> getPlayerHand(ThreeTriosPlayer player) {
-    return player.getHandCards();
+  public List<ThreeTriosCard> getPlayerHand(PlayerColor playerColor) {
+    if (playerColor.equals(PlayerColor.RED)) {
+      return redPlayer.getHandCards();
+    } else {
+      return bluePlayer.getHandCards();
+    }
   }
 
   public PlayerColor getCardOwner(int x, int y) {

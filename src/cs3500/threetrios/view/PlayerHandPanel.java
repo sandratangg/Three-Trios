@@ -2,56 +2,47 @@ package cs3500.threetrios.view;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.util.List;
 
 import cs3500.threetrios.model.PlayerColor;
+import cs3500.threetrios.model.ThreeTriosCard;
 
-public class PlayerHandPanel extends JPanel implements IPlayerHandPanel {
-  private PlayerColor playerColor;
-  private JButton[] cardButtons;
-  private int selectedCard = -1;
+public class PlayerHandPanel extends JPanel {
+  private CellPanel selectedCardPanel = null;
 
-  public PlayerHandPanel(PlayerColor playerColor) {
-    this.playerColor = playerColor;
-    setLayout(new GridLayout(0, 1));
+  public PlayerHandPanel(List<ThreeTriosCard> cards, PlayerColor color) {
+    setLayout(new GridLayout(cards.size(), 1)); // Vertical layout
 
-    // Assume a fixed hand size for simplicity
-    cardButtons = new JButton[10]; // Adjust size as needed
-    for (int i = 0; i < cardButtons.length; i++) {
-      final int cardIndex = i;
-      cardButtons[i] = new JButton(playerColor + " Card " + (i + 1));
-      cardButtons[i].addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-          if (selectedCard == cardIndex) {
-            deselectCard();
-          } else {
-            System.out.println("Card clicked: " + cardIndex + " owned by " + playerColor);
-            highlightCard(cardIndex);
-          }
+    for (ThreeTriosCard card : cards) {
+      CellPanel cardPanel = new CellPanel(card, color); // Use CellPanel for card display
+      cardPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+
+      // Set preferred size for the card panel
+      cardPanel.setPreferredSize(new Dimension(100, 150)); // Adjust width and height as needed
+
+      cardPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+          handleCardSelection(cardPanel);
         }
       });
-      add(cardButtons[i]);
+
+      add(cardPanel);
     }
   }
 
-  @Override
-  public void highlightCard(int cardIndex) {
-    if (selectedCard != -1) {
-      cardButtons[selectedCard].setBackground(null);
+  private void handleCardSelection(CellPanel cardPanel) {
+    if (selectedCardPanel != null) {
+      selectedCardPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
     }
-    selectedCard = cardIndex;
-    cardButtons[cardIndex].setBackground(Color.YELLOW);
-  }
 
-  @Override
-  public void deselectCard() {
-    if (selectedCard != -1) {
-      cardButtons[selectedCard].setBackground(null);
-      selectedCard = -1;
+    if (selectedCardPanel == cardPanel) {
+      selectedCardPanel = null;
+    } else {
+      cardPanel.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 3));
+      selectedCardPanel = cardPanel;
     }
+
+    revalidate();
+    repaint();
   }
 }

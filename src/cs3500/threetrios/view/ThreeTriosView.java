@@ -12,8 +12,8 @@ import cs3500.threetrios.model.ReadOnlyThreeTriosModel;
 
 public class ThreeTriosView extends JFrame implements IThreeTriosView {
   private IGameGridPanel gridPanel;
-  private IPlayerHandPanel leftHandPanel;
-  private IPlayerHandPanel rightHandPanel;
+  private PlayerHandPanel leftHandPanel;
+  private PlayerHandPanel rightHandPanel;
   private JLabel messageLabel;
 
   public ThreeTriosView(ReadOnlyThreeTriosModel model) {
@@ -25,8 +25,9 @@ public class ThreeTriosView extends JFrame implements IThreeTriosView {
     add((Component) gridPanel, BorderLayout.CENTER);
 
     // Set up player hands
-    leftHandPanel = new PlayerHandPanel(PlayerColor.RED);
-    rightHandPanel = new PlayerHandPanel(PlayerColor.BLUE);
+    leftHandPanel = new PlayerHandPanel(model.getPlayerHand(PlayerColor.RED), PlayerColor.RED);
+    rightHandPanel = new PlayerHandPanel(model.getPlayerHand(PlayerColor.BLUE), PlayerColor.BLUE);
+
     add((Component) leftHandPanel, BorderLayout.WEST);
     add((Component) rightHandPanel, BorderLayout.EAST);
 
@@ -44,8 +45,7 @@ public class ThreeTriosView extends JFrame implements IThreeTriosView {
     this.gridPanel = gridPanel;
   }
 
-  @Override
-  public void setPlayerHand(IPlayerHandPanel leftHandPanel, IPlayerHandPanel rightHandPanel) {
+  public void setPlayerHand(PlayerHandPanel leftHandPanel, PlayerHandPanel rightHandPanel) {
     this.leftHandPanel = leftHandPanel;
     this.rightHandPanel = rightHandPanel;
   }
@@ -57,16 +57,16 @@ public class ThreeTriosView extends JFrame implements IThreeTriosView {
 
   @Override
   public void highlightCard(int cardIndex, PlayerColor playerColor) {
-    if (playerColor == PlayerColor.RED) {
+    /*if (playerColor == PlayerColor.RED) {
       leftHandPanel.highlightCard(cardIndex);
     } else {
       rightHandPanel.highlightCard(cardIndex);
-    }
+    }*/
   }
 
   @Override
   public void deselectCard() {
-    leftHandPanel.deselectCard();
-    rightHandPanel.deselectCard();
+    /*leftHandPanel.deselectCard();
+    rightHandPanel.deselectCard();*/
   }
 }
