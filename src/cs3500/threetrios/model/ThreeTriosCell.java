@@ -42,6 +42,11 @@ public class ThreeTriosCell implements ICell {
     return !isHole && card == null;
   }
 
+  @Override
+  public boolean isHole() {
+    return this.isHole;
+  }
+
   /**
    * Method that gets the Card in the cell.
    */

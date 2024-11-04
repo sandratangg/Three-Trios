@@ -12,7 +12,7 @@ import java.util.Scanner;
  * turn-switching, battle phases, and determining the game's outcome.
  * The model maintains the current and opposite player to manage game turns.
  */
-public class ThreeTriosGameModel implements ThreeTrios {
+public class ThreeTriosGameModel extends ReadOnlyThreeTriosModel implements ThreeTrios {
 
   private ThreeTriosGrid grid;
   private ThreeTriosPlayer redPlayer;
@@ -175,11 +175,11 @@ public class ThreeTriosGameModel implements ThreeTrios {
     return player.getHandCards();
   }
 
-  public IPlayer getCardOwner(int x, int y) {
+  public PlayerColor getCardOwner(int x, int y) {
     if (currentPlayer.owns(grid.getCardFromCell(x, y))) {
-      return new ThreeTriosPlayer(currentPlayerColor(), currentPlayer.getHandCards());
+      return currentPlayerColor();
     } else if (oppositePlayer.owns(grid.getCardFromCell(x, y))) {
-      return new ThreeTriosPlayer(oppositePlayerColor(), oppositePlayer.getHandCards());
+      return oppositePlayerColor();
     } else {
       throw new IllegalStateException("No player owns a card at this spot!");
     }

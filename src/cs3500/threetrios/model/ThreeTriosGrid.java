@@ -68,14 +68,14 @@ public class ThreeTriosGrid implements IGrid {
     if (isLegalMove(row, col, card)) {
       grid[row][col].setCard(card);
     } else {
-      throw new IllegalStateException("Illegal card placement");
+      throw new IllegalArgumentException("Illegal card placement");
     }
   }
 
   public boolean isLegalMove(int row, int col, ICard card) {
     if (row < 0 || row >= rows || col < 0 || col >= cols) {
       return false;
-    } else return !grid[row][col].isEmpty();
+    } else return grid[row][col].isEmpty() & !grid[row][col].isHole;
 
   }
 

@@ -171,7 +171,7 @@ public class ThreeTriosGridTests {
     try {
       smallGrid.placeCard(0, 0, sampleCardDragon);
     } catch (IllegalArgumentException e) {
-      assertTrue(e.getMessage().contains("Card is already placed or cell is a hole."));
+      assertTrue(e.getMessage().contains("Illegal card placement"));
     }
 
     // Place sampleCard in the center of the medium grid
@@ -179,7 +179,7 @@ public class ThreeTriosGridTests {
     try {
       mediumGrid.placeCard(2, 2, sampleCardDragon);
     } catch (IllegalArgumentException e) {
-      assertTrue(e.getMessage().contains("Card is already placed or cell is a hole."));
+      assertTrue(e.getMessage().contains("Illegal card placement"));
     }
 
     // Place sampleCard in the bottom-right corner of the large grid
@@ -187,7 +187,7 @@ public class ThreeTriosGridTests {
     try {
       largeGrid.placeCard(9, 9, sampleCardDragon);
     } catch (IllegalArgumentException e) {
-      assertTrue(e.getMessage().contains("Card is already placed or cell is a hole."));
+      assertTrue(e.getMessage().contains("Illegal card placement"));
     }
   }
 
@@ -204,8 +204,8 @@ public class ThreeTriosGridTests {
 
     try {
       gridFile.placeCard(1, 2, sampleCardPhoenix);
-      fail("Expected IllegalStateException to be thrown for placing card in a hole cell");
-    } catch (IllegalStateException e) {
+      fail("Expected IllegalArgumentException for illegal card placement");
+    } catch (IllegalArgumentException e) {
       // Test passes if IllegalStateException is thrown
     }
   }

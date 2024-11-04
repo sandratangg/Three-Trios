@@ -19,4 +19,5 @@ public interface ICell {
   boolean isEmpty();
 
 
+  boolean isHole();
 }
