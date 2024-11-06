@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import cs3500.threetrios.controller.FileReader;
+
 /**
  * Represents the Three Trios game model, containing the game grid, players,
  * and core game logic. This class handles actions such as card placement,
@@ -60,8 +62,10 @@ public class ThreeTriosGameModel extends ReadOnlyThreeTriosModel implements Thre
     this.oppositePlayer = bluePlayer; // Red player starts
   }
 
-  public ThreeTriosGameModel(String gridConfigPath, String cardConfigPath) throws FileNotFoundException {
-    this(ThreeTriosGrid.fromFile(gridConfigPath), readCardsFromFile(cardConfigPath));
+
+  
+  public ThreeTriosGameModel(String gridString, String cardString) throws FileNotFoundException {
+    this(FileReader.gridFileReader(gridString), FileReader.cardFileReader(cardString));
   }
 
 
