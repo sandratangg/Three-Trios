@@ -68,6 +68,20 @@ public class ThreeTriosGameModel extends ReadOnlyThreeTriosModel implements Thre
     this(FileReader.gridFileReader(gridString), FileReader.cardFileReader(cardString));
   }
 
+  public ThreeTriosGameModel(ThreeTriosGrid grid, List<ThreeTriosCard> deck, List<ThreeTriosCard> placedCards, List<Posn> placedCardsPositions) {
+
+    this(grid, deck);
+    if (deck.containsAll(placedCards) && placedCards.size() == placedCardsPositions.size()) {
+      for (int card = 0; card < placedCards.size(); card++) {
+        grid.placeCard(placedCardsPositions.get(card).getX(),
+                placedCardsPositions.get(card).getY(), placedCards.get(card));
+      }
+    } else {
+      throw new IllegalArgumentException("Deck must contain all cards to be placed & all cards to be placed must have an associated position.");
+    }
+
+  }
+
 
   /**
    * Attempts to place a card at a specified location on the game grid.
