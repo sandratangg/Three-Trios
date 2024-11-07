@@ -49,7 +49,6 @@ public class ThreeTriosGUIViewTests {
   @Test
   public void testInitialState() {
     System.out.println(gameModel.currentPlayerColor().toString());
-
     //System.out.println(gameModel.getPlayerScore(PlayerColor.BLUE));
 
     ThreeTriosView view = new ThreeTriosView(gameModel);

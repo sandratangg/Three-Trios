@@ -67,6 +67,7 @@ public class ThreeTriosGrid implements IGrid {
   public void placeCard(int row, int col, ICard card) {
     if (isLegalMove(row, col, card)) {
       grid[row][col].setCard(card);
+
     } else {
       throw new IllegalArgumentException("Illegal card placement");
     }

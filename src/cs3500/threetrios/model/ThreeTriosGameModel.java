@@ -116,6 +116,7 @@ public class ThreeTriosGameModel extends ReadOnlyThreeTriosModel implements Thre
 
     try {
       grid.placeCard(row, col, card);
+      //currentPlayer.playCard(card);
     } catch (IllegalArgumentException e) {
       throw new IllegalArgumentException("Invalid position: (" + row + ", " + col + ")");
     }
@@ -213,8 +214,14 @@ public class ThreeTriosGameModel extends ReadOnlyThreeTriosModel implements Thre
     }
   }
 
+
   public PlayerColor getCardOwner(int x, int y) {
     System.out.println("Spot: " + x + ", " + y);
+    System.out.println(grid.getCardFromCell(x, y).toString());
+
+    System.out.println(redPlayer.getOwnedCards().size());
+    System.out.println(bluePlayer.getOwnedCards().size());
+
     if (currentPlayer.owns(grid.getCardFromCell(x, y))) {
       return currentPlayerColor();
     } else if (oppositePlayer.owns(grid.getCardFromCell(x, y))) {
