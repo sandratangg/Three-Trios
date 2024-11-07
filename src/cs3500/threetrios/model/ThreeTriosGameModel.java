@@ -89,7 +89,7 @@ public class ThreeTriosGameModel extends ReadOnlyThreeTriosModel implements Thre
     this(grid, deck);
     if (deck.containsAll(placedCards) && placedCards.size() == placedCardsPositions.size()) {
       for (int card = 0; card < placedCards.size(); card++) {
-        grid.placeCard(placedCardsPositions.get(card).getX(),
+        placeCard(placedCardsPositions.get(card).getX(),
                 placedCardsPositions.get(card).getY(), placedCards.get(card));
       }
     } else {
