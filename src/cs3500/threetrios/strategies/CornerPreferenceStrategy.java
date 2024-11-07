@@ -1,4 +1,4 @@
-package cs3500.threetrios.controller;
+package cs3500.threetrios.strategies;
 
 import java.util.List;
 import java.util.Optional;

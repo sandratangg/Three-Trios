@@ -1,4 +1,4 @@
-package cs3500.threetrios.controller;
+package cs3500.threetrios.strategies;
 
 import cs3500.threetrios.model.ThreeTriosCard;
 
