@@ -214,6 +214,7 @@ public class ThreeTriosGameModel extends ReadOnlyThreeTriosModel implements Thre
   }
 
   public PlayerColor getCardOwner(int x, int y) {
+    System.out.println("Spot: " + x + ", " + y);
     if (currentPlayer.owns(grid.getCardFromCell(x, y))) {
       return currentPlayerColor();
     } else if (oppositePlayer.owns(grid.getCardFromCell(x, y))) {

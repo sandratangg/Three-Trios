@@ -2,9 +2,12 @@ package cs3500.threetrios.controller;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import cs3500.threetrios.model.ThreeTriosCard;
+import cs3500.threetrios.model.ThreeTriosGrid;
 
 /**
  * Class that reads files.
@@ -21,9 +24,10 @@ public class FileReader {
    * @return a list of {@link ThreeTriosCard} objects representing the deck.
    * @throws FileNotFoundException if the specified file cannot be found.
    */
-  public static String cardFileReader(String filename) throws FileNotFoundException {
-    StringBuilder deckBuilder = new StringBuilder();
+  public static List<ThreeTriosCard> readCardsFromFile(String filename)
+          throws FileNotFoundException {
     Scanner scanner = new Scanner(new File(filename));
+    List<ThreeTriosCard> deck = new ArrayList<>();
 
     while (scanner.hasNextLine()) {
       String line = scanner.nextLine();
@@ -34,16 +38,10 @@ public class FileReader {
       int attackEast = parseCardValue(cardData[3]);
       int attackWest = parseCardValue(cardData[4]);
 
-      // Add the card information to the deck representation
-      deckBuilder.append("Card Name: ").append(cardName)
-              .append(", North: ").append(attackNorth)
-              .append(", South: ").append(attackSouth)
-              .append(", East: ").append(attackEast)
-              .append(", West: ").append(attackWest)
-              .append("\n");
+      deck.add(new ThreeTriosCard(cardName, attackNorth, attackEast, attackWest, attackSouth));
     }
-    scanner.close();
-    return deckBuilder.toString();
+
+    return deck;
   }
 
   /**
@@ -55,31 +53,27 @@ public class FileReader {
    * @return a string representation of the grid configuration.
    * @throws FileNotFoundException if the specified file cannot be found.
    */
-  public static String gridFileReader(String filename) throws FileNotFoundException {
-    StringBuilder gridBuilder = new StringBuilder();
+  public static ThreeTriosGrid gridFromFile(String filename) throws FileNotFoundException {
     Scanner scanner = new Scanner(new File(filename));
-
     int rows = scanner.nextInt();
     int cols = scanner.nextInt();
-    scanner.nextLine();  // Move to the next line after reading dimensions
+    scanner.nextLine();  // Move to the next line after the dimensions
 
-    gridBuilder.append("Grid Dimensions: ").append(rows).append(" x ").append(cols).append("\n");
+    ThreeTriosGrid grid = new ThreeTriosGrid(rows, cols);
 
     for (int row = 0; row < rows; row++) {
       String line = scanner.nextLine();
-      gridBuilder.append("Row ").append(row + 1).append(": ");
       for (int col = 0; col < cols; col++) {
         char cellChar = line.charAt(col);
         if (cellChar == 'C') {
-          gridBuilder.append("[Empty Card Cell] ");
+          grid.placeEmptyCardCell(row, col);  // Method to initialize an empty card cell
         } else if (cellChar == 'X') {
-          gridBuilder.append("[Hole] ");
+          grid.placeHole(row, col);  // Method to mark a hole
         }
       }
-      gridBuilder.append("\n");
     }
-    scanner.close();
-    return gridBuilder.toString();
+
+    return grid;
   }
 
 

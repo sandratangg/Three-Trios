@@ -18,6 +18,7 @@ public class CellPanel extends JPanel {
     this.isHole = cell.isHole();
 
     if (!cell.isEmpty() && !isHole) {
+      System.out.println("Row: " + row + ", Col: " + col);
       createPlayerCardPanel(cell, model, row, col);
     } else {
       setBackground(isHole ? Color.GRAY : Color.YELLOW);

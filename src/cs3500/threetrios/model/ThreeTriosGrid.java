@@ -282,18 +282,18 @@ public class ThreeTriosGrid implements IGrid {
     return grid;
   }
 
-  private void placeEmptyCardCell(int row, int col) {
+  public void placeEmptyCardCell(int row, int col) {
     grid[row][col] = new ThreeTriosCell(false);  // 'false' means it’s not a hole
   }
 
-  private void placeHole(int row, int col) {
+  public void placeHole(int row, int col) {
     grid[row][col] = new ThreeTriosCell(true);  // 'true' means it’s a hole
   }
 
   // For testing purposes
   // Returns card from cell at position (i, j)
   public ICard getCardFromCell(int i, int j) {
-    return grid[i][j].card;
+    return grid[i][j].getCard();
   }
 
 
