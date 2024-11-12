@@ -2,12 +2,13 @@ package cs3500.threetrios.strategies;
 
 import java.util.Optional;
 
+import cs3500.threetrios.model.PlayerColor;
 import cs3500.threetrios.model.ReadOnlyThreeTriosModel;
 import cs3500.threetrios.model.ThreeTriosCard;
 import cs3500.threetrios.model.ThreeTriosPlayer;
 
-class MaximizeFlipsStrategy implements ThreeTriosStrategy {
-  public Optional<Move> chooseMove(ReadOnlyThreeTriosModel model, ThreeTriosPlayer player) {
+public class MaximizeFlipsStrategy implements ThreeTriosStrategy {
+  public Optional<Move> chooseMove(ReadOnlyThreeTriosModel model, PlayerColor color) {
     int maxFlips = 0;
     Move bestMove = null;
 
@@ -15,13 +16,13 @@ class MaximizeFlipsStrategy implements ThreeTriosStrategy {
       for (int col = 0; col < model.getGridWidth(); col++) {
         if (!model.getCellContents(row, col).isEmpty()) continue;
 
-        for (ThreeTriosCard card : player.getHandCards()) {
+        for (ThreeTriosCard card : model.getPlayerHand(color)) {
           int flips = model.calculateFlippableCards(row, col, card);
           if (flips > maxFlips) {
             maxFlips = flips;
             bestMove = new Move(row, col, card);
           } else if (flips == maxFlips) {
-            if (bestMove == null || isUpperLeft(row, col, bestMove.row, bestMove.col)) {
+            if (bestMove == null || isUpperLeft(row, col, bestMove.getRow(), bestMove.getCol())) {
               bestMove = new Move(row, col, card);
             }
           }
