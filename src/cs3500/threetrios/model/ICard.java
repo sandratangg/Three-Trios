@@ -37,4 +37,6 @@ public interface ICard {
    * @return the name of the card as a string
    */
   String getName();
+
+  boolean equals(ICard card);
 }

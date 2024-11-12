@@ -35,13 +35,18 @@ public class ThreeTriosGUIViewTests {
     gridCardsList = new ArrayList<>();
     placedCardPositions = new ArrayList<>();
 
-    for (int card = 0; card < 1; card++) {
-      gridCardsList.add(deck.get(card));
-    }
+//    for (int card = 0; card < 1; card++) {
+//      gridCardsList.add(deck.get(card));
+//    }
+    gridCardsList.add(deck.get(0));
+    gridCardsList.add(deck.get(20));
+    gridCardsList.add(deck.get(3));
+    gridCardsList.add(deck.get(21));
 
     placedCardPositions.add(new Posn(0, 0));
-    //placedCardPositions.add(new Posn(0, 2));
-    //placedCardPositions.add(new Posn(0, 4));
+    placedCardPositions.add(new Posn(0, 4));
+    placedCardPositions.add(new Posn(3, 0));
+    placedCardPositions.add(new Posn(1, 0));
 
     gameModel = new ThreeTriosGameModel(grid, deck, gridCardsList, placedCardPositions);
   }
@@ -52,7 +57,10 @@ public class ThreeTriosGUIViewTests {
     //System.out.println(gameModel.getPlayerScore(PlayerColor.BLUE));
 
     ThreeTriosView view = new ThreeTriosView(gameModel);
-    view.setVisible(true);
+    while (true) {
+      view.setVisible(true);
+    }
+
   }
 
 

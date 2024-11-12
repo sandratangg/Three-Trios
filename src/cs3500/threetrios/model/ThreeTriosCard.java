@@ -123,4 +123,25 @@ public class ThreeTriosCard implements ICard {
             + convertAttackValue(attackSouth);
   }
 
+  @Override
+  public boolean equals(ICard card) {
+    System.out.println("this name: " + cardName);
+    System.out.println("given name: " + card.getName());
+    return this.matchesName(card.getName()) &&
+            this.attackNorth == card.attack(Direction.NORTH) &&
+            this.attackEast == card.attack(Direction.EAST) &&
+            this.attackWest == card.attack(Direction.WEST) &&
+            this.attackSouth == card.attack(Direction.SOUTH);
+  }
+
+  @Override
+  public int hashCode() {
+    int result = cardName != null ? cardName.hashCode() : 0;
+    result = 31 * result + attackNorth;
+    result = 31 * result + attackEast;
+    result = 31 * result + attackWest;
+    result = 31 * result + attackSouth;
+    return result;
+  }
+
 }

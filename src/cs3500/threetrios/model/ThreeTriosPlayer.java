@@ -57,7 +57,15 @@ public class ThreeTriosPlayer implements IPlayer {
    * @return true if the player owns the card or false if otherwise.
    */
   public boolean owns(ICard card) {
-    return this.ownedCards.contains(card);
+    boolean doesPlayerOwn = false;
+
+    for (ICard c : this.ownedCards) {
+      if (c.equals(card)) {
+        doesPlayerOwn = true;
+      }
+    }
+
+    return doesPlayerOwn;
   }
 
   /**

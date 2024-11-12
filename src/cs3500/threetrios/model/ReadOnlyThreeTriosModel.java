@@ -35,14 +35,25 @@ public abstract class ReadOnlyThreeTriosModel {
   // Determines the owner of the card in a cell at the given coordinate
   public PlayerColor getCardOwner(int row, int col) {
     ICard card = grid.getCardFromCell(row, col);
+    System.out.println("Checking card ownership at position (" + row + ", " + col + ")");
+    System.out.println("Card: " + card);
+
+    if (card == null) {
+      throw new IllegalStateException("No card found at this position.");
+    }
+
     if (redPlayer.owns(card)) {
+      System.out.println("Card owned by RED player");
       return PlayerColor.RED;
     } else if (bluePlayer.owns(card)) {
+      System.out.println("Card owned by BLUE player");
       return PlayerColor.BLUE;
     } else {
+      System.out.println("No player owns the card at position (" + row + ", " + col + ")");
       throw new IllegalStateException("No player owns the card at this position.");
     }
   }
+
 
   // Checks if it is legal for the current player to play at a given coordinate
   public boolean isLegalMove(int row, int col, ICard card) {

@@ -67,7 +67,6 @@ public class ThreeTriosGrid implements IGrid {
   public void placeCard(int row, int col, ICard card) {
     if (isLegalMove(row, col, card)) {
       grid[row][col].setCard(card);
-
     } else {
       throw new IllegalArgumentException("Illegal card placement");
     }
@@ -91,7 +90,7 @@ public class ThreeTriosGrid implements IGrid {
     if (isValidPosition(adjacentRow, adjacentCol)) {
       ThreeTriosCell adjacentCell = grid[adjacentRow][adjacentCol];
 
-      if (!adjacentCell.isEmpty()) {  // Check if the cell has a card
+      if (!adjacentCell.isEmpty() && !adjacentCell.isHole) {  // Check if the cell has a card
         ICard adjacentCard = adjacentCell.card;
 
         // Only battle if the adjacent card belongs to the opponent
@@ -143,7 +142,7 @@ public class ThreeTriosGrid implements IGrid {
       int adjacentCol = getAdjacentCol(y, direction);
 
       if (isValidPosition(adjacentRow, adjacentCol) && !visited[adjacentRow][adjacentCol]) {
-        ThreeTriosCell adjacentCell = (ThreeTriosCell) getCell(adjacentRow, adjacentCol);
+        ThreeTriosCell adjacentCell = getCell(adjacentRow, adjacentCol);
 
         // Check if there's an opponent card in the adjacent cell
         if (!adjacentCell.isEmpty() && !player.owns(adjacentCell.card)) {
