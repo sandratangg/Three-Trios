@@ -3,12 +3,13 @@ package cs3500.threetrios.strategies;
 import java.util.List;
 import java.util.Optional;
 
+import cs3500.threetrios.model.PlayerColor;
 import cs3500.threetrios.model.ReadOnlyThreeTriosModel;
 import cs3500.threetrios.model.ThreeTriosCard;
 import cs3500.threetrios.model.ThreeTriosPlayer;
 
-class CornerPreferenceStrategy implements ThreeTriosStrategy {
-  public Optional<Move> chooseMove(ReadOnlyThreeTriosModel model, ThreeTriosPlayer player) {
+public class CornerPreferenceStrategy implements ThreeTriosStrategy {
+  public Optional<Move> chooseMove(ReadOnlyThreeTriosModel model, PlayerColor color) {
     int gridHeight = model.getGridHeight();
     int gridWidth = model.getGridWidth();
     List<int[]> corners = List.of(
@@ -27,13 +28,13 @@ class CornerPreferenceStrategy implements ThreeTriosStrategy {
 
       if (!model.getCellContents(row, col).isEmpty()) continue;
 
-      for (ThreeTriosCard card : player.getHandCards()) {
+      for (ThreeTriosCard card : model.getPlayerHand(color)) {
         int opponentFlips = model.calculateFlippableCards(row, col, card);
         if (opponentFlips < minOpponentFlips) {
           minOpponentFlips = opponentFlips;
           bestMove = new Move(row, col, card);
         } else if (opponentFlips == minOpponentFlips) {
-          if (bestMove == null || isUpperLeft(row, col, bestMove.row, bestMove.col)) {
+          if (bestMove == null || isUpperLeft(row, col, bestMove.getRow(), bestMove.getCol())) {
             bestMove = new Move(row, col, card);
           }
         }
