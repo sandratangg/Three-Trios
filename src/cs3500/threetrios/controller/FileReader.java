@@ -20,13 +20,13 @@ public class FileReader {
    * attack values for the north, south, east, and west directions. Attack
    * values should range from 1 to 10, with 'A' representing 10.
    *
-   * @param filename the path to the file containing card data.
+   * @param filePath the path to the file containing card data.
    * @return a list of {@link ThreeTriosCard} objects representing the deck.
    * @throws FileNotFoundException if the specified file cannot be found.
    */
-  public static List<ThreeTriosCard> readCardsFromFile(String filename)
+  public static List<ThreeTriosCard> readCardsFromFile(String filePath)
           throws FileNotFoundException {
-    Scanner scanner = new Scanner(new File(filename));
+    Scanner scanner = new Scanner(new File(filePath));
     List<ThreeTriosCard> deck = new ArrayList<>();
 
     while (scanner.hasNextLine()) {
@@ -49,12 +49,12 @@ public class FileReader {
    * The file should contain grid dimensions in the first line, followed by grid cell configurations,
    * where 'C' represents an empty card cell and 'X' represents a hole.
    *
-   * @param filename the path to the grid configuration file.
+   * @param filePath the path to the grid configuration file.
    * @return a string representation of the grid configuration.
    * @throws FileNotFoundException if the specified file cannot be found.
    */
-  public static ThreeTriosGrid gridFromFile(String filename) throws FileNotFoundException {
-    Scanner scanner = new Scanner(new File(filename));
+  public static ThreeTriosGrid gridFromFile(String filePath) throws FileNotFoundException {
+    Scanner scanner = new Scanner(new File(filePath));
     int rows = scanner.nextInt();
     int cols = scanner.nextInt();
     scanner.nextLine();  // Move to the next line after the dimensions

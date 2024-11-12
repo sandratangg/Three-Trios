@@ -63,27 +63,14 @@ public class ThreeTriosGameModel extends ReadOnlyThreeTriosModel implements Thre
   }
 
 
-
-  public ThreeTriosGameModel(String gridConfigPath, String cardConfigPath) throws FileNotFoundException {
-    this(ThreeTriosGrid.fromFile(gridConfigPath), readCardsFromFile(cardConfigPath));
-  }
-
   /**
-   * In FileReader: public static String fromGridFile(String filePath)
-   *
-   *
-   *
-   * File reader will read the file from a given path and covert it to a String
-   * FileReader.fromFile("path/....")  -> returns large String
-   *
-   *
-   *
-   * ThreeTriosGameModel newGame = new ThreeTriosGameModel(FileReader.fromGridFile(....), FileReader.fromCardFile(....))
+   * Constructs a ThreeTrios game model with a specified grid, deck of cards, a list of cards that need to be placed, and their positions.
+   * @param grid the game grid to use for the model.
+   * @param deck the deck of cards to use for the model.
+   * @param placedCards the list of cards that need to be placed.
+   * @param placedCardsPositions the list of positions where the cards need to be placed.
    *
    */
-
-
-
   public ThreeTriosGameModel(ThreeTriosGrid grid, List<ThreeTriosCard> deck, List<ThreeTriosCard> placedCards, List<Posn> placedCardsPositions) {
 
     this(grid, deck);
