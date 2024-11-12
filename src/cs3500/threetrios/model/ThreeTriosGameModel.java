@@ -117,14 +117,14 @@ public class ThreeTriosGameModel extends ReadOnlyThreeTriosModel implements Thre
     try {
       grid.placeCard(row, col, card);
       currentPlayer.addToOwned(card);
-      System.out.println("does current player own placed card: " + currentPlayer.owns(card));
+      //System.out.println("does current player own placed card: " + currentPlayer.owns(card));
       //currentPlayer.playCard(card);
     } catch (IllegalArgumentException e) {
       throw new IllegalArgumentException("Invalid position: (" + row + ", " + col + ")");
     }
 
-    System.out.println("card to be placed name: " + card.getName());
-    System.out.println("Performing battle");
+    //System.out.println("card to be placed name: " + card.getName());
+    //System.out.println("Performing battle");
     performBattlePhase(row, col, card, currentPlayer, oppositePlayer);
     switchTurn();
   }
@@ -135,7 +135,7 @@ public class ThreeTriosGameModel extends ReadOnlyThreeTriosModel implements Thre
   private void performBattlePhase(int row, int col, ICard placedCard,
                                   ThreeTriosPlayer currentPlayer, ThreeTriosPlayer oppositePlayer) {
     for (Direction direction : Direction.values()) {
-      System.out.println("card to be placed name: " + placedCard.getName());
+      //System.out.println("card to be placed name: " + placedCard.getName());
       grid.battlePhase(row, col, placedCard, direction, currentPlayer, oppositePlayer);
     }
   }
@@ -222,21 +222,21 @@ public class ThreeTriosGameModel extends ReadOnlyThreeTriosModel implements Thre
 
   public PlayerColor getCardOwner(int row, int col) {
     ICard card = grid.getCardFromCell(row, col);
-    System.out.println("Checking card ownership at position (" + row + ", " + col + ")");
-    System.out.println("Card: " + card);
+    //System.out.println("Checking card ownership at position (" + row + ", " + col + ")");
+    //System.out.println("Card: " + card);
 
     if (card == null) {
       throw new IllegalStateException("No card found at this position.");
     }
 
     if (redPlayer.owns(card)) {
-      System.out.println("Card owned by RED player");
+      //System.out.println("Card owned by RED player");
       return PlayerColor.RED;
     } else if (bluePlayer.owns(card)) {
-      System.out.println("Card owned by BLUE player");
+      //System.out.println("Card owned by BLUE player");
       return PlayerColor.BLUE;
     } else {
-      System.out.println("No player owns the card at position (" + row + ", " + col + ")");
+      //System.out.println("No player owns the card at position (" + row + ", " + col + ")");
       throw new IllegalStateException("No player owns the card at this position.");
     }
   }

@@ -80,3 +80,63 @@ Textual Rendering of the Model
 To facilitate visualization, we implemented a textual rendering feature (toString() method) within
 the ThreeTriosGameModel class, allowing players and developers to view a simplified text-based
 representation of the game board.
+
+
+CHANGES FOR PART 2----------------------------------------------------------------------------------
+
+- Refactored fromFile in ThreeTriosGameModel and readFromFile in ThreeTriosGrid (these components
+ handle reading the configuration files) to a FileReader class in the controller package,
+ since the model should not directly read the file.
+
+- Created a ReadOnlyThreeTrios class
+    - ReadOnlyThreeTriosMode.java: Provides read-only access to the game model.
+
+- Create a Posn class:
+    - Posn.java: Represents a position on the grid.
+
+- Updated the ThreeTriosModel.java to ensure the card is placed correctly
+
+
+
+Strategies (cs.3500.threetrios.strategies):
+
+    Key Interface:
+        1. ThreeTriosStrategy: Interface for card placement strategies, defining methods for selecting
+        the next move based on the current game state.
+    Key Components:
+        - CornerPreferenceStrategy.java: Places cards in grid corners first, since it is harder to flip
+        by exposing fewer sides
+        - FallbackStrategy.java: Provides a default move by selecting the upper-leftmost cell and first
+        card when no preferred move is available.
+        - MaximizeFlipsStrategy.java: Chooses moves that flip the maximum number of opponent cards
+        in one turn, prioritizing dominance on the grid.
+        - Move.java: Encapsulates a card and grid position as a single move, supporting easy comparison
+        for strategy-based decisions.
+
+
+
+
+Textual View of the Game (cs3500.threetrios.view)
+
+ The textual view of the game is displayed in the console, showing the game grid, player hands, and
+ card placements. The view components include:
+
+ Key Interfaces:
+    1. IPlayerHandPanel: Interface for the player hand panel, defining methods for displaying and
+        selecting cards in a player’s hand.
+    2. IGameGridPanel: Interface for the game grid panel, outlining essential grid-related functions
+        for display and interaction.
+    3. IThreeTriosView: Interface for the main game view, providing a blueprint for rendering and
+        managing game components.
+
+ Key Components:
+    - CellPanel.java: Represents individual cells on the game grid, displaying content
+        (empty, hole, or card) and handling visual updates.
+    - GameGridPanel.java: Displays the main game grid, managing cell arrangement
+        and user interactions with the grid.
+    - PlayerHandPanel.java: Shows the player’s hand, allowing card selection
+        and highlighting of the selected card.
+    - ThreeTriosSimpleTextView.java: Provides a simple textual representation of the game grid
+        and player hands for easy debugging and testing.
+    - ThreeTriosView: The main graphical view class that coordinates and displays the game grid,
+        player hands, and other visual components.
