@@ -106,15 +106,10 @@ Strategies (cs.3500.threetrios.strategies):
     Key Components:
         - CornerPreferenceStrategy.java: Places cards in grid corners first, since it is harder to flip
         by exposing fewer sides
-        - FallbackStrategy.java: Provides a default move by selecting the upper-leftmost cell and first
-        card when no preferred move is available.
         - MaximizeFlipsStrategy.java: Chooses moves that flip the maximum number of opponent cards
         in one turn, prioritizing dominance on the grid.
         - Move.java: Encapsulates a card and grid position as a single move, supporting easy comparison
         for strategy-based decisions.
-
-
-
 
 Textual View of the Game (cs3500.threetrios.view)
 
