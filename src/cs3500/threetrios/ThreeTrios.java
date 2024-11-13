@@ -12,9 +12,6 @@ public final class ThreeTrios {
     ThreeTriosGameModel model = new ThreeTriosGameModel(ThreeTriosGrid.fromFile("docs/ExampleBoards/board2.txt"),
             ThreeTriosGameModel.readCardsFromFile("docs/ExampleCards/card_file2.txt"));
 
-    // Test
-    System.out.println("Current grid height: " + model.getGridHeight());
-    System.out.println("Red player hand size: " + model.getPlayerHand(PlayerColor.RED).size());
     ThreeTriosView view = new ThreeTriosView(model);
     view.setVisible(true);
   }

@@ -44,7 +44,8 @@ public class CornerPreferenceStrategyTests {
 
     Optional<Move> chosenMove = strategy.chooseMove(mockModel, PlayerColor.BLUE);
     assertTrue(chosenMove.isPresent());
-    assertEquals(new Move(0, 0, hand.get(0)), chosenMove.get()); // Chooses the upper-left corner
+    // Chooses the upper-left corner
+    assertEquals(new Move(0, 0, hand.get(0)), chosenMove.get());
   }
 
   @Test
@@ -61,7 +62,8 @@ public class CornerPreferenceStrategyTests {
 
     Optional<Move> chosenMove = strategy.chooseMove(mockModel, PlayerColor.RED);
     assertTrue(chosenMove.isPresent());
-    assertEquals(new Move(1, 1, hand.get(0)), chosenMove.get()); // Falls back to upper-leftmost non-corner
+    // Falls back to upper-leftmost non-corner
+    assertEquals(new Move(1, 1, hand.get(0)), chosenMove.get());
   }
 
   @Test

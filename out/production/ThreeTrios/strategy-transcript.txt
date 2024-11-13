@@ -1,0 +1,7 @@
+Choosing move for player: RED
+Current board state:
+cs3500.threetrios.model.ThreeTriosCell@3fb6a447 cs3500.threetrios.model.ThreeTriosCell@79b4d0f cs3500.threetrios.model.ThreeTriosCell@6b2fad11 
+cs3500.threetrios.model.ThreeTriosCell@79698539 cs3500.threetrios.model.ThreeTriosCell@73f792cf cs3500.threetrios.model.ThreeTriosCell@2ed94a8b 
+cs3500.threetrios.model.ThreeTriosCell@38082d64 cs3500.threetrios.model.ThreeTriosCell@dfd3711 cs3500.threetrios.model.ThreeTriosCell@42d3bd8b 
+Chosen move: Move{row=0, col=0, card=Card1 5 3 7 4}
+==================================
