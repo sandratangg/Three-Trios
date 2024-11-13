@@ -1,50 +1,48 @@
 package cs3500.threetrios.strategies;
 
-import java.util.List;
-import java.util.Optional;
-
 import cs3500.threetrios.model.PlayerColor;
 import cs3500.threetrios.model.ReadOnlyThreeTriosModel;
 import cs3500.threetrios.model.ThreeTriosCard;
-import cs3500.threetrios.model.ThreeTriosPlayer;
+
+import java.util.List;
+import java.util.Optional;
 
 public class CornerPreferenceStrategy implements ThreeTriosStrategy {
-  public Optional<Move> chooseMove(ReadOnlyThreeTriosModel model, PlayerColor color) {
-    int gridHeight = model.getGridHeight();
-    int gridWidth = model.getGridWidth();
-    List<int[]> corners = List.of(
-            new int[]{0, 0},
-            new int[]{0, gridWidth - 1},
-            new int[]{gridHeight - 1, 0},
-            new int[]{gridHeight - 1, gridWidth - 1}
-    );
 
-    Move bestMove = null;
-    int minOpponentFlips = Integer.MAX_VALUE;
+  @Override
+  public Optional<Move> chooseMove(ReadOnlyThreeTriosModel model, PlayerColor playerColor) {
+    List<ThreeTriosCard> hand = model.getPlayerHand(playerColor);
+    if (hand.isEmpty()) {
+      return Optional.empty();
+    }
 
+    int width = model.getGridWidth();
+    int height = model.getGridHeight();
+
+    // List of corners in the order: top-left, top-right, bottom-left, bottom-right
+    int[][] corners = {{0, 0}, {0, width - 1}, {height - 1, 0}, {height - 1, width - 1}};
+
+    // Try placing in the corners first
     for (int[] corner : corners) {
-      int row = corner[0];
-      int col = corner[1];
+      for (ThreeTriosCard card : hand) {
+        if (model.isLegalMove(corner[0], corner[1], card)) {
+          return Optional.of(new Move(corner[0], corner[1], card));
+        }
+      }
+    }
 
-      if (!model.getCellContents(row, col).isEmpty()) continue;
-
-      for (ThreeTriosCard card : model.getPlayerHand(color)) {
-        int opponentFlips = model.calculateFlippableCards(row, col, card);
-        if (opponentFlips < minOpponentFlips) {
-          minOpponentFlips = opponentFlips;
-          bestMove = new Move(row, col, card);
-        } else if (opponentFlips == minOpponentFlips) {
-          if (bestMove == null || isUpperLeft(row, col, bestMove.getRow(), bestMove.getCol())) {
-            bestMove = new Move(row, col, card);
+    // If no corners are available, try any other valid position
+    for (int row = 0; row < height; row++) {
+      for (int col = 0; col < width; col++) {
+        for (ThreeTriosCard card : hand) {
+          if (model.isLegalMove(row, col, card)) {
+            return Optional.of(new Move(row, col, card));
           }
         }
       }
     }
 
-    return Optional.ofNullable(bestMove);
-  }
-
-  private boolean isUpperLeft(int row1, int col1, int row2, int col2) {
-    return (row1 < row2) || (row1 == row2 && col1 < col2);
+    // No valid moves available
+    return Optional.empty();
   }
 }

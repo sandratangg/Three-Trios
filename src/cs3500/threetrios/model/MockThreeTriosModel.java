@@ -62,14 +62,4 @@ public class MockThreeTriosModel extends ReadOnlyThreeTriosModel {
     // Return a dummy cell with the current card state for simplicity
     return grid.getCell(row, col);
   }
-
-  @Override
-  public int getPlayerScore(PlayerColor playerColor) {
-    return playerColor == PlayerColor.RED ? redPlayer.getOwnedCardsSize() : bluePlayer.getOwnedCardsSize();
-  }
-
-  @Override
-  public boolean isGameOver() {
-    return grid.isGridFull();
-  }
 }

@@ -1,29 +1,43 @@
 package cs3500.threetrios.strategies;
 
-import java.util.Optional;
-
 import cs3500.threetrios.model.PlayerColor;
 import cs3500.threetrios.model.ReadOnlyThreeTriosModel;
 import cs3500.threetrios.model.ThreeTriosCard;
-import cs3500.threetrios.model.ThreeTriosPlayer;
+
+import java.util.List;
+import java.util.Optional;
 
 public class MaximizeFlipsStrategy implements ThreeTriosStrategy {
-  public Optional<Move> chooseMove(ReadOnlyThreeTriosModel model, PlayerColor color) {
-    int maxFlips = 0;
+
+  @Override
+  public Optional<Move> chooseMove(ReadOnlyThreeTriosModel model, PlayerColor playerColor) {
+    List<ThreeTriosCard> hand = model.getPlayerHand(playerColor);
+    if (hand.isEmpty()) {
+      return Optional.empty();
+    }
+
+    int width = model.getGridWidth();
+    int height = model.getGridHeight();
     Move bestMove = null;
+    int maxFlips = -1;
 
-    for (int row = 0; row < model.getGridHeight(); row++) {
-      for (int col = 0; col < model.getGridWidth(); col++) {
-        if (!model.getCellContents(row, col).isEmpty()) continue;
+    // Iterate over all positions on the grid
+    for (int row = 0; row < height; row++) {
+      for (int col = 0; col < width; col++) {
+        // Iterate over each card in the player's hand
+        for (ThreeTriosCard card : hand) {
+          if (model.isLegalMove(row, col, card)) {
+            int flips = model.calculateFlippableCards(row, col, card);
 
-        for (ThreeTriosCard card : model.getPlayerHand(color)) {
-          int flips = model.calculateFlippableCards(row, col, card);
-          if (flips > maxFlips) {
-            maxFlips = flips;
-            bestMove = new Move(row, col, card);
-          } else if (flips == maxFlips) {
-            if (bestMove == null || isUpperLeft(row, col, bestMove.getRow(), bestMove.getCol())) {
+            // Update the best move if we find a card that results in more flips
+            if (flips > maxFlips) {
               bestMove = new Move(row, col, card);
+              maxFlips = flips;
+            } else if (flips == maxFlips && bestMove != null) {
+              // Break ties by selecting the upper-leftmost position, and the first card
+              if (row < bestMove.getRow() || (row == bestMove.getRow() && col < bestMove.getCol())) {
+                bestMove = new Move(row, col, card);
+              }
             }
           }
         }
@@ -32,9 +46,4 @@ public class MaximizeFlipsStrategy implements ThreeTriosStrategy {
 
     return Optional.ofNullable(bestMove);
   }
-
-  private boolean isUpperLeft(int row1, int col1, int row2, int col2) {
-    return (row1 < row2) || (row1 == row2 && col1 < col2);
-  }
 }
-
