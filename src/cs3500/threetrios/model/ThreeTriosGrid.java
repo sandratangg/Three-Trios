@@ -1,9 +1,5 @@
 package cs3500.threetrios.model;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
-
 /**
  * Represents a grid in the game.
  */
@@ -40,6 +36,10 @@ public class ThreeTriosGrid implements IGrid {
     }
   }
 
+  /**
+   * Method to return a new copy of this grid.
+   * @return Copy of this grid.
+   */
   public ThreeTriosGrid copy() {
     ThreeTriosGrid newGrid = new ThreeTriosGrid(this.rows, this.cols);
 
@@ -72,10 +72,19 @@ public class ThreeTriosGrid implements IGrid {
     }
   }
 
+  /**
+   * Determines if placing a card at a location is legal.
+   * @param row  the row to place the card
+   * @param col  the column to place the card
+   * @param card the card to place
+   * @return Returns if card can be placed.
+   */
   public boolean isLegalMove(int row, int col, ICard card) {
     if (row < 0 || row >= rows || col < 0 || col >= cols) {
       return false;
-    } else return grid[row][col].isEmpty() & !grid[row][col].isHole;
+    } else {
+      return grid[row][col].isEmpty() & !grid[row][col].isHole;
+    }
 
   }
 
@@ -134,7 +143,8 @@ public class ThreeTriosGrid implements IGrid {
   }
 
   // Recursive helper method to calculate flips with chain reactions
-  private int calculateFlipsFromPosition(int x, int y, ICard card, IPlayer player, boolean[][] visited) {
+  private int calculateFlipsFromPosition(int x, int y, ICard card, IPlayer player,
+                                         boolean[][] visited) {
     int chainFlips = 0;
 
     for (Direction direction : Direction.values()) {
@@ -155,7 +165,8 @@ public class ThreeTriosGrid implements IGrid {
             chainFlips++;
 
             // Recursively calculate further flips from this new position
-            chainFlips += calculateFlipsFromPosition(adjacentRow, adjacentCol, adjacentCell.card, player, visited);
+            chainFlips += calculateFlipsFromPosition(adjacentRow, adjacentCol, adjacentCell.card,
+                    player, visited);
           }
         }
       }
@@ -250,36 +261,6 @@ public class ThreeTriosGrid implements IGrid {
       }
     }
     return true;
-  }
-
-  /**
-   * Creates a {@code ThreeTriosGrid} instance by reading grid configuration from a specified file.
-   *
-   * @param filename the path to the configuration file
-   * @return a {@code ThreeTriosGrid} initialized according to the specified file configuration
-   * @throws FileNotFoundException if the file cannot be found
-   */
-  public static ThreeTriosGrid fromFile(String filename) throws FileNotFoundException {
-    Scanner scanner = new Scanner(new File(filename));
-    int rows = scanner.nextInt();
-    int cols = scanner.nextInt();
-    scanner.nextLine();  // Move to the next line after the dimensions
-
-    ThreeTriosGrid grid = new ThreeTriosGrid(rows, cols);
-
-    for (int row = 0; row < rows; row++) {
-      String line = scanner.nextLine();
-      for (int col = 0; col < cols; col++) {
-        char cellChar = line.charAt(col);
-        if (cellChar == 'C') {
-          grid.placeEmptyCardCell(row, col);  // Method to initialize an empty card cell
-        } else if (cellChar == 'X') {
-          grid.placeHole(row, col);  // Method to mark a hole
-        }
-      }
-    }
-
-    return grid;
   }
 
   public void placeEmptyCardCell(int row, int col) {

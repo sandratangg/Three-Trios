@@ -1,7 +1,5 @@
 package cs3500.threetrios.model;
 
-import java.util.List;
-
 /**
  * Represents a player in the Three Trios game. A player has a hand of cards
  * and can play, add, and verify ownership of cards. This interface defines

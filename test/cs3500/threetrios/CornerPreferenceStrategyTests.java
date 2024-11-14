@@ -2,7 +2,6 @@ package cs3500.threetrios;
 
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 import cs3500.threetrios.model.MockThreeTriosModel;
 import cs3500.threetrios.model.PlayerColor;
@@ -15,11 +14,25 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+/**
+ * This class contains unit tests for the {@link CornerPreferenceStrategy} class,
+ * which prioritizes placing cards in corner positions on the board in the Three Trios game.
+ * It tests the behavior of the strategy under various board configurations.
+ */
 public class CornerPreferenceStrategyTests {
+
   private ReadOnlyThreeTriosModel mockModel;
   private CornerPreferenceStrategy strategy;
   private List<ThreeTriosCard> hand;
 
+  /**
+   * Sets up the test environment by initializing the strategy and a hand of cards
+   * before each test case is executed.
+   */
   @Before
   public void setUp() {
     strategy = new CornerPreferenceStrategy();
@@ -30,6 +43,10 @@ public class CornerPreferenceStrategyTests {
     );
   }
 
+  /**
+   * Tests the strategy's ability to choose a corner position when available.
+   * The strategy should prioritize the upper-left corner.
+   */
   @Test
   public void testChooseCorner() {
     mockModel = new MockThreeTriosModel(
@@ -48,6 +65,10 @@ public class CornerPreferenceStrategyTests {
     assertEquals(new Move(0, 0, hand.get(0)), chosenMove.get());
   }
 
+  /**
+   * Tests the strategy's behavior when all corners are already occupied.
+   * It should fall back to the upper-leftmost available non-corner position.
+   */
   @Test
   public void testAllCornersOccupied() {
     mockModel = new MockThreeTriosModel(
@@ -66,6 +87,10 @@ public class CornerPreferenceStrategyTests {
     assertEquals(new Move(1, 1, hand.get(0)), chosenMove.get());
   }
 
+  /**
+   * Tests the strategy's behavior when there are no valid moves left on the board.
+   * The strategy should return an empty result.
+   */
   @Test
   public void testNoValidCorners() {
     mockModel = new MockThreeTriosModel(

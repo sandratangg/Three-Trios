@@ -175,6 +175,10 @@ public class ThreeTriosPlayer implements IPlayer {
     return this.ownedCards.size();
   }
 
+  /**
+   * Gets all cards in this hand.
+   * @return Returns a new list of cards in this hand.
+   */
   public List<ThreeTriosCard> getHandCards() {
     List<ThreeTriosCard> cards = new ArrayList<>();
     for (ICard card : hand) {

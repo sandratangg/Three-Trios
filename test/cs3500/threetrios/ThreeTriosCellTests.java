@@ -32,7 +32,8 @@ public class ThreeTriosCellTests {
 
     // Card cell with a card
     cardCellWithCard = new ThreeTriosCell();
-    sampleCard = new ThreeTriosCard("Dragon", 5, 7, 6, 3);
+    sampleCard = new ThreeTriosCard("Dragon", 5, 7, 6,
+            3);
 
   }
 

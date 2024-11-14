@@ -46,7 +46,7 @@ public class FileReader {
 
   /**
    * Reads a grid configuration from a file and creates a string representation of the grid.
-   * The file should contain grid dimensions in the first line, followed by grid cell configurations,
+   * The file should contain grid dimensions in first line, followed by grid cell configurations,
    * where 'C' represents an empty card cell and 'X' represents a hole.
    *
    * @param filePath the path to the grid configuration file.

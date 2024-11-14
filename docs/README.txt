@@ -1,137 +1,179 @@
 Three Trios Game Model
 
-Overview
+Overview:
+    This codebase models the Three Trios card game, simulating strategic gameplay through classes
+representing players, cards, a game grid, and core game logic. The project organizes components
+into a structured model to encapsulate rules, structure gameplay flow, and support grid-based
+card interactions.
 
-This codebase models the Three Trios card game, simulating strategic gameplay through classes
-representing players, cards, a game grid, and game logic. The code organizes components into a
-structured model that enables card placement, directional combat, and turn-based interactions,
-capturing the game’s mechanics. The main goal is to encapsulate rules, structure gameplay flow,
-and support grid-based card interactions.
+    The main objective is to capture the game’s mechanics, allowing for card placement, directional
+combat, and turn-based interactions while maintaining separation between model, view,
+and controller components.
 
-Key Components
+---------------------------------------------------------------------------------------------------
+Part 1: Original Implementation
 
+Key Components:
 The design organizes the game model into distinct classes and interfaces:
 
-1. ThreeTriosGameModel: The core game model, managing player turns, card placements, and grid
-   interactions. It drives game control flow, from card placement to victory determination. Key
-   methods include `placeCard` to initiate card placement on the grid, and `battlePhase`, which
-   resolves conflicts between opposing cards.
+ThreeTriosGameModel:
+The core game model, managing player turns, card placements, and grid interactions.
+Handles game flow from card placement to victory determination.
 
-2. ThreeTriosGrid: Represents the game grid, a two-dimensional array where each cell can hold a
-   card or be a hole (non-playable space). This grid manages card placements and battle mechanics
-   for directional attacks between neighboring cells.
-
-3. ThreeTriosPlayer: Represents each player, tracking their hand and owned cards on the grid.
-   Player color (red or blue) determines ownership, with methods to manage ownership changes from
-   battles.
-
-4. ThreeTriosCard: Represents individual cards, each with a name and attack values in four
-   cardinal directions. These attributes influence combat and provide unique strategic qualities
-   for play. Directional values determine battle outcomes.
-
-5. ThreeTriosCell: Represents each cell on the grid, either as a playable space (holding a card)
-   or a hole (non-playable). This class differentiates empty and occupied cells, supporting grid
-   functionality.
-
-Key Interfaces
-
-1. ThreeTrios: Interface for the game model, outlining methods for card placement on the grid.
-   This interface is the entry point for game interaction, ensuring model alignment with gameplay.
-
-2. IGrid: Interface for grid functionalities, defining methods for card placement and grid
-   management. It abstracts grid structure for flexibility and maintainability.
-
-3. IPlayer: Interface for player functionalities, including methods for managing hands and owned
-   cards. It supports player operations for consistent interactions.
-
-4. ICard: Interface for cards, defining behaviors like directional attacks and name matching. This
-   abstracts card properties, providing a base for all card types.
-
-5. ICell: Interface for cells, defining methods for checking occupancy. This enables uniform cell
-   interactions, allowing grid management independent of specific implementations.
-
-Organization
-
-Primary code resides in the `cs3500.threetrios.model` package, containing core classes and
-interfaces. The purpose of each file is as follows:
-
-- `ThreeTriosGameModel.java`: Implements the main game model, coordinating actions, grid
-   interactions, and game flow.
-- `ThreeTriosGrid.java`: Manages grid structure, cell initialization, card placement, and battle
-   logic.
-- `ThreeTriosPlayer.java`: Defines player attributes, manages hands and owned cards, and supports
-   ownership changes.
-- `ThreeTriosCard.java`: Defines card properties and encapsulates directional attack values for
-   gameplay.
-- `ThreeTriosCell.java`: Represents grid cells, distinguishing playable cells and holes for
-   accurate grid representation.
+    Key methods:
+    placeCard for placing cards on the grid.
+    battlePhase for resolving conflicts between opposing cards.
 
 
-Configuration Files
+ThreeTriosGrid:
+Represents the game grid, structured as a 2D array where each cell can hold a card or be a hole
+(non-playable).
+Manages card placements and battle mechanics for directional attacks.
 
-The game setup includes grid and card configuration files:
+ThreeTriosPlayer:
+Represents each player, tracking their hand and owned cards on the grid.
+Player color (red or blue) determines ownership of cards.
+Manages ownership changes resulting from battles.
 
-board1.txt, board2.txt, board3.txt: Define various grid setups, specifying cell types and spaces.
-card_file1.txt, card_file2.txt: List available cards and their directional attack values.
+ThreeTriosCard:
+Represents individual cards, each with a name and attack values in four cardinal directions.
+Attack values influence battles when placed adjacent to other cards.
+
+ThreeTriosCell:
+Represents each cell on the grid, differentiating between playable spaces and holes.
+Supports grid functionality by distinguishing empty and occupied cells.
+
+--------------------------------------------------------------------------------------------------
+Part 2: Refactoring and Enhancements
+
+Key Updates:
+
+Refactored File Reading:
+
+    Moved fromFile and readCardsFromFile methods from ThreeTriosGameModel and
+ThreeTriosGrid to a separate FileReader class in the controller package.
+    This change ensures that the model focuses solely on game logic, with file handling delegated
+to the controller.
+
+Added Read-Only Access:
+
+    Introduced ReadOnlyThreeTriosModel to enforce read-only access for views and strategies,
+preventing unintended modifications to the game state.
+
+Introduced Posn Class:
+
+    Added Posn class to represent grid positions, used for specifying coordinates during card
+placement and movement.
+
+---------------------------------------------------------------------------------------------------
+Detailed Breakdown of Updated Structure
+
+Model (cs3500.threetrios.model)
+
+ThreeTriosGameModel:
+    Updated to work with the refactored FileReader.
+    Supports card placement, battle phases, turn switching, and victory determination.
+    Now includes a determineWinner method for game end conditions.
+
+ThreeTriosGrid:
+    Manages grid structure and cell initialization, including battle logic between neighboring cells
+    Provides methods like placeCard, isLegalMove, and battlePhase for handling gameplay
+    mechanics.
+
+ThreeTriosPlayer:
+    Manages player attributes, including hands, owned cards, and turn switching.
+    Updated methods for adding/removing owned cards during battles.
+
+ThreeTriosCard:
+    Encapsulates properties like directional attack values and card names.
+    Includes utility methods for attack comparisons and card identification.
+
+ThreeTriosCell:
+    Represents a cell on the game grid, distinguishing between holes and playable cells.
+    Provides methods for checking occupancy and placing cards.
+
+Posn:
+    Represents coordinates on the grid, simplifying position handling for card placements.
+
+ReadOnlyThreeTriosModel:
+    Provides read-only access to game state, ensuring strategies and views cannot alter the model
+    directly.
 
 
-Textual Rendering of the Model
+Controller (cs3500.threetrios.controller)
 
-To facilitate visualization, we implemented a textual rendering feature (toString() method) within
-the ThreeTriosGameModel class, allowing players and developers to view a simplified text-based
-representation of the game board.
+FileReader:
+    Handles reading grid and card data from external files.
+    Supports the following configuration files:
+    board1.txt, board2.txt, board3.txt for grid setups.
+    card_file1.txt, card_file2.txt for card definitions.
+
+Strategies (cs3500.threetrios.strategies)
+
+ThreeTriosStrategy Interface:
+    Defines methods for selecting moves based on game state.
+    Allows for flexible AI strategies that can be easily swapped.
+
+MaximizeFlipsStrategy:
+    Selects moves that flip the maximum number of opponent cards in one turn.
+
+CornerPreferenceStrategy:
+    Prefers placing cards in corners, which are harder to flip due to fewer adjacent cells.
+
+TranscriptStrategyWrapper:
+    Wraps existing strategies to log moves to a transcript file for analysis.
+
+Move:
+    Represents a card and its position on the grid as a single move.
+
+View (cs3500.threetrios.view)
+
+Graphical View:
+
+    ThreeTriosView: Main graphical interface integrating grid and player hands.
+
+    GameGridPanel: Displays the grid and handles card placements.
+
+    PlayerHandPanel: Displays the player's hand and allows card selection.
+
+    CellPanel: Represents individual cells on the grid, displaying card or hole status.
+
+Testing (test.cs3500.threetrios)
+
+The project includes JUnit tests for comprehensive coverage:
+
+    ThreeTriosModelTests: Tests game model functionalities.
+    ThreeTriosGridTests: Tests for grid configurations and card placements.
+    ThreeTriosPlayerTests: Tests player operations, including card ownership.
+    ThreeTriosCardTests: Tests card attributes and attack comparisons.
+    Strategies Tests: Covers strategy implementations like MaximizeFlipsStrategyTests and
+    CornerPreferenceStrategyTests.
 
 
-CHANGES FOR PART 2----------------------------------------------------------------------------------
+Configuration Files:
+The game is configured using text files located in the docs folder:
 
-- Refactored fromFile in ThreeTriosGameModel and readFromFile in ThreeTriosGrid (these components
- handle reading the configuration files) to a FileReader class in the controller package,
- since the model should not directly read the file.
+ExampleBoards:
+    board1.txt, board2.txt, board3.txt: Define various grid layouts, specifying playable cells
+    and holes.
 
-- Created a ReadOnlyThreeTrios class
-    - ReadOnlyThreeTriosMode.java: Provides read-only access to the game model.
-
-- Create a Posn class:
-    - Posn.java: Represents a position on the grid.
-
-- Updated the ThreeTriosModel.java to ensure the card is placed correctly
+ExampleCards:
+    card_file1.txt, card_file2.txt: Define card names and their directional attack values.
 
 
+Included Files in This Project:
 
-Strategies (cs.3500.threetrios.strategies):
+Screenshots:
+    Located in the docs/ViewScreenshots folder:
+        GameStart.png: Demonstrates the game starting state.
+        IntermediateState.png: Shows the game in progress.
+        RedPlayerCard.png and BluePlayerCard.png: Illustrate card placements for both players.
 
-    Key Interface:
-        1. ThreeTriosStrategy: Interface for card placement strategies, defining methods for selecting
-        the next move based on the current game state.
-    Key Components:
-        - CornerPreferenceStrategy.java: Places cards in grid corners first, since it is harder to flip
-        by exposing fewer sides
-        - MaximizeFlipsStrategy.java: Chooses moves that flip the maximum number of opponent cards
-        in one turn, prioritizing dominance on the grid.
-        - Move.java: Encapsulates a card and grid position as a single move, supporting easy comparison
-        for strategy-based decisions.
+Strategy Transcript:
+    A plain-text file named strategy-transcript.txt is located in the docs folder.
+    This file contains a transcript generated by the mocked model for the simplest strategy choosing
+    a move for Red on the initial 3x3 board configuration with no holes.
 
-Textual View of the Game (cs3500.threetrios.view)
-
- The textual view of the game is displayed in the console, showing the game grid, player hands, and
- card placements. The view components include:
-
- Key Interfaces:
-    1. IPlayerHandPanel: Interface for the player hand panel, defining methods for displaying and
-        selecting cards in a player’s hand.
-    2. IGameGridPanel: Interface for the game grid panel, outlining essential grid-related functions
-        for display and interaction.
-    3. IThreeTriosView: Interface for the main game view, providing a blueprint for rendering and
-        managing game components.
-
- Key Components:
-    - CellPanel.java: Represents individual cells on the game grid, displaying content
-        (empty, hole, or card) and handling visual updates.
-    - GameGridPanel.java: Displays the main game grid, managing cell arrangement
-        and user interactions with the grid.
-    - PlayerHandPanel.java: Shows the player’s hand, allowing card selection
-        and highlighting of the selected card.
-    - ThreeTriosSimpleTextView.java: Provides a simple textual representation of the game grid
-        and player hands for easy debugging and testing.
-    - ThreeTriosView: The main graphical view class that coordinates and displays the game grid,
-        player hands, and other visual components.
+Executable JAR File:
+    The runnable JAR file (ThreeTrios.jar) is included in the root of the project directory.
+    To run: java -jar ThreeTrios.jar

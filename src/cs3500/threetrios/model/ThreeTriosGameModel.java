@@ -1,12 +1,6 @@
 package cs3500.threetrios.model;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
-
-import cs3500.threetrios.controller.FileReader;
 
 /**
  * Represents the Three Trios game model, containing the game grid, players,
@@ -26,10 +20,7 @@ public class ThreeTriosGameModel extends ReadOnlyThreeTriosModel implements Thre
    * Constructs a ThreeTrios game model with specified grid dimensions
    * and an initial deck of cards. The deck is divided between two players,
    * who take turns placing cards on the grid.
-   * <p>
-   * Invariant: The `currentPlayer` starts as `redPlayer` and alternates
-   * with `bluePlayer` on each turn, ensuring consistent turn order.
-   * </p>
+   *
    * @param rows the number of rows in the game grid.
    * @param cols the number of columns in the game grid.
    * @param deck the list of cards representing the deck, split between players.
@@ -38,9 +29,9 @@ public class ThreeTriosGameModel extends ReadOnlyThreeTriosModel implements Thre
     this(new ThreeTriosGrid(rows, cols), deck);
   }
 
-
   /**
    * Constructs a ThreeTrios game model with a specified grid and deck of cards.
+   *
    * @param grid the game grid to use for the model.
    * @param deck the deck of cards to use for the model.
    */
@@ -49,8 +40,7 @@ public class ThreeTriosGameModel extends ReadOnlyThreeTriosModel implements Thre
     int cellsInGrid = grid.getNumCardCells();
 
     if (deck.size() <= cellsInGrid) {
-      throw new IllegalStateException("If there are n card cells in the grid,"
-              + "there must be at least n + 1 cards available to split.");
+      throw new IllegalStateException("Must have at least n + 1 cards to split.");
     }
 
     int cardsPerPlayer = deck.size() / 2;
@@ -59,32 +49,8 @@ public class ThreeTriosGameModel extends ReadOnlyThreeTriosModel implements Thre
     this.bluePlayer = new ThreeTriosPlayer(PlayerColor.BLUE,
             deck.subList(cardsPerPlayer, deck.size()));
     this.currentPlayer = redPlayer;
-    this.oppositePlayer = bluePlayer; // Red player starts
+    this.oppositePlayer = bluePlayer;
   }
-
-
-  /**
-   * Constructs a ThreeTrios game model with a specified grid, deck of cards, a list of cards that need to be placed, and their positions.
-   * @param grid the game grid to use for the model.
-   * @param deck the deck of cards to use for the model.
-   * @param placedCards the list of cards that need to be placed.
-   * @param placedCardsPositions the list of positions where the cards need to be placed.
-   *
-   */
-  public ThreeTriosGameModel(ThreeTriosGrid grid, List<ThreeTriosCard> deck, List<ThreeTriosCard> placedCards, List<Posn> placedCardsPositions) {
-
-    this(grid, deck);
-    if (deck.containsAll(placedCards) && placedCards.size() == placedCardsPositions.size()) {
-      for (int card = 0; card < placedCards.size(); card++) {
-        placeCard(placedCardsPositions.get(card).getX(),
-                placedCardsPositions.get(card).getY(), placedCards.get(card));
-      }
-    } else {
-      throw new IllegalArgumentException("Deck must contain all cards to be placed & all cards to be placed must have an associated position.");
-    }
-
-  }
-
 
   /**
    * Attempts to place a card at a specified location on the game grid.
@@ -93,8 +59,6 @@ public class ThreeTriosGameModel extends ReadOnlyThreeTriosModel implements Thre
    * @param col  the column index at which to place the card.
    * @param card the ThreeTriosCard to be placed on the grid.
    * @throws IllegalArgumentException if the card cannot be placed at the specified location.
-   * @throws IllegalArgumentException if the player does not have the card.
-   * @throws IllegalArgumentException if the position is invalid.
    */
   public void placeCard(int row, int col, ICard card) {
     if (!currentPlayer.playCard(card)) {
@@ -104,37 +68,31 @@ public class ThreeTriosGameModel extends ReadOnlyThreeTriosModel implements Thre
     try {
       grid.placeCard(row, col, card);
       currentPlayer.addToOwned(card);
-      //System.out.println("does current player own placed card: " + currentPlayer.owns(card));
-      //currentPlayer.playCard(card);
     } catch (IllegalArgumentException e) {
       throw new IllegalArgumentException("Invalid position: (" + row + ", " + col + ")");
     }
 
-    //System.out.println("card to be placed name: " + card.getName());
-    //System.out.println("Performing battle");
     performBattlePhase(row, col, card, currentPlayer, oppositePlayer);
     switchTurn();
   }
 
-
-
-  // Helper method to perform the battle phase.
+  /**
+   * Performs the battle phase after a card is placed.
+   *
+   * @param row the row index of the placed card.
+   * @param col the column index of the placed card.
+   * @param placedCard the card that was placed.
+   */
   private void performBattlePhase(int row, int col, ICard placedCard,
-                                  ThreeTriosPlayer currentPlayer, ThreeTriosPlayer oppositePlayer) {
+                                  ThreeTriosPlayer currentPlayer,
+                                  ThreeTriosPlayer oppositePlayer) {
     for (Direction direction : Direction.values()) {
-      //System.out.println("card to be placed name: " + placedCard.getName());
       grid.battlePhase(row, col, placedCard, direction, currentPlayer, oppositePlayer);
     }
   }
 
   /**
-   * Helper method to switch the turn between players.
-   * <p>
-   * Invariant: The `currentPlayer` must always alternate between `redPlayer`
-   * and `bluePlayer` after each valid move. This method ensures that
-   * each player takes turns in sequence and that the game ends only when
-   * the grid is full.
-   * </p>
+   * Switches the current player after a turn.
    */
   private void switchTurn() {
     if (isGameOver()) {
@@ -151,97 +109,6 @@ public class ThreeTriosGameModel extends ReadOnlyThreeTriosModel implements Thre
   }
 
   /**
-   * Provides a string representation of the game model's current state,
-   * including the active player's information, the grid, and the current
-   * player's hand. This representation supports debugging and tracking game progress.
-   *
-   * @return a string summarizing the game's current state.
-   */
-  public String toString() {
-    StringBuilder gameModelString = new StringBuilder();
-
-    gameModelString.append(currentPlayer.toString());
-    gameModelString = newLine(gameModelString);
-
-    gameModelString.append(grid.toString(redPlayer));
-    gameModelString = newLine(gameModelString);
-
-    gameModelString.append(currentPlayer.handToString());
-
-    return gameModelString.toString();
-  }
-
-  /**
-   * Adds a newline to a provided StringBuilder, primarily used to format
-   * the string representation of the game model.
-   *
-   * @param string the StringBuilder to append a newline to.
-   * @return the updated StringBuilder with an appended newline.
-   */
-  public StringBuilder newLine(StringBuilder string) {
-    return string.append("\n");
-  }
-
-  public IGrid copyGrid() {
-    return grid.copy();
-  }
-
-  public int getGridWidth() {
-    return grid.getColCount();
-  }
-
-  public int getGridHeight() {
-    return grid.getRowCount();
-  }
-
-  public ThreeTriosCell getCellContents(int x, int y) {
-    return grid.getCell(x, y);
-  }
-
-  public List<ThreeTriosCard> getPlayerHand(PlayerColor playerColor) {
-    if (playerColor.equals(PlayerColor.RED)) {
-      return redPlayer.getHandCards();
-    } else {
-      return bluePlayer.getHandCards();
-    }
-  }
-
-
-  public PlayerColor getCardOwner(int row, int col) {
-    ICard card = grid.getCardFromCell(row, col);
-    //System.out.println("Checking card ownership at position (" + row + ", " + col + ")");
-    //System.out.println("Card: " + card);
-
-    if (card == null) {
-      throw new IllegalStateException("No card found at this position.");
-    }
-
-    if (redPlayer.owns(card)) {
-      //System.out.println("Card owned by RED player");
-      return PlayerColor.RED;
-    } else if (bluePlayer.owns(card)) {
-      //System.out.println("Card owned by BLUE player");
-      return PlayerColor.BLUE;
-    } else {
-      //System.out.println("No player owns the card at position (" + row + ", " + col + ")");
-      throw new IllegalStateException("No player owns the card at this position.");
-    }
-  }
-
-
-  public boolean isLegalMove(int x, int y, ICard card, IPlayer player) {
-    return grid.isLegalMove(x, y, card);
-  }
-
-  public int calculateFlippableCards(int x, int y, ICard card, IPlayer player) {
-    return grid.calculateFlippableCards(x, y, card, player);
-  }
-
-  public int getPlayerScore(ThreeTriosPlayer player) {
-    return countOwnedCards(player);
-  }
-
-  /**
    * Checks if the game is over by determining if the grid is full.
    *
    * @return true if the grid is fully occupied; false otherwise.
@@ -251,9 +118,7 @@ public class ThreeTriosGameModel extends ReadOnlyThreeTriosModel implements Thre
   }
 
   /**
-   * Determines the winner of the game based on the number of cards owned
-   * by each player. In the event of a tie, a message indicating the tie
-   * is returned.
+   * Determines the winner of the game based on the number of cards owned by each player.
    *
    * @return a string announcing the winner or indicating a tie.
    */
@@ -271,75 +136,44 @@ public class ThreeTriosGameModel extends ReadOnlyThreeTriosModel implements Thre
   }
 
   /**
-   * Counts the total number of cards owned by a player, including
-   * both the cards on the grid and those in the player's hand.
+   * Counts the total number of cards owned by a player.
    *
    * @param player the player for whom to count the owned cards.
    * @return the number of cards owned by the player.
    */
   private int countOwnedCards(ThreeTriosPlayer player) {
-    return player.getOwnedCardsSize();  // Includes cards in hand
+    return player.getOwnedCardsSize();
   }
 
   /**
-   * Reads a list of cards from a file and creates a deck. The file should
-   * contain card information in lines, each specifying a card's name and
-   * attack values for the north, south, east, and west directions. Attack
-   * values should range from 1 to 10, with 'A' representing 10.
+   * Gets the current player's color.
    *
-   * @param filename the path to the file containing card data.
-   * @return a list of {@link ThreeTriosCard} objects representing the deck.
-   * @throws FileNotFoundException if the specified file cannot be found.
-   */
-  public static List<ThreeTriosCard> readCardsFromFile(String filename)
-          throws FileNotFoundException {
-    Scanner scanner = new Scanner(new File(filename));
-    List<ThreeTriosCard> deck = new ArrayList<>();
-
-    while (scanner.hasNextLine()) {
-      String line = scanner.nextLine();
-      String[] cardData = line.split(" ");
-      String cardName = cardData[0];
-      int attackNorth = parseCardValue(cardData[1]);
-      int attackSouth = parseCardValue(cardData[2]);
-      int attackEast = parseCardValue(cardData[3]);
-      int attackWest = parseCardValue(cardData[4]);
-
-      deck.add(new ThreeTriosCard(cardName, attackNorth, attackEast, attackWest, attackSouth));
-    }
-
-    return deck;
-  }
-
-  // Helper method to parse attack values, accounting for 'A' (10 in hexadecimal).
-  private static int parseCardValue(String value) {
-    if (value.equals("A")) {
-      return 10;  // 'A' represents 10 in hexadecimal format.
-    } else {
-      return Integer.parseInt(value);
-    }
-  }
-
-  /**
-   * Returns the color of the current player.
-   * Determines if the current player is red or blue based on their attributes.
-   *
-   * @return the {@code PlayerColor} of the current player, either {@code RED} or {@code BLUE}
+   * @return the PlayerColor of the current player.
    */
   public PlayerColor currentPlayerColor() {
-    if (this.currentPlayer.isRed()) {
-      return PlayerColor.RED;
-    } else {
-      return PlayerColor.BLUE;
-    }
+    return currentPlayer.isRed() ? PlayerColor.RED : PlayerColor.BLUE;
   }
 
+  /**
+   * Gets the opposite player's color.
+   *
+   * @return the PlayerColor of the opposite player.
+   */
   public PlayerColor oppositePlayerColor() {
-    if (this.currentPlayer.isRed()) {
-      return PlayerColor.BLUE;
-    } else {
-      return PlayerColor.RED;
-    }
+    return currentPlayer.isRed() ? PlayerColor.BLUE : PlayerColor.RED;
   }
 
+  /**
+   * Provides a string representation of the current state of the game.
+   *
+   * @return a formatted string representing the game state.
+   */
+  public String toString() {
+
+    return currentPlayer.toString() +
+            "\n" +
+            grid.toString(redPlayer) +
+            "\n" +
+            currentPlayer.handToString();
+  }
 }
