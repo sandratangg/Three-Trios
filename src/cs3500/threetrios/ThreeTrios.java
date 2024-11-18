@@ -18,7 +18,6 @@ public final class ThreeTrios {
     List<ThreeTriosCard> deck = FileReader.readCardsFromFile("docs/ExampleCards/card_file2.txt");
     ThreeTriosGameModel model = new ThreeTriosGameModel(grid, deck);
 
-    // Hardcode players
     // Both players are set as HumanPlayers for now
     Player player1 = new HumanPlayer();
     Player player2 = new HumanPlayer();
@@ -28,17 +27,14 @@ public final class ThreeTrios {
     // Player player2 = new AIPlayer(new MaximizeFlipsStrategy(), PlayerColor.BLUE);
 
     // Get the actual game players
-    // TO-DO: Need to modify logic to work w/ playerColors instead
-    ThreeTriosPlayer redPlayer = model.getRedPlayer();
-    ThreeTriosPlayer bluePlayer = model.getBluePlayer();
 
     // Create views for both players
     ThreeTriosView view1 = new ThreeTriosView(model);
     ThreeTriosView view2 = new ThreeTriosView(model);
 
     // Create controllers for each player
-    new ThreeTriosController(model, view1, player1, redPlayer);
-    new ThreeTriosController(model, view2, player2, bluePlayer);
+    new ThreeTriosController(model, view1, player1, PlayerColor.RED);
+    new ThreeTriosController(model, view2, player2, PlayerColor.BLUE);
 
     // Display both views
     view1.setVisible(true);

@@ -15,10 +15,10 @@ public class ThreeTriosController {
   private final ThreeTriosGameModel model;
   private final ThreeTriosView view;
   private final Player player;
-  private final ThreeTriosPlayer gamePlayer;
+  private final PlayerColor gamePlayer;
   private ThreeTriosCard selectedCard;
 
-  public ThreeTriosController(ThreeTriosGameModel model, ThreeTriosView view, Player player, ThreeTriosPlayer gamePlayer) {
+  public ThreeTriosController(ThreeTriosGameModel model, ThreeTriosView view, Player player, PlayerColor gamePlayer) {
     this.model = model;
     this.view = view;
     this.player = player;
@@ -43,7 +43,7 @@ public class ThreeTriosController {
 
           //TO-DO: update this logic to check if the player's colors are the same
 
-          if (model.getCurrentPlayer() == gamePlayer) {
+          if (model.getCurrentPlayerColor().equals(gamePlayer)) {
 
             //TO-DO: add ability to get the selected card from the view
             selectedCard = view.getSelectedCard();
@@ -59,7 +59,7 @@ public class ThreeTriosController {
         public void mouseClicked(MouseEvent e) {
 
           //TO-DO: update this logic to check if the player's colors are the same
-          if (model.getCurrentPlayer() == gamePlayer && selectedCard != null) {
+          if (model.getCurrentPlayerColor().equals(gamePlayer) && selectedCard != null) {
 
             //TO-DO: add ability to get the selected row & col from the view
             int row = view.getSelectedRow();
