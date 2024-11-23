@@ -2,9 +2,8 @@ package cs3500.threetrios.view;
 
 import javax.swing.JPanel;
 import javax.swing.BorderFactory;
-import java.awt.GridLayout;
-import java.awt.Dimension;
-import java.awt.Color;
+
+import java.awt.*;
 import java.util.List;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -79,4 +78,23 @@ public class PlayerHandPanel extends JPanel {
     revalidate();
     repaint();
   }
+
+  public CellPanel getSelectedCardPanel() {
+    return selectedCardPanel;
+  }
+
+  public void highlightCard(int cardIndex) {
+    // Deselect previously selected card
+    if (selectedCardPanel != null) {
+      selectedCardPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY)); // Reset border
+    }
+
+    // Highlight the new card
+    Component[] cards = getComponents();
+    if (cardIndex >= 0 && cardIndex < cards.length) {
+      selectedCardPanel = (CellPanel) cards[cardIndex];
+      selectedCardPanel.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 3)); // Highlight border
+    }
+  }
+
 }

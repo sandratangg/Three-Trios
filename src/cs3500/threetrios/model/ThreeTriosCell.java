@@ -7,6 +7,7 @@ public class ThreeTriosCell implements ICell {
   boolean isHole;
   public ICard card;
 
+
   /**
    * Constructor for a Card Cell (A space that is empty or contains a card).
    */
@@ -78,4 +79,5 @@ public class ThreeTriosCell implements ICell {
   public boolean sameCard(ThreeTriosCard sampleCard) {
     return this.card.equals(sampleCard);
   }
+
 }

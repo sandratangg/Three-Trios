@@ -58,7 +58,7 @@ public class ThreeTriosController {
         @Override
         public void mouseClicked(MouseEvent e) {
 
-          //TO-DO: update this logic to check if the player's colors are the same
+          //Check if the player's colors are the same
           if (model.getCurrentPlayerColor().equals(gamePlayer) && selectedCard != null) {
 
             //TO-DO: add ability to get the selected row & col from the view
@@ -101,5 +101,6 @@ public class ThreeTriosController {
 
     //TO-DO: Add ability to update the current player in the view
     view.updateTurnIndicator(model.getCurrentPlayerColor());
+
   }
 }

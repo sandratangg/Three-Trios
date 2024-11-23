@@ -3,10 +3,13 @@ package cs3500.threetrios.view;
 import javax.swing.JPanel;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
+
 import cs3500.threetrios.model.Direction;
+import cs3500.threetrios.model.ICard;
 import cs3500.threetrios.model.PlayerColor;
 import cs3500.threetrios.model.ReadOnlyThreeTriosModel;
 import cs3500.threetrios.model.ThreeTriosCard;
@@ -17,6 +20,9 @@ import cs3500.threetrios.model.ThreeTriosCell;
  * The cell may display a card owned by a player, be empty, or represent a hole on the board.
  */
 public class CellPanel extends JPanel {
+  private ThreeTriosCell cell; // stores cell data
+  private int row;
+  private int col;
 
   /**
    * Constructs a CellPanel based on the given cell's contents, location, and the game model.
@@ -28,6 +34,9 @@ public class CellPanel extends JPanel {
    * @param col   the column index of the cell on the game grid
    */
   public CellPanel(ThreeTriosCell cell, ReadOnlyThreeTriosModel model, int row, int col) {
+    this.cell = cell;
+    this.row = row;
+    this.col = col;
     boolean isHole = cell.isHole();
 
     if (!cell.isEmpty() && !isHole) {
@@ -117,4 +126,32 @@ public class CellPanel extends JPanel {
     super.paintComponent(g);
     // Background color is set during initialization in the constructor or createPlayerCardPanel
   }
+
+  /**
+   * Gets the row index of this cell panel.
+   * @return the row index
+   */
+  public int getRow() {
+    return this.row;
+  }
+
+  /**
+   * Gets the column index of this cell panel.
+   * @return the column index
+   */
+  public int getCol() {
+    return this.col;
+  }
+
+  /**
+   * Returns the card contained in this cell panel, or null if the cell is empty or a hole.
+   *
+   * @return the card in the cell, or null
+   */
+  public ThreeTriosCard getCard() {
+    return cell != null ? (ThreeTriosCard) cell.getCard() : null;
+  }
+
+
+
 }

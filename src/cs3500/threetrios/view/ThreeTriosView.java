@@ -1,12 +1,13 @@
 package cs3500.threetrios.view;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import java.awt.BorderLayout;
-import java.awt.Component;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+
+import javax.swing.*;
 
 import cs3500.threetrios.model.PlayerColor;
 import cs3500.threetrios.model.ReadOnlyThreeTriosModel;
+import cs3500.threetrios.model.ThreeTriosCard;
 
 /**
  * Represents the main view for the Three Trios game, which extends JFrame and
@@ -88,13 +89,11 @@ public class ThreeTriosView extends JFrame implements IThreeTriosView {
    */
   @Override
   public void highlightCard(int cardIndex, PlayerColor playerColor) {
-    /* Uncomment to enable highlighting
     if (playerColor == PlayerColor.RED) {
       leftHandPanel.highlightCard(cardIndex);
     } else {
       rightHandPanel.highlightCard(cardIndex);
     }
-    */
   }
 
   /**
@@ -107,4 +106,96 @@ public class ThreeTriosView extends JFrame implements IThreeTriosView {
     rightHandPanel.deselectCard();
     */
   }
+
+  /**
+   * Adds a mouse listener to the card selection panel.
+   *
+   * @param mouseAdapter the mouse adapter to add
+   */
+  public void addCardSelectionListener(MouseAdapter mouseAdapter) {
+    leftHandPanel.addMouseListener(mouseAdapter);
+    rightHandPanel.addMouseListener(mouseAdapter);
+  }
+
+  /**
+   * TODO : Implement this method
+   * Gets the selected card from the view.
+   *
+   * @return the selected card.
+   */
+  public ThreeTriosCard getSelectedCard() {
+    if (leftHandPanel.getSelectedCardPanel() != null) {
+      return leftHandPanel.getSelectedCardPanel().getCard();
+    } else if (rightHandPanel.getSelectedCardPanel() != null) {
+      return rightHandPanel.getSelectedCardPanel().getCard();
+    } else if (gridPanel.getSelectedCardPanel() != null) {
+      return gridPanel.getSelectedCardPanel().getCard();
+    }
+    return null;
+  }
+
+
+  /**
+   * TODO : Implement this method
+   * Gets the selected row from the view.
+   *
+   * @return the selected row.
+   */
+  public int getSelectedRow() {
+    if (gridPanel.getSelectedCardPanel() != null) {
+      return gridPanel.getSelectedCardPanel().getRow();
+    }
+    return -1;
+  }
+
+  /**
+   * TODO : Implement this method
+   * Gets the selected column from the view.
+   *
+   * @return the selected column.
+   */
+  public int getSelectedCol() {
+    if (gridPanel.getSelectedCardPanel() != null) {
+      return gridPanel.getSelectedCardPanel().getCol();
+    }
+    return -1;
+  }
+
+  /**
+   * TODO : Implement this method
+   * Show error message in the view.
+   *
+   * @param message the error message to display.
+   */
+  public void showError(String message) {
+    JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
+  }
+
+  /**
+   * TODO : Implement this method
+   * Updates the turn indicator to show the current player's turn.
+   *
+   * @param currentPlayerColor the color of the current player.
+   */
+  public void updateTurnIndicator(PlayerColor currentPlayerColor) {
+    // Update the label to show the current player's turn
+    String playerText = "Current Player: " + currentPlayerColor.toString();
+    messageLabel.setText(playerText);
+
+    // Change the label's color to visually represent the player
+    if (currentPlayerColor == PlayerColor.RED) {
+      messageLabel.setForeground(Color.RED);
+    } else if (currentPlayerColor == PlayerColor.BLUE) {
+      messageLabel.setForeground(Color.BLUE);
+    } else {
+      messageLabel.setForeground(Color.BLACK); // Default color if needed
+    }
+  }
+
+  @Override
+  public void addGridClickListener(MouseAdapter mouseAdapter) {
+    gridPanel.addCellClickListener(mouseAdapter);
+  }
+
+
 }
