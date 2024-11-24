@@ -72,9 +72,24 @@ public class ThreeTriosView extends JFrame implements IThreeTriosView {
    * @param rightHandPanel the hand panel for the BLUE player
    */
   public void setPlayerHand(PlayerHandPanel leftHandPanel, PlayerHandPanel rightHandPanel) {
+    // Remove old panels
+    remove(this.leftHandPanel);
+    remove(this.rightHandPanel);
+
+    // Set new panels
     this.leftHandPanel = leftHandPanel;
     this.rightHandPanel = rightHandPanel;
+
+    // Add new panels to the frame
+    add(this.leftHandPanel, BorderLayout.WEST);
+    add(this.rightHandPanel, BorderLayout.EAST);
+
+    // Refresh the frame
+    revalidate();
+    repaint();
   }
+
+
 
   /**
    * Displays a message in the message label.
@@ -126,10 +141,12 @@ public class ThreeTriosView extends JFrame implements IThreeTriosView {
    * @return the game grid panel
    */
   public GameGridPanel getGrid() {
-
-    gridPanel = new GameGridPanel(model);
+    if (gridPanel == null) { // Only create if not already created
+      gridPanel = new GameGridPanel(model);
+    }
     return gridPanel;
   }
+
 
   /**
    * Returns the selected coordinate on the game grid.

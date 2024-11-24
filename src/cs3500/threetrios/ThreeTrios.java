@@ -37,15 +37,19 @@ public final class ThreeTrios {
     ThreeTriosView view1 = new ThreeTriosView(model);
     ThreeTriosView view2 = new ThreeTriosView(model);
 
-    ThreeTriosController c1 = new ThreeTriosController(model, player1, view1, PlayerColor.RED);
-    ThreeTriosController c2 = new ThreeTriosController(model, player2, view2, PlayerColor.BLUE);
+    ThreeTriosController c1 = new ThreeTriosController(model, player1, view1, PlayerColor.RED, null);
+    ThreeTriosController c2 = new ThreeTriosController(model, player2, view2, PlayerColor.BLUE, c1);
+    c1.otherController = c2; // Link the two controllers
 
     view1.getGrid().setController(c1);
     view1.getLeftHandPanel().setController(c1);
+
     view2.getGrid().setController(c2);
     view2.getRightHandPanel().setController(c2);
 
     c1.activate();
     c2.activate();
+
+
   }
 }

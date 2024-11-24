@@ -1,7 +1,9 @@
 package cs3500.threetrios.view;
 
+
 import javax.swing.JPanel;
 import javax.swing.BorderFactory;
+
 
 import java.util.List;
 import java.awt.Color;
@@ -10,9 +12,11 @@ import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+
 import cs3500.threetrios.model.PlayerColor;
 import cs3500.threetrios.model.ThreeTriosCard;
 import cs3500.threetrios.controller.ThreeTriosController;
+
 
 /**
  * Represents a panel for the player's hand in the Three Trios game, containing all cards in hand.
@@ -20,6 +24,7 @@ import cs3500.threetrios.controller.ThreeTriosController;
 public class PlayerHandPanel extends JPanel {
   private CellPanel selectedCardPanel = null;
   private ThreeTriosController controller;
+
 
   /**
    * Constructs a PlayerHandPanel based on the given list of cards and player color.
@@ -29,12 +34,12 @@ public class PlayerHandPanel extends JPanel {
    */
   public PlayerHandPanel(List<ThreeTriosCard> cards, PlayerColor color) {
     setLayout(new GridLayout(cards.size(), 1));
+    removeAll(); // Clear existing components
 
     for (int i = 0; i < cards.size(); i++) {
       ThreeTriosCard card = cards.get(i);
       CellPanel cardPanel = new CellPanel(card, color);
       cardPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-
       cardPanel.setPreferredSize(new Dimension(100, 150));
 
       int cardIndex = i;
@@ -47,7 +52,13 @@ public class PlayerHandPanel extends JPanel {
 
       add(cardPanel);
     }
+
+    revalidate();
+    repaint();
   }
+
+
+
 
   /**
    * Sets the controller for the player hand panel.
@@ -58,10 +69,12 @@ public class PlayerHandPanel extends JPanel {
     this.controller = controller;
   }
 
+
   private void handleCardSelection(CellPanel cardPanel, int cardIndex) {
     if (selectedCardPanel != null) {
       selectedCardPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
     }
+
 
     if (selectedCardPanel == cardPanel) {
       selectedCardPanel = null;
@@ -70,13 +83,18 @@ public class PlayerHandPanel extends JPanel {
       selectedCardPanel = cardPanel;
     }
 
+
     if (controller != null && selectedCardPanel != null) {
-      controller.onCardSelected(selectedCardPanel.getCard());
+      controller.onCardSelected(selectedCardPanel.getCard()); // Pass the actual card to the controller
     }
+
 
     revalidate();
     repaint();
   }
+
+
+
 
   /**
    * Returns the card currently selected by the player, or null if no card is selected.
