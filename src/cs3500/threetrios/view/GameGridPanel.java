@@ -73,4 +73,28 @@ public class GameGridPanel extends JPanel implements IGameGridPanel {
       }
     }
   }
+
+  public int getClickedRow(MouseEvent e) {
+    for (int row = 0; row < rows; row++) {
+      for (int col = 0; col < cols; col++) {
+        if (cells[row][col].equals(e.getSource())) {
+          return row;
+        }
+      }
+    }
+    return -1; // Invalid click
+  }
+
+  public int getClickedCol(MouseEvent e) {
+    for (int row = 0; row < rows; row++) {
+      for (int col = 0; col < cols; col++) {
+        if (cells[row][col].equals(e.getSource())) {
+          return col;
+        }
+      }
+    }
+    return -1; // Invalid click
+  }
+
+
 }

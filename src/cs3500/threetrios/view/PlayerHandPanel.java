@@ -79,4 +79,12 @@ public class PlayerHandPanel extends JPanel {
     revalidate();
     repaint();
   }
+
+  public ThreeTriosCard getSelectedCard() {
+    if (selectedCardPanel != null) {
+      return selectedCardPanel.getCard(); // Assume `CellPanel` has a `getCard` method
+    }
+    return null;
+  }
+
 }

@@ -4,9 +4,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.event.MouseAdapter;
 
 import cs3500.threetrios.model.PlayerColor;
 import cs3500.threetrios.model.ReadOnlyThreeTriosModel;
+import cs3500.threetrios.model.ThreeTriosCard;
 
 /**
  * Represents the main view for the Three Trios game, which extends JFrame and
@@ -19,6 +21,7 @@ public class ThreeTriosView extends JFrame implements IThreeTriosView {
   private PlayerHandPanel leftHandPanel;
   private PlayerHandPanel rightHandPanel;
   private JLabel messageLabel;
+  private final ReadOnlyThreeTriosModel model;
 
   /**
    * Constructs the ThreeTriosView with the given game model. It initializes the
@@ -28,6 +31,7 @@ public class ThreeTriosView extends JFrame implements IThreeTriosView {
    */
   public ThreeTriosView(ReadOnlyThreeTriosModel model) {
     super("Three Trios Game");
+    this.model = model;
     setLayout(new BorderLayout());
 
     // Set up the game grid panel
@@ -47,6 +51,25 @@ public class ThreeTriosView extends JFrame implements IThreeTriosView {
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     pack();
     setVisible(true);
+  }
+
+  /**
+   * Adds a listener to the player's hand panels for card selection.
+   *
+   * @param listener the MouseAdapter to handle card selection
+   */
+  public void addCardSelectionListener(MouseAdapter listener) {
+    leftHandPanel.addMouseListener(listener);
+    rightHandPanel.addMouseListener(listener);
+  }
+
+  /**
+   * Adds a listener to the game grid panel for cell clicks.
+   *
+   * @param listener the MouseAdapter to handle cell clicks
+   */
+  public void addGridClickListener(MouseAdapter listener) {
+    ((GameGridPanel) gridPanel).addMouseListener(listener);
   }
 
   /**
@@ -80,31 +103,35 @@ public class ThreeTriosView extends JFrame implements IThreeTriosView {
     messageLabel.setText(message);
   }
 
-  /**
-   * Highlights a card in the specified player's hand.
-   *
-   * @param cardIndex   the index of the card to highlight
-   * @param playerColor the color of the player (RED or BLUE)
-   */
   @Override
   public void highlightCard(int cardIndex, PlayerColor playerColor) {
-    /* Uncomment to enable highlighting
-    if (playerColor == PlayerColor.RED) {
-      leftHandPanel.highlightCard(cardIndex);
-    } else {
-      rightHandPanel.highlightCard(cardIndex);
-    }
-    */
+
+  }
+
+  @Override
+  public void deselectCard() {
+
   }
 
   /**
-   * Deselects any currently highlighted card in both players' hands.
+   * Returns the card currently selected by the player, or null if no card is selected.
+   *
+   * @return the selected card, or null if none is selected
    */
-  @Override
-  public void deselectCard() {
-    /* Uncomment to enable deselecting
-    leftHandPanel.deselectCard();
-    rightHandPanel.deselectCard();
-    */
+  public ThreeTriosCard getSelectedCard() {
+    if (model.getCurrentPlayerColor() == PlayerColor.RED) {
+      return leftHandPanel.getSelectedCard();
+    } else {
+      return rightHandPanel.getSelectedCard();
+    }
+  }
+
+  /**
+   * Returns the current game grid panel.
+   *
+   * @return the game grid panel
+   */
+  public IGameGridPanel getGrid() {
+    return gridPanel;
   }
 }

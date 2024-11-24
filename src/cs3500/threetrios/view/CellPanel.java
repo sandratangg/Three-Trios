@@ -18,6 +18,8 @@ import cs3500.threetrios.model.ThreeTriosCell;
  */
 public class CellPanel extends JPanel {
 
+  private ThreeTriosCard card;
+
   /**
    * Constructs a CellPanel based on the given cell's contents, location, and the game model.
    * Initializes the panel as a player card, empty cell, or hole based on the cell's properties.
@@ -38,6 +40,7 @@ public class CellPanel extends JPanel {
     }
 
     setBorder(BorderFactory.createLineBorder(Color.BLACK));
+    card = null;
   }
 
   /**
@@ -64,6 +67,8 @@ public class CellPanel extends JPanel {
     add(eastLabel, BorderLayout.EAST);
     add(southLabel, BorderLayout.SOUTH);
     add(westLabel, BorderLayout.WEST);
+
+    this.card = card;
   }
 
   /**
@@ -116,5 +121,9 @@ public class CellPanel extends JPanel {
   protected void paintComponent(Graphics g) {
     super.paintComponent(g);
     // Background color is set during initialization in the constructor or createPlayerCardPanel
+  }
+
+  protected ThreeTriosCard getCard() {
+    return this.card;
   }
 }
