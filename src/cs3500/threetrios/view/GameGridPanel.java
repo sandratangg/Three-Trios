@@ -27,6 +27,8 @@ public class GameGridPanel extends JPanel implements IGameGridPanel {
     for (int row = 0; row < rows; row++) {
       for (int col = 0; col < cols; col++) {
         cells[row][col] = new CellPanel(model.getCellContents(row, col), model, row, col);
+        int finalRow = row;
+        int finalCol = col;
         CellPanel cell = cells[row][col];
 
         cells[row][col].addMouseListener(new MouseAdapter() {
@@ -62,6 +64,16 @@ public class GameGridPanel extends JPanel implements IGameGridPanel {
         cells[row][col].setHighlighted(false);
       }
     }
+  }
+
+  @Override
+  public CellPanel getSelectedCardPanel() {
+    return null;
+  }
+
+  @Override
+  public void addCellClickListener(MouseAdapter mouseAdapter) {
+
   }
 
   public Posn getSelectedCoord() {
