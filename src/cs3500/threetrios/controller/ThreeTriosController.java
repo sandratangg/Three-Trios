@@ -23,13 +23,7 @@ public class ThreeTriosController {
   public void activate() {
     while (!model.isGameOver()) {
       if (model.currentPlayerColor().equals(pColor)) {
-        if (player.isHuman()) {
-          try {
-            Thread.sleep(100); // Small delay to allow user interaction
-          } catch (InterruptedException e) {
-            e.printStackTrace();
-          }
-        } else {
+        if (!player.isHuman()) {
           player.makeMove(model);
         }
       }
