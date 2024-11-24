@@ -1,9 +1,9 @@
 package cs3500.threetrios.view;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import java.awt.BorderLayout;
-import java.awt.Component;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+
+import javax.swing.*;
 
 import cs3500.threetrios.model.PlayerColor;
 import cs3500.threetrios.model.Posn;
@@ -108,11 +108,11 @@ public class ThreeTriosView extends JFrame implements IThreeTriosView {
     if (model.getCurrentPlayerColor() == PlayerColor.RED) {
       repaint();
       return leftHandPanel.getSelectedCard();
+
     } else {
       repaint();
       return rightHandPanel.getSelectedCard();
     }
-
 
   }
 
@@ -143,3 +143,4 @@ public class ThreeTriosView extends JFrame implements IThreeTriosView {
     return this.rightHandPanel;
   }
 }
+

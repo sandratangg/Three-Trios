@@ -9,6 +9,7 @@ import cs3500.threetrios.view.*;
 import java.io.FileNotFoundException;
 import java.util.List;
 
+
 public final class ThreeTrios {
   public static void main(String[] args) throws FileNotFoundException {
     ThreeTriosGrid grid = FileReader.gridFromFile("docs/ExampleBoards/board2.txt");

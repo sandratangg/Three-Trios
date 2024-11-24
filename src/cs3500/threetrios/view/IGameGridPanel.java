@@ -1,5 +1,10 @@
 package cs3500.threetrios.view;
 
+import java.awt.event.MouseAdapter;
+
+import cs3500.threetrios.model.ThreeTriosCard;
+import cs3500.threetrios.model.ThreeTriosCell;
+
 /**
  * Represents the interface for the game grid panel in the Three Trios game.
  * Provides methods to highlight specific cells on the grid and clear any highlights.
@@ -19,4 +24,8 @@ public interface IGameGridPanel {
    * Clears any highlights on the game grid, removing any visual indications.
    */
   void clearHighlight();
+
+  CellPanel getSelectedCardPanel();
+
+  void addCellClickListener(MouseAdapter mouseAdapter);
 }
