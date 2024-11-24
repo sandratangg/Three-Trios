@@ -27,8 +27,7 @@ public class GameGridPanel extends JPanel implements IGameGridPanel {
     for (int row = 0; row < rows; row++) {
       for (int col = 0; col < cols; col++) {
         cells[row][col] = new CellPanel(model.getCellContents(row, col), model, row, col);
-        int finalRow = row;
-        int finalCol = col;
+        CellPanel cell = cells[row][col];
 
         cells[row][col].addMouseListener(new MouseAdapter() {
           @Override
@@ -38,9 +37,10 @@ public class GameGridPanel extends JPanel implements IGameGridPanel {
             if (controller != null) {
               controller.onGridCellClicked(finalRow, finalCol);
             }
+
           }
         });
-        add(cells[row][col]);
+        add(cell);
       }
     }
   }
@@ -48,6 +48,7 @@ public class GameGridPanel extends JPanel implements IGameGridPanel {
   public void setController(ThreeTriosController controller) {
     this.controller = controller;
   }
+
 
   @Override
   public void highlightCell(int row, int col) {

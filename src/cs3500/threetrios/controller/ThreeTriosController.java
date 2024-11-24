@@ -1,6 +1,7 @@
 package cs3500.threetrios.controller;
 
 import cs3500.threetrios.model.*;
+
 import cs3500.threetrios.view.*;
 
 public class ThreeTriosController {
@@ -54,4 +55,5 @@ public class ThreeTriosController {
       System.out.println("No card selected!");
     }
   }
+
 }

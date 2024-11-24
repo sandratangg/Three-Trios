@@ -2,9 +2,8 @@ package cs3500.threetrios.view;
 
 import javax.swing.JPanel;
 import javax.swing.BorderFactory;
-import java.awt.GridLayout;
-import java.awt.Dimension;
-import java.awt.Color;
+
+import java.awt.*;
 import java.util.List;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
