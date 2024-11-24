@@ -24,7 +24,7 @@ public class ThreeTriosController {
   public void activate() {
     while (!model.isGameOver()) {
       if (model.currentPlayerColor().equals(pColor)) {
-        if (player.isHuman() != true) {
+        if (!player.isHuman()) {
           player.makeMove(model);
         }
       }
