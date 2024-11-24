@@ -1,9 +1,11 @@
 package cs3500.threetrios.view;
 
-import java.awt.*;
-import java.awt.event.MouseAdapter;
 
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
 
 import cs3500.threetrios.model.PlayerColor;
 import cs3500.threetrios.model.Posn;
@@ -86,12 +88,14 @@ public class ThreeTriosView extends JFrame implements IThreeTriosView {
 
   @Override
   public void highlightCard(int cardIndex, PlayerColor playerColor) {
-
+    // method not implemented
+    // it should highlight the card in the player's hand
   }
 
   @Override
   public void deselectCard() {
-
+    // method not implemented
+    // it should deselect the card in the player's hand
   }
 
   /**
@@ -127,6 +131,11 @@ public class ThreeTriosView extends JFrame implements IThreeTriosView {
     return gridPanel;
   }
 
+  /**
+   * Returns the selected coordinate on the game grid.
+   *
+   * @return the selected coordinate
+   */
   public Posn getSelectedCoord() {
     gridPanel = new GameGridPanel(model);
     add((Component) gridPanel, BorderLayout.CENTER);

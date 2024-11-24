@@ -47,8 +47,8 @@ public class MaximizeFlipsStrategy implements ThreeTriosStrategy {
               maxFlips = flips;
             } else if (flips == maxFlips && bestMove != null) {
               // Break ties by choosing the upper-leftmost position and first card in hand
-              if (row < bestMove.getRow() ||
-                      (row == bestMove.getRow() && col < bestMove.getCol())) {
+              if (row < bestMove.getRow()
+                      || (row == bestMove.getRow() && col < bestMove.getCol())) {
                 bestMove = new Move(row, col, card);
               }
             }

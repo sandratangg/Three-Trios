@@ -170,10 +170,10 @@ public class ThreeTriosGameModel extends ReadOnlyThreeTriosModel implements Thre
    */
   public String toString() {
 
-    return currentPlayer.toString() +
-            "\n" +
-            grid.toString(redPlayer) +
-            "\n" +
-            currentPlayer.handToString();
+    return currentPlayer.toString()
+            + "\n"
+            + grid.toString(redPlayer)
+            + "\n"
+            + currentPlayer.handToString();
   }
 }

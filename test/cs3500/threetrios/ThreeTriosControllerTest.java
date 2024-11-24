@@ -3,16 +3,27 @@ package cs3500.threetrios;
 import cs3500.threetrios.controller.HumanPlayer;
 import cs3500.threetrios.controller.Player;
 import cs3500.threetrios.controller.ThreeTriosController;
-import cs3500.threetrios.model.*;
-import cs3500.threetrios.view.*;
+import cs3500.threetrios.model.PlayerColor;
+import cs3500.threetrios.model.ThreeTriosCard;
+import cs3500.threetrios.model.ThreeTriosGameModel;
+import cs3500.threetrios.model.ThreeTriosGrid;
+import cs3500.threetrios.view.ThreeTriosView;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
+/**
+ * Test for the ThreeTriosController class.
+ */
 public class ThreeTriosControllerTest {
   private ThreeTriosGameModel model;
   private ThreeTriosView view;
@@ -97,7 +108,9 @@ public class ThreeTriosControllerTest {
     ThreeTriosCard card = model.getPlayerHand(PlayerColor.RED).get(0);
     for (int row = 0; row < 3; row++) {
       for (int col = 0; col < 3; col++) {
-        if (model.isGameOver()) break;
+        if (model.isGameOver()) {
+          break;
+        }
         controller.onCardSelected(card);
         controller.onGridCellClicked(row, col);
         if (!model.getPlayerHand(PlayerColor.RED).isEmpty()) {

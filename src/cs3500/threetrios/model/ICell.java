@@ -19,5 +19,12 @@ public interface ICell {
   boolean isEmpty();
 
 
+  /**
+   * Checks if the cell is a hole. A hole is a cell that is not empty but
+   * cannot be occupied by a card. Holes are typically used to represent
+   * invalid or blocked positions on the game grid, restricting movement.
+   *
+   * @return true if the cell is a hole; false if it is empty or contains a card.
+   */
   boolean isHole();
 }

@@ -2,8 +2,6 @@ package cs3500.threetrios.view;
 
 import java.awt.event.MouseAdapter;
 
-import cs3500.threetrios.model.ThreeTriosCard;
-import cs3500.threetrios.model.ThreeTriosCell;
 
 /**
  * Represents the interface for the game grid panel in the Three Trios game.
@@ -25,7 +23,17 @@ public interface IGameGridPanel {
    */
   void clearHighlight();
 
+  /**
+   * Gets the panel representing the currently selected card on the game grid.
+   *
+   * @return the panel representing the selected card
+   */
   CellPanel getSelectedCardPanel();
 
+  /**
+   * Adds a mouse listener to the game grid panel to handle cell clicks.
+   *
+   * @param mouseAdapter the mouse adapter to handle cell clicks
+   */
   void addCellClickListener(MouseAdapter mouseAdapter);
 }

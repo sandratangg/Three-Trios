@@ -9,6 +9,9 @@ import cs3500.threetrios.model.ReadOnlyThreeTriosModel;
 import cs3500.threetrios.model.Posn;
 import cs3500.threetrios.controller.ThreeTriosController;
 
+/**
+ * Represents a panel for the game grid in the Three Trios game, containing all cells on the board.
+ */
 public class GameGridPanel extends JPanel implements IGameGridPanel {
 
   private final int rows;
@@ -17,6 +20,11 @@ public class GameGridPanel extends JPanel implements IGameGridPanel {
   private Posn selectedCoord = null;
   private ThreeTriosController controller;
 
+  /**
+   * Constructs a GameGridPanel based on the given game model, initializing the grid's cells.
+   *
+   * @param model the read-only model of the game to retrieve cell contents and properties
+   */
   public GameGridPanel(ReadOnlyThreeTriosModel model) {
     this.rows = model.getGridHeight();
     this.cols = model.getGridWidth();
@@ -73,7 +81,8 @@ public class GameGridPanel extends JPanel implements IGameGridPanel {
 
   @Override
   public void addCellClickListener(MouseAdapter mouseAdapter) {
-
+    // method not used in this implementation
+    // it should add a mouse listener to each cell in the grid
   }
 
   public Posn getSelectedCoord() {

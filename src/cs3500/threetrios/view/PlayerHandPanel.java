@@ -3,8 +3,10 @@ package cs3500.threetrios.view;
 import javax.swing.JPanel;
 import javax.swing.BorderFactory;
 
-import java.awt.*;
 import java.util.List;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -12,13 +14,20 @@ import cs3500.threetrios.model.PlayerColor;
 import cs3500.threetrios.model.ThreeTriosCard;
 import cs3500.threetrios.controller.ThreeTriosController;
 
+/**
+ * Represents a panel for the player's hand in the Three Trios game, containing all cards in hand.
+ */
 public class PlayerHandPanel extends JPanel {
   private CellPanel selectedCardPanel = null;
-  private final PlayerColor color;
   private ThreeTriosController controller;
 
+  /**
+   * Constructs a PlayerHandPanel based on the given list of cards and player color.
+   *
+   * @param cards the list of cards in the player's hand
+   * @param color the color representing the player who owns the hand
+   */
   public PlayerHandPanel(List<ThreeTriosCard> cards, PlayerColor color) {
-    this.color = color;
     setLayout(new GridLayout(cards.size(), 1));
 
     for (int i = 0; i < cards.size(); i++) {
@@ -40,6 +49,11 @@ public class PlayerHandPanel extends JPanel {
     }
   }
 
+  /**
+   * Sets the controller for the player hand panel.
+   *
+   * @param controller the controller to set
+   */
   public void setController(ThreeTriosController controller) {
     this.controller = controller;
   }
@@ -64,6 +78,11 @@ public class PlayerHandPanel extends JPanel {
     repaint();
   }
 
+  /**
+   * Returns the card currently selected by the player, or null if no card is selected.
+   *
+   * @return the selected card, or null if none is selected
+   */
   public ThreeTriosCard getSelectedCard() {
     if (selectedCardPanel != null) {
       return selectedCardPanel.getCard();

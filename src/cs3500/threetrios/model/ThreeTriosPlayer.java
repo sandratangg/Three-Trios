@@ -193,6 +193,12 @@ public class ThreeTriosPlayer implements IPlayer {
     return new ArrayList<>(ownedCards);
   }
 
+  /**
+   * Checks if the player has the same color as the specified color.
+   *
+   * @param color the color to compare against the player's color.
+   * @return true if the player has the same color as the specified color.
+   */
   public boolean sameColor(PlayerColor color) {
     return this.color.equals(color);
   }

@@ -38,7 +38,8 @@ public class ThreeTriosGrid implements IGrid {
 
   /**
    * Method to return a new copy of this grid.
-   * @return Copy of this grid.
+   *
+   * @return Copy of this grid
    */
   public ThreeTriosGrid copy() {
     ThreeTriosGrid newGrid = new ThreeTriosGrid(this.rows, this.cols);
@@ -74,6 +75,7 @@ public class ThreeTriosGrid implements IGrid {
 
   /**
    * Determines if placing a card at a location is legal.
+   *
    * @param row  the row to place the card
    * @param col  the column to place the card
    * @param card the card to place
@@ -137,6 +139,15 @@ public class ThreeTriosGrid implements IGrid {
     }
   }
 
+  /**
+   * Calculates the number of cards that can be flipped by playing a card at a specific coordinate.
+   *
+   * @param x the x-coordinate of the card
+   * @param y the y-coordinate of the card
+   * @param card the card to be played
+   * @param player the player who is playing the card
+   * @return the number of flippable cards
+   */
   public int calculateFlippableCards(int x, int y, ICard card, IPlayer player) {
     boolean[][] visited = new boolean[this.rows][this.cols];
     return calculateFlipsFromPosition(x, y, card, player, visited);
@@ -263,16 +274,32 @@ public class ThreeTriosGrid implements IGrid {
     return true;
   }
 
+  /**
+   * Places an empty card cell at the given row and column.
+   *
+   * @param row the row
+   * @param col the column
+   */
   public void placeEmptyCardCell(int row, int col) {
     grid[row][col] = new ThreeTriosCell(false);  // 'false' means it’s not a hole
   }
 
+  /**
+   * Places a hole at the given row and column.
+   * @param row the row
+   * @param col the column
+   */
   public void placeHole(int row, int col) {
     grid[row][col] = new ThreeTriosCell(true);  // 'true' means it’s a hole
   }
 
   // For testing purposes
-  // Returns card from cell at position (i, j)
+  /**
+   * Returns the card from the cell at the given position (i, j).
+   * @param i the row
+   * @param j the column
+   * @return the card from the cell at the given position
+   */
   public ICard getCardFromCell(int i, int j) {
     return grid[i][j].getCard();
   }

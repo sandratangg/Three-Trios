@@ -87,10 +87,10 @@ public class Move {
    */
   @Override
   public String toString() {
-    return "Move{" +
-            "row=" + row +
-            ", col=" + col +
-            ", card=" + card +
-            '}';
+    return "Move{"
+            + "row=" + row
+            + ", col=" + col
+            + ", card=" + card
+            + '}';
   }
 }

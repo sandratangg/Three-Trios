@@ -1,16 +1,29 @@
 package cs3500.threetrios;
 
-import cs3500.threetrios.controller.*;
-import cs3500.threetrios.model.*;
-import cs3500.threetrios.strategies.CornerPreferenceStrategy;
-import cs3500.threetrios.strategies.MaximizeFlipsStrategy;
-import cs3500.threetrios.view.*;
-
 import java.io.FileNotFoundException;
 import java.util.List;
 
+import cs3500.threetrios.controller.FileReader;
+import cs3500.threetrios.controller.HumanPlayer;
+import cs3500.threetrios.controller.Player;
+import cs3500.threetrios.controller.ThreeTriosController;
+import cs3500.threetrios.model.PlayerColor;
+import cs3500.threetrios.model.ThreeTriosCard;
+import cs3500.threetrios.model.ThreeTriosGameModel;
+import cs3500.threetrios.model.ThreeTriosGrid;
+import cs3500.threetrios.view.ThreeTriosView;
 
+/**
+ * Represents the main class for the Three Trios game, which initializes the game model, view, and
+ * controller to start the game.
+ */
 public final class ThreeTrios {
+  /**
+   * Initializes the game model, view, and controller to start the Three Trios game.
+   *
+   * @param args the command-line arguments for the game
+   * @throws FileNotFoundException if the file is not found
+   */
   public static void main(String[] args) throws FileNotFoundException {
     ThreeTriosGrid grid = FileReader.gridFromFile("docs/ExampleBoards/board2.txt");
     List<ThreeTriosCard> deck = FileReader.readCardsFromFile("docs/ExampleCards/card_file2.txt");

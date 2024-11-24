@@ -71,8 +71,8 @@ public class MockThreeTriosModel extends ReadOnlyThreeTriosModel {
       flippable++;
     }
 
-    if (col < board[0].length - 1 &&
-            board[row][col + 1] != 0 && board[row][col + 1] != playerCode) {
+    if (col < board[0].length - 1
+            && board[row][col + 1] != 0 && board[row][col + 1] != playerCode) {
       flippable++;
     }
 

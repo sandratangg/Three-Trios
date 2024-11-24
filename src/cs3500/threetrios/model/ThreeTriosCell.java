@@ -18,6 +18,7 @@ public class ThreeTriosCell implements ICell {
 
   /**
    * Constructor for a Hole (A dark space where no card can be placed.).
+   *
    * @param isHole whether the cell is a hole or not
    */
   public ThreeTriosCell(boolean isHole) {
