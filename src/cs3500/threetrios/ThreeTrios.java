@@ -13,6 +13,7 @@ import cs3500.threetrios.model.ThreeTriosGameModel;
 import cs3500.threetrios.model.ThreeTriosGrid;
 import cs3500.threetrios.view.ThreeTriosView;
 
+
 /**
  * Represents the main class for the Three Trios game, which initializes the game model, view, and
  * controller to start the game.
