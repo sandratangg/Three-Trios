@@ -1,41 +1,37 @@
 package cs3500.threetrios;
 
+import cs3500.threetrios.controller.*;
+import cs3500.threetrios.model.*;
+import cs3500.threetrios.strategies.CornerPreferenceStrategy;
+import cs3500.threetrios.strategies.MaximizeFlipsStrategy;
+import cs3500.threetrios.view.*;
+
 import java.io.FileNotFoundException;
 import java.util.List;
-import cs3500.threetrios.controller.FileReader;
-import cs3500.threetrios.model.ThreeTriosCard;
-import cs3500.threetrios.model.ThreeTriosGameModel;
-import cs3500.threetrios.model.ThreeTriosGrid;
-import cs3500.threetrios.view.ThreeTriosView;
 
-/**
- * The entry point for the Three Trios game application.
- * Initializes the game model, loads data from files, and starts the game view.
- */
 public final class ThreeTrios {
-
-  /**
-   * The main method to launch the Three Trios game.
-   * It reads the board configuration and cards from specified files, initializes the game model,
-   * and displays the game view.
-   *
-   * @param args command-line arguments (not used)
-   * @throws FileNotFoundException if the specified board or card file is not found
-   */
   public static void main(String[] args) throws FileNotFoundException {
-    // Load the grid and deck using the FileReader class
     ThreeTriosGrid grid = FileReader.gridFromFile("docs/ExampleBoards/board2.txt");
-    List<ThreeTriosCard> deck =
-            FileReader.readCardsFromFile("docs/ExampleCards/card_file2.txt");
-
-    // Initialize the game model with the loaded grid and deck
+    List<ThreeTriosCard> deck = FileReader.readCardsFromFile("docs/ExampleCards/card_file2.txt");
     ThreeTriosGameModel model = new ThreeTriosGameModel(grid, deck);
 
-    // Initialize the game view and display it
-    ThreeTriosView view1 = new ThreeTriosView(model);
-    view1.setVisible(true);
+    Player player1 = new HumanPlayer();
+    Player player2 = new HumanPlayer();
+    //Player player1 = new AIPlayer(new MaximizeFlipsStrategy(), PlayerColor.RED);
+    //Player player2 = new AIPlayer(new CornerPreferenceStrategy(), PlayerColor.BLUE);
 
+    ThreeTriosView view1 = new ThreeTriosView(model);
     ThreeTriosView view2 = new ThreeTriosView(model);
-    view2.setVisible(true);
+
+    ThreeTriosController c1 = new ThreeTriosController(model, player1, view1, PlayerColor.RED);
+    ThreeTriosController c2 = new ThreeTriosController(model, player2, view2, PlayerColor.BLUE);
+
+    view1.getGrid().setController(c1);
+    view1.getLeftHandPanel().setController(c1);
+    view2.getGrid().setController(c2);
+    view2.getRightHandPanel().setController(c2);
+
+    c1.activate();
+    c2.activate();
   }
 }

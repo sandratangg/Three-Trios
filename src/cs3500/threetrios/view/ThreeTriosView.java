@@ -4,9 +4,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.event.MouseAdapter;
 
 import cs3500.threetrios.model.PlayerColor;
+import cs3500.threetrios.model.Posn;
 import cs3500.threetrios.model.ReadOnlyThreeTriosModel;
 import cs3500.threetrios.model.ThreeTriosCard;
 
@@ -17,11 +17,11 @@ import cs3500.threetrios.model.ThreeTriosCard;
  */
 public class ThreeTriosView extends JFrame implements IThreeTriosView {
 
-  private IGameGridPanel gridPanel;
+  private GameGridPanel gridPanel;
   private PlayerHandPanel leftHandPanel;
   private PlayerHandPanel rightHandPanel;
   private JLabel messageLabel;
-  private final ReadOnlyThreeTriosModel model;
+  private ReadOnlyThreeTriosModel model;
 
   /**
    * Constructs the ThreeTriosView with the given game model. It initializes the
@@ -54,32 +54,13 @@ public class ThreeTriosView extends JFrame implements IThreeTriosView {
   }
 
   /**
-   * Adds a listener to the player's hand panels for card selection.
-   *
-   * @param listener the MouseAdapter to handle card selection
-   */
-  public void addCardSelectionListener(MouseAdapter listener) {
-    leftHandPanel.addMouseListener(listener);
-    rightHandPanel.addMouseListener(listener);
-  }
-
-  /**
-   * Adds a listener to the game grid panel for cell clicks.
-   *
-   * @param listener the MouseAdapter to handle cell clicks
-   */
-  public void addGridClickListener(MouseAdapter listener) {
-    ((GameGridPanel) gridPanel).addMouseListener(listener);
-  }
-
-  /**
    * Sets a new game grid panel.
    *
    * @param gridPanel the new game grid panel to set
    */
   @Override
   public void setGrid(IGameGridPanel gridPanel) {
-    this.gridPanel = gridPanel;
+    this.gridPanel = (GameGridPanel) gridPanel;
   }
 
   /**
@@ -119,11 +100,20 @@ public class ThreeTriosView extends JFrame implements IThreeTriosView {
    * @return the selected card, or null if none is selected
    */
   public ThreeTriosCard getSelectedCard() {
+    leftHandPanel = new PlayerHandPanel(model.getPlayerHand(PlayerColor.RED), PlayerColor.RED);
+    rightHandPanel = new PlayerHandPanel(model.getPlayerHand(PlayerColor.BLUE), PlayerColor.BLUE);
+    add((Component) leftHandPanel, BorderLayout.WEST);
+    add((Component) rightHandPanel, BorderLayout.EAST);
+
     if (model.getCurrentPlayerColor() == PlayerColor.RED) {
+      repaint();
       return leftHandPanel.getSelectedCard();
     } else {
+      repaint();
       return rightHandPanel.getSelectedCard();
     }
+
+
   }
 
   /**
@@ -131,7 +121,25 @@ public class ThreeTriosView extends JFrame implements IThreeTriosView {
    *
    * @return the game grid panel
    */
-  public IGameGridPanel getGrid() {
+  public GameGridPanel getGrid() {
+
+    gridPanel = new GameGridPanel(model);
     return gridPanel;
+  }
+
+  public Posn getSelectedCoord() {
+    gridPanel = new GameGridPanel(model);
+    add((Component) gridPanel, BorderLayout.CENTER);
+
+    repaint();
+    return this.gridPanel.getSelectedCoord();
+  }
+
+  public PlayerHandPanel getLeftHandPanel() {
+    return this.leftHandPanel;
+  }
+
+  public PlayerHandPanel getRightHandPanel() {
+    return this.rightHandPanel;
   }
 }
