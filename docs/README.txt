@@ -66,6 +66,17 @@ Introduced Posn Class:
 placement and movement.
 
 ---------------------------------------------------------------------------------------------------
+Part 3: Controller
+
+
+Developed ThreeTriosController to handle user actions and manage game logic.
+Updated ThreeTrios.java to be able to have different player types.
+Implemented the specified human and AI player interfaces. 
+
+Note: We were not able to successfully achieve these. We kept our changes however as we believe we
+were somewhat close in finding the solution.
+
+---------------------------------------------------------------------------------------------------
 Detailed Breakdown of Updated Structure
 
 Model (cs3500.threetrios.model)
@@ -107,6 +118,18 @@ FileReader:
     Supports the following configuration files:
     board1.txt, board2.txt, board3.txt for grid setups.
     card_file1.txt, card_file2.txt for card definitions.
+
+ThreeTriosController:
+    Controller representing 1 player (human or AI) of the ThreeTrios game
+
+Player:
+    Interface for a player of the ThreeTrios game (human or AI)
+
+AIPlayer:
+    Represents an AI player of the ThreeTrios game
+
+HumanPlayer:
+    Represents a human player of the ThreeTrios game
 
 Strategies (cs3500.threetrios.strategies)
 
