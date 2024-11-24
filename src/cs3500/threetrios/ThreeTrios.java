@@ -32,7 +32,10 @@ public final class ThreeTrios {
     ThreeTriosGameModel model = new ThreeTriosGameModel(grid, deck);
 
     // Initialize the game view and display it
-    ThreeTriosView view = new ThreeTriosView(model);
-    view.setVisible(true);
+    ThreeTriosView view1 = new ThreeTriosView(model);
+    view1.setVisible(true);
+
+    ThreeTriosView view2 = new ThreeTriosView(model);
+    view2.setVisible(true);
   }
 }
