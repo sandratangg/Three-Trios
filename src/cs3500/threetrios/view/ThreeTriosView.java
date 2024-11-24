@@ -6,6 +6,7 @@ import java.awt.event.MouseAdapter;
 import javax.swing.*;
 
 import cs3500.threetrios.model.PlayerColor;
+import cs3500.threetrios.model.Posn;
 import cs3500.threetrios.model.ReadOnlyThreeTriosModel;
 import cs3500.threetrios.model.ThreeTriosCard;
 
@@ -16,10 +17,11 @@ import cs3500.threetrios.model.ThreeTriosCard;
  */
 public class ThreeTriosView extends JFrame implements IThreeTriosView {
 
-  private IGameGridPanel gridPanel;
+  private GameGridPanel gridPanel;
   private PlayerHandPanel leftHandPanel;
   private PlayerHandPanel rightHandPanel;
   private JLabel messageLabel;
+  private ReadOnlyThreeTriosModel model;
 
   /**
    * Constructs the ThreeTriosView with the given game model. It initializes the
@@ -29,6 +31,7 @@ public class ThreeTriosView extends JFrame implements IThreeTriosView {
    */
   public ThreeTriosView(ReadOnlyThreeTriosModel model) {
     super("Three Trios Game");
+    this.model = model;
     setLayout(new BorderLayout());
 
     // Set up the game grid panel
@@ -57,7 +60,7 @@ public class ThreeTriosView extends JFrame implements IThreeTriosView {
    */
   @Override
   public void setGrid(IGameGridPanel gridPanel) {
-    this.gridPanel = gridPanel;
+    this.gridPanel = (GameGridPanel) gridPanel;
   }
 
   /**
@@ -81,121 +84,63 @@ public class ThreeTriosView extends JFrame implements IThreeTriosView {
     messageLabel.setText(message);
   }
 
-  /**
-   * Highlights a card in the specified player's hand.
-   *
-   * @param cardIndex   the index of the card to highlight
-   * @param playerColor the color of the player (RED or BLUE)
-   */
   @Override
   public void highlightCard(int cardIndex, PlayerColor playerColor) {
-    if (playerColor == PlayerColor.RED) {
-      leftHandPanel.highlightCard(cardIndex);
-    } else {
-      rightHandPanel.highlightCard(cardIndex);
-    }
+
   }
 
-  /**
-   * Deselects any currently highlighted card in both players' hands.
-   */
   @Override
   public void deselectCard() {
-    /* Uncomment to enable deselecting
-    leftHandPanel.deselectCard();
-    rightHandPanel.deselectCard();
-    */
+
   }
 
   /**
-   * Adds a mouse listener to the card selection panel.
+   * Returns the card currently selected by the player, or null if no card is selected.
    *
-   * @param mouseAdapter the mouse adapter to add
-   */
-  public void addCardSelectionListener(MouseAdapter mouseAdapter) {
-    leftHandPanel.addMouseListener(mouseAdapter);
-    rightHandPanel.addMouseListener(mouseAdapter);
-  }
-
-  /**
-   * TODO : Implement this method
-   * Gets the selected card from the view.
-   *
-   * @return the selected card.
+   * @return the selected card, or null if none is selected
    */
   public ThreeTriosCard getSelectedCard() {
-    if (leftHandPanel.getSelectedCardPanel() != null) {
-      return leftHandPanel.getSelectedCardPanel().getCard();
-    } else if (rightHandPanel.getSelectedCardPanel() != null) {
-      return rightHandPanel.getSelectedCardPanel().getCard();
-    } else if (gridPanel.getSelectedCardPanel() != null) {
-      return gridPanel.getSelectedCardPanel().getCard();
-    }
-    return null;
-  }
+    leftHandPanel = new PlayerHandPanel(model.getPlayerHand(PlayerColor.RED), PlayerColor.RED);
+    rightHandPanel = new PlayerHandPanel(model.getPlayerHand(PlayerColor.BLUE), PlayerColor.BLUE);
+    add((Component) leftHandPanel, BorderLayout.WEST);
+    add((Component) rightHandPanel, BorderLayout.EAST);
 
+    if (model.getCurrentPlayerColor() == PlayerColor.RED) {
+      repaint();
+      return leftHandPanel.getSelectedCard();
 
-  /**
-   * TODO : Implement this method
-   * Gets the selected row from the view.
-   *
-   * @return the selected row.
-   */
-  public int getSelectedRow() {
-    if (gridPanel.getSelectedCardPanel() != null) {
-      return gridPanel.getSelectedCardPanel().getRow();
-    }
-    return -1;
-  }
-
-  /**
-   * TODO : Implement this method
-   * Gets the selected column from the view.
-   *
-   * @return the selected column.
-   */
-  public int getSelectedCol() {
-    if (gridPanel.getSelectedCardPanel() != null) {
-      return gridPanel.getSelectedCardPanel().getCol();
-    }
-    return -1;
-  }
-
-  /**
-   * TODO : Implement this method
-   * Show error message in the view.
-   *
-   * @param message the error message to display.
-   */
-  public void showError(String message) {
-    JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
-  }
-
-  /**
-   * TODO : Implement this method
-   * Updates the turn indicator to show the current player's turn.
-   *
-   * @param currentPlayerColor the color of the current player.
-   */
-  public void updateTurnIndicator(PlayerColor currentPlayerColor) {
-    // Update the label to show the current player's turn
-    String playerText = "Current Player: " + currentPlayerColor.toString();
-    messageLabel.setText(playerText);
-
-    // Change the label's color to visually represent the player
-    if (currentPlayerColor == PlayerColor.RED) {
-      messageLabel.setForeground(Color.RED);
-    } else if (currentPlayerColor == PlayerColor.BLUE) {
-      messageLabel.setForeground(Color.BLUE);
     } else {
-      messageLabel.setForeground(Color.BLACK); // Default color if needed
+      repaint();
+      return rightHandPanel.getSelectedCard();
     }
+
   }
 
-  @Override
-  public void addGridClickListener(MouseAdapter mouseAdapter) {
-    gridPanel.addCellClickListener(mouseAdapter);
+  /**
+   * Returns the current game grid panel.
+   *
+   * @return the game grid panel
+   */
+  public GameGridPanel getGrid() {
+
+    gridPanel = new GameGridPanel(model);
+    return gridPanel;
   }
 
+  public Posn getSelectedCoord() {
+    gridPanel = new GameGridPanel(model);
+    add((Component) gridPanel, BorderLayout.CENTER);
 
+    repaint();
+    return this.gridPanel.getSelectedCoord();
+  }
+
+  public PlayerHandPanel getLeftHandPanel() {
+    return this.leftHandPanel;
+  }
+
+  public PlayerHandPanel getRightHandPanel() {
+    return this.rightHandPanel;
+  }
 }
+

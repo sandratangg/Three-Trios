@@ -10,36 +10,25 @@ import java.awt.event.MouseEvent;
 
 import cs3500.threetrios.model.PlayerColor;
 import cs3500.threetrios.model.ThreeTriosCard;
+import cs3500.threetrios.controller.ThreeTriosController;
 
-/**
- * Represents a panel that displays the player's hand of cards.
- * It allows the player to select a card, which will be highlighted when clicked.
- */
 public class PlayerHandPanel extends JPanel {
   private CellPanel selectedCardPanel = null;
   private final PlayerColor color;
+  private ThreeTriosController controller;
 
-  /**
-   * Constructs a PlayerHandPanel with the given list of cards and player color.
-   * Each card is displayed in a vertical layout and is selectable by clicking on it.
-   *
-   * @param cards the list of cards to display
-   * @param color the color of the player (RED or BLUE)
-   */
   public PlayerHandPanel(List<ThreeTriosCard> cards, PlayerColor color) {
-    this.color = color; // Store the player color
-    setLayout(new GridLayout(cards.size(), 1)); // Vertical layout
+    this.color = color;
+    setLayout(new GridLayout(cards.size(), 1));
 
-    // Initialize card panels
     for (int i = 0; i < cards.size(); i++) {
       ThreeTriosCard card = cards.get(i);
-      CellPanel cardPanel = new CellPanel(card, color); // Use CellPanel for card display
+      CellPanel cardPanel = new CellPanel(card, color);
       cardPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 
-      // Set preferred size for the card panel
       cardPanel.setPreferredSize(new Dimension(100, 150));
 
-      int cardIndex = i; // Final variable to pass to the listener
+      int cardIndex = i;
       cardPanel.addMouseListener(new MouseAdapter() {
         @Override
         public void mouseClicked(MouseEvent evt) {
@@ -51,50 +40,34 @@ public class PlayerHandPanel extends JPanel {
     }
   }
 
-  /**
-   * Handles the selection of a card. If a card is already selected, it is deselected.
-   * The newly selected card is highlighted with a yellow border.
-   *
-   * @param cardPanel the panel of the card that was clicked
-   * @param cardIndex the index of the card that was clicked
-   */
+  public void setController(ThreeTriosController controller) {
+    this.controller = controller;
+  }
+
   private void handleCardSelection(CellPanel cardPanel, int cardIndex) {
-    // Deselect previously selected card if any
     if (selectedCardPanel != null) {
       selectedCardPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
     }
 
-    // Toggle selection state of the clicked card
     if (selectedCardPanel == cardPanel) {
-      selectedCardPanel = null; // Deselect if already selected
+      selectedCardPanel = null;
     } else {
       cardPanel.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 3));
       selectedCardPanel = cardPanel;
     }
 
-    // Print the index and player color for debugging purposes
-    System.out.println("Card index: " + cardIndex + ", Player color: " + color);
+    if (controller != null && selectedCardPanel != null) {
+      controller.onCardSelected(selectedCardPanel.getCard());
+    }
 
     revalidate();
     repaint();
   }
 
-  public CellPanel getSelectedCardPanel() {
-    return selectedCardPanel;
-  }
-
-  public void highlightCard(int cardIndex) {
-    // Deselect previously selected card
+  public ThreeTriosCard getSelectedCard() {
     if (selectedCardPanel != null) {
-      selectedCardPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY)); // Reset border
+      return selectedCardPanel.getCard();
     }
-
-    // Highlight the new card
-    Component[] cards = getComponents();
-    if (cardIndex >= 0 && cardIndex < cards.length) {
-      selectedCardPanel = (CellPanel) cards[cardIndex];
-      selectedCardPanel.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 3)); // Highlight border
-    }
+    return null;
   }
-
 }

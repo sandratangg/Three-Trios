@@ -1,106 +1,59 @@
 package cs3500.threetrios.controller;
 
 import cs3500.threetrios.model.*;
-import cs3500.threetrios.strategies.Move;
-import cs3500.threetrios.view.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.Optional;
-import javax.swing.JOptionPane;
 
-/**
- * The controller for managing a single player's actions.
- */
+import cs3500.threetrios.view.*;
+
 public class ThreeTriosController {
   private final ThreeTriosGameModel model;
-  private final ThreeTriosView view;
   private final Player player;
-  private final PlayerColor gamePlayer;
+  private final ThreeTriosView view;
+  private final PlayerColor pColor;
   private ThreeTriosCard selectedCard;
+  private Posn selectedCoord;
 
-  public ThreeTriosController(ThreeTriosGameModel model, ThreeTriosView view, Player player, PlayerColor gamePlayer) {
+  public ThreeTriosController(ThreeTriosGameModel model, Player player, ThreeTriosView view, PlayerColor pColor) {
     this.model = model;
-    this.view = view;
     this.player = player;
-    this.gamePlayer = gamePlayer;
-
-    setupViewListeners();
-    updateView();
-
-    // If the player is AI, make an initial move
-    if (!player.isHuman()) {
-      makeAIMove();
-    }
+    this.view = view;
+    this.pColor = pColor;
+    this.selectedCard = null;
+    this.selectedCoord = null;
   }
 
-  private void setupViewListeners() {
-    if (player.isHuman()) {
-
-      //TO-DO: Implement listener method in the view
-      view.addCardSelectionListener(new MouseAdapter() {
-        @Override
-        public void mouseClicked(MouseEvent e) {
-
-          //TO-DO: update this logic to check if the player's colors are the same
-
-          if (model.getCurrentPlayerColor().equals(gamePlayer)) {
-
-            //TO-DO: add ability to get the selected card from the view
-            selectedCard = view.getSelectedCard();
-
-            //Pretty sure view does this but can't hurt to double check
-            view.highlightSelectedCard(selectedCard);
-          }
+  public void activate() {
+    while (!model.isGameOver()) {
+      if (model.currentPlayerColor().equals(pColor)) {
+        if (player.isHuman() != true) {
+          player.makeMove(model);
         }
-      });
+      }
+    }
+    view.showMessage("Game over! " + model.determineWinner());
+  }
 
-      view.addGridClickListener(new MouseAdapter() {
-        @Override
-        public void mouseClicked(MouseEvent e) {
+  public void onCardSelected(ThreeTriosCard card) {
+    this.selectedCard = card;
+    System.out.println("Card selected: " + card);
+  }
 
-          //Check if the player's colors are the same
-          if (model.getCurrentPlayerColor().equals(gamePlayer) && selectedCard != null) {
+  public void onGridCellClicked(int row, int col) {
+    this.selectedCoord = new Posn(row, col);
+    System.out.println("Cell clicked at: " + row + ", " + col);
 
-            //TO-DO: add ability to get the selected row & col from the view
-            int row = view.getSelectedRow();
-            int col = view.getSelectedCol();
-            try {
-              model.placeCard(row, col, selectedCard);
-
-              //NOTE: model already switches turns upon card placement + this is a private method
-              //model.switchTurn();
-
-              updateView();
-              makeAIMove();
-            } catch (IllegalArgumentException ex) {
-
-              //TO-DO: Add ability to show errors in view
-              view.showError(ex.getMessage());
-            }
-          }
-        }
-      });
+    if (selectedCard != null) {
+      try {
+        model.placeCard(row, col, selectedCard);
+        System.out.println("Placed card: " + selectedCard + " at (" + row + ", " + col + ")");
+        selectedCard = null; // Clear selection after placing
+        view.setGrid(new GameGridPanel(model)); // Refresh grid
+        view.showMessage("Card placed! Current player: " + model.currentPlayerColor());
+      } catch (IllegalArgumentException e) {
+        System.out.println("Invalid move: " + e.getMessage());
+      }
+    } else {
+      System.out.println("No card selected!");
     }
   }
 
-  private void makeAIMove() {
-    if (!player.isHuman()) {
-      Optional<Move> move = player.makeMove(model);
-      move.ifPresent(m -> {
-        model.placeCard(m.getRow(), m.getCol(), m.getCard());
-
-        //NOTE: model already switches turns upon card placement + this is a private method
-        //model.switchTurn();
-
-        updateView();
-      });
-    }
-  }
-
-  private void updateView() {
-
-    //TO-DO: Add ability to update the current player in the view
-    view.updateTurnIndicator(model.getCurrentPlayerColor());
-
-  }
 }
