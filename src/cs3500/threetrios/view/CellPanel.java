@@ -113,6 +113,18 @@ public class CellPanel extends JPanel {
             : BorderFactory.createLineBorder(Color.BLACK));
   }
 
+  public void updateCell(ThreeTriosCell cell, ReadOnlyThreeTriosModel model, int row, int col) {
+    removeAll(); // Clear previous content
+    if (!cell.isEmpty() && !cell.isHole()) {
+      createPlayerCardPanel(cell, model, row, col);
+    } else {
+      setBackground(cell.isHole() ? Color.GRAY : Color.YELLOW);
+    }
+    revalidate();
+    repaint();
+  }
+
+
   /**
    * Overrides the paintComponent method to preserve any custom background color and
    * ensure the player's color remains visible.

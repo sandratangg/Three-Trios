@@ -84,6 +84,16 @@ public class GameGridPanel extends JPanel implements IGameGridPanel {
 
 
 
+  public void updateGrid(ReadOnlyThreeTriosModel model) {
+    for (int row = 0; row < rows; row++) {
+      for (int col = 0; col < cols; col++) {
+        CellPanel cell = cells[row][col];
+        cell.updateCell(model.getCellContents(row, col), model, row, col);
+      }
+    }
+    revalidate();
+    repaint();
+  }
 
 
 
