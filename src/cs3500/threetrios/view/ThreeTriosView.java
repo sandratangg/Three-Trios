@@ -82,4 +82,23 @@ public class ThreeTriosView extends JFrame implements IThreeTriosView {
     return this.rightHandPanel;
   }
 
+  public void setPlayerRepresentation(PlayerColor playerColor) {
+    // Remove any existing components in the NORTH position
+    BorderLayout layout = (BorderLayout) getContentPane().getLayout();
+    Component existingComponent = layout.getLayoutComponent(BorderLayout.NORTH);
+    if (existingComponent != null) {
+      remove(existingComponent);
+    }
+
+    // Add the new player label
+    JLabel playerLabel = new JLabel("Player: " + playerColor, JLabel.CENTER);
+    add(playerLabel, BorderLayout.NORTH);
+
+    // Refresh the frame
+    revalidate();
+    repaint();
+  }
+
+
+
 }

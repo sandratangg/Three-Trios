@@ -1,9 +1,13 @@
 package cs3500.threetrios.controller;
 
+import java.util.Optional;
+
+import javax.swing.JOptionPane;
 import cs3500.threetrios.model.PlayerColor;
 import cs3500.threetrios.model.Posn;
 import cs3500.threetrios.model.ThreeTriosCard;
 import cs3500.threetrios.model.ThreeTriosGameModel;
+import cs3500.threetrios.strategies.Move;
 import cs3500.threetrios.view.GameGridPanel;
 import cs3500.threetrios.view.PlayerHandPanel;
 import cs3500.threetrios.view.ThreeTriosView;
@@ -22,12 +26,6 @@ public class ThreeTriosController {
 
   /**
    * Constructs a controller for the Three Trios game.
-   *
-   * @param model        the game model
-   * @param player       the player
-   * @param view         the game view
-   * @param playerColor  the player's color
-   * @param otherController the opponent's controller
    */
   public ThreeTriosController(ThreeTriosGameModel model, Player player,
                               ThreeTriosView view, PlayerColor playerColor,
@@ -39,6 +37,9 @@ public class ThreeTriosController {
     this.otherController = otherController;
     this.selectedCard = null;
     this.selectedCoord = null;
+
+    // Set the view to display which player it represents
+    view.setPlayerRepresentation(playerColor);
   }
 
   /**
@@ -48,12 +49,31 @@ public class ThreeTriosController {
     while (!model.isGameOver()) {
       if (model.currentPlayerColor().equals(playerColor)) {
         if (!player.isHuman()) {
-          player.makeMove(model);
+          Optional<Move> move = player.makeMove(model);
+          move.ifPresent(m -> {
+            try {
+              model.placeCard(m.getRow(), m.getCol(), m.getCard());
+              System.out.println(playerColor + " placed card: " + m.getCard());
+              notifyOpponentOfPlacement();
+
+              // Check if the game is over after the move
+              if (model.isGameOver()) {
+                notifyGameOver();
+                return;
+              }
+
+              notifyTurn();
+
+            } catch (IllegalArgumentException e) {
+              System.out.println("Invalid AI move: " + e.getMessage());
+            }
+          });
         }
       }
     }
-    view.showMessage("Game over! " + model.determineWinner());
+    notifyGameOver();
   }
+
 
   /**
    * Handles card selection.
@@ -62,12 +82,12 @@ public class ThreeTriosController {
    */
   public void onCardSelected(ThreeTriosCard card) {
     if (!model.currentPlayerColor().equals(playerColor)) {
-      view.showMessage("Wait for your turn!");
+      showErrorDialog("Wait for your turn!");
       return;
     }
 
     if (!model.getPlayerHand(playerColor).contains(card)) {
-      view.showMessage("Invalid move: You don't own this card!");
+      showErrorDialog("Invalid move: You don't own this card!");
       return;
     }
 
@@ -85,7 +105,7 @@ public class ThreeTriosController {
     this.selectedCoord = new Posn(row, col);
 
     if (!model.currentPlayerColor().equals(playerColor)) {
-      view.showMessage("Wait for your turn!");
+      showErrorDialog("Wait for your turn!");
       return;
     }
 
@@ -94,7 +114,7 @@ public class ThreeTriosController {
         model.placeCard(row, col, selectedCard);
         selectedCard = null;
 
-        // Update the grid for the current view
+        // Update the grid for the current view immediately
         GameGridPanel gridPanel = view.getGrid();
         gridPanel.updateGrid(model);
 
@@ -102,19 +122,63 @@ public class ThreeTriosController {
         view.revalidate();
         view.repaint();
 
+        // Check if the game is over
+        if (model.isGameOver()) {
+          notifyOpponentOfPlacement(); // Notify the opponent
+          notifyGameOver();            // Show the winner on both views
+          return;
+        }
+
         // Notify the other controller/view
         notifyOpponentOfPlacement();
-
-        // Switch to the next player's turn
-        //model.switchTurn();  // Ensure the model updates the current player
         notifyTurn();        // Notify the next player
 
       } catch (IllegalArgumentException e) {
-        view.showMessage("Invalid move: " + e.getMessage());
+        showErrorDialog("Invalid move: " + e.getMessage());
       }
     } else {
-      view.showMessage("No card selected!");
+      showErrorDialog("No card selected!");
     }
+  }
+
+  /**
+   * Displays a dialog for invalid/illegal moves.
+   *
+   * @param message the error message
+   */
+  private void showErrorDialog(String message) {
+    JOptionPane.showMessageDialog(view, message, "Invalid Move", JOptionPane.ERROR_MESSAGE);
+  }
+
+  /**
+   * Notifies both players of the game over condition and shows the winner's color.
+   */
+  private void notifyGameOver() {
+    // Determine the winner
+    String winner = model.determineWinner();
+    String message;
+
+    if (winner.equals("TIE")) {
+      message = "It's a tie!";
+    } else {
+      message = winner + " wins!";
+    }
+
+    // Show game over dialog for both views
+    JOptionPane.showMessageDialog(view, message, "Game Over", JOptionPane.INFORMATION_MESSAGE);
+
+    if (otherController != null) {
+      otherController.showGameOverMessage(message);
+    }
+  }
+
+  /**
+   * Displays the game-over message for this controller's view.
+   *
+   * @param message the game-over message
+   */
+  public void showGameOverMessage(String message) {
+    JOptionPane.showMessageDialog(view, message, "Game Over", JOptionPane.INFORMATION_MESSAGE);
   }
 
   /**
@@ -122,7 +186,6 @@ public class ThreeTriosController {
    */
   public void notifyOpponentOfPlacement() {
     if (otherController != null) {
-      System.out.println("Notifying opponent's view of placement.");
       otherController.updateView();
     }
   }
@@ -147,7 +210,6 @@ public class ThreeTriosController {
     // Revalidate and repaint the view
     view.revalidate();
     view.repaint();
-    System.out.println("Updated view for player: " + playerColor);
   }
 
   /**

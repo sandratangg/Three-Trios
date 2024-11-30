@@ -30,6 +30,13 @@ public class AIPlayer implements Player {
 
   @Override
   public Optional<Move> makeMove(ReadOnlyThreeTriosModel model) {
-    return strategy.chooseMove(model, color);
+    Optional<Move> move = strategy.chooseMove(model, color);
+    if (move.isPresent()) {
+      System.out.println("AI (" + color + ") chooses move: " + move.get());
+    } else {
+      System.out.println("AI (" + color + ") has no valid moves.");
+    }
+    return move;
   }
+
 }
