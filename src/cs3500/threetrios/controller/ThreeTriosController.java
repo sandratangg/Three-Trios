@@ -5,6 +5,7 @@ import java.util.Optional;
 import javax.swing.JOptionPane;
 import cs3500.threetrios.model.PlayerColor;
 import cs3500.threetrios.model.Posn;
+import cs3500.threetrios.model.ReadOnlyThreeTriosModel;
 import cs3500.threetrios.model.ThreeTriosCard;
 import cs3500.threetrios.model.ThreeTriosGameModel;
 import cs3500.threetrios.strategies.Move;
@@ -233,5 +234,13 @@ public class ThreeTriosController {
 
       view.showMessage("Your turn!");
     }
+  }
+
+  public PlayerColor getPlayerColor() {
+    return model.currentPlayerColor();
+  }
+
+  public ReadOnlyThreeTriosModel getModel() {
+    return model;
   }
 }
