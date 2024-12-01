@@ -8,7 +8,7 @@ import java.util.List;
  */
 public abstract class ReadOnlyThreeTriosModel {
 
-  protected ThreeTriosGrid grid;
+  public ThreeTriosGrid grid;
   protected ThreeTriosPlayer redPlayer;
   protected ThreeTriosPlayer bluePlayer;
   protected ThreeTriosPlayer currentPlayer;
