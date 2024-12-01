@@ -19,7 +19,7 @@ import cs3500.threetrios.provider.model.IThreeTriosViewModel;
 /**
  * View class for the Three Trios game.
  */
-public class ProviderThreeTriosViewProvider extends JFrame implements ProviderIThreeTriosView {
+public class ProviderThreeTriosView extends JFrame implements ProviderIThreeTriosView {
   private final AbstractGridPanel gridPanel;
   private final AbstractPlayerHandPanel redPlayerHandPanel;
   private final AbstractPlayerHandPanel bluePlayerHandPanel;
@@ -29,7 +29,7 @@ public class ProviderThreeTriosViewProvider extends JFrame implements ProviderIT
   /**
    * Constructor for the view.
    */
-  public ProviderThreeTriosViewProvider(IThreeTriosViewModel model) {
+  public ProviderThreeTriosView(IThreeTriosViewModel model) {
     this.model = Objects.requireNonNull(model, "Model cannot be null");
 
     // Set up hand and grid panels
